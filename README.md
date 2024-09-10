@@ -41,24 +41,15 @@ Como casos generales o de uso común se tienen las pruebas con cada transacción
 
 - **Underflow**: Consiste en un caso donde una FIFO está vacía y se quiere hacer una lectura.
 
-- **Varios envían a la vez**: 
-- 
-- **Todos envían a la vez**: 
-- 
-- **Se envía un paquete con un id ilegal**:
-- 
-- **Todos hacen broadcast simultaneamente**:
-- 
-- **Varios hacen broadcast**:
-- 
-- **Se envía a sí mismo**:
-- 
-- **Uno solo envía una ráfaga de paquetes**:   
--    
-- **Todos le envían al mismo simultaneamente**
-
-- **Reset cuando no se ha terminado una transacción**:
-
+- **Varios envían a la vez**: Este caso probará el comportamiento del bus al enviar datos por varios periférico a la vez
+- **Todos envían a la vez**: Este caso probará el comportamiento del bus al enviar datos por cada periférico a la vez
+- **Se envía un paquete con un id ilegal**: Con determinado número de periféricos, se utilizará un número o ID que no existe.
+- **Todos hacen broadcast simultaneamente**: Similar al caso de enviar todos a la vez, solo que con broadcast.
+- **Varios hacen broadcast**: Busca probar mportamiento del bus al recibir varios broadcast 
+- **Se envía a sí mismo**: Este caso consiste en sacar un dato de un periférico para volver a enviarlo al mismo.
+- **Uno solo envía una ráfaga de paquetes**: Busca probar el comportamiento del dispositivo al enviar datos de forms exhaustiva.
+- **Todos le envían al mismo simultaneamente**: Medirá la capacidad de los periféricos al recibir datos exhaustivamente.
+- **Reset cuando no se ha terminado una transacción**: El comportamiento esperado es que vacíe el dispositivo, dejándolo sin datos. Por lo que anularía las transacciones hasta dicho momento.
 
 ## 3. Aleatorización
 
@@ -68,14 +59,14 @@ Además de esto, como parte de las pruebas, se aleatorizarán distintas variable
 
 - **Largo de paquetes**: se aleatorizará el largo de los paquetes entre 16, 32 y 64 bits.
 
-- **Tiempo de espera entre eventos**: para las distintas transacciones se aleatorizarán los tiempos de retardo.
+- **Tiempo de espera entre eventos**: Para las distintas transacciones se aleatorizarán los tiempos de retardo.
 
-- **Cantidad de periféricos**: 
-- **Dimensión de profundidad en la FIFO**:
-- **Tipos de transacciones**:
-- **Payload**:
-- **Identificadores válidos**:
-- **Identificadores no válidos**:
+- **Cantidad de periféricos**: El dispositivo al ser capaz de tener diferente cantidad de periféricos, podría tener comportamientos distintos.
+- **Dimensión de profundidad en la FIFO**: Los periféricos pueden tener tamaños distintos, lo ideal sería un comportamiento sin cambios.
+- **Tipos de transacciones**: Las transacciones pueden ir en distinto órden y cantidad, cada una realiza distintas acciones.
+- **Payload**: Los datos oara periféricos serán aleatorizables.
+- **Identificadores válidos**: Cada periférico posee un ID, estos estan asociados al numero de periféricos.
+- **Identificadores no válidos**: Como prueba se tendrán identificadores para periféricos que no existen.
 
 ## 4. Diseño del ambiente
 El ambiente consiste de distintos transactores, en este caso se conforma de un generador Test, un agente, un driver/monitor, un checker y un scoreboard. Además de esto el driver va a tener una interfaz para comunicarse con el DUT.
