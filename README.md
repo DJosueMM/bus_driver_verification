@@ -85,17 +85,3 @@ La interfaz es el medio a través del cual el driver interactúa con el DUT. Med
 
 ![Mapa conceptual](https://github.com/user-attachments/assets/41a0b979-11af-45a9-bed0-037a9f917845)
 
-
-## 4. Implementación del ambiente
-
-Relacionado al diagrama anterior, los paquetes de transacción son los siguientes:
-
-**pck1**:
-
-**pck2**:
-
-**pck3**:
-
-**pck4**:
-
-**pck5**:
