@@ -13,6 +13,8 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
  
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion;
 
+    constraint const_illegal_ID {id_spec >= DRVS; id_spec > 0;} //constraint para que el ID sea invalido
+
     function new();
         num_transacciones = 2;
         max_retardo       = 5;
@@ -30,11 +32,14 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
 
                 $display("[%g] Agente: recibe instruccion", $time);
                 test_agent_mbx.get(instruccion);
-
+                
                 case(instruccion)
+
+                    const_illegal_ID.constraint_mode(0);
 
                     send_random_payload_legal_id: begin // Esta instruccion genera num_tranacciones escrituras seguidas del mismo número de lecturas
                         for(int i = 0; i < num_transacciones; i++) begin
+                            const_illegal_ID.constraint_mode(1);
                             transaccion = new();
                             transaccion.randomize();
                             tpo_spec = escritura;
@@ -153,6 +158,9 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion.print("Agente: transacción creada");
                             agnt_drv_mbx.put(transaccion);
                         end
+                    end
+                    default: begin
+                        $display("[%g] Agente: instrucción no reconocida", $time);
                     end
                 endcase
             end
