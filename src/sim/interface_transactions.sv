@@ -55,7 +55,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
     rand int                 max_delay;         // Tiempo máximo de retraso en ciclos de reloj
     rand int                 delay;             // Retraso en ciclos de reloj
     rand bit [7 : 0]         pkg_id;            // ID del paquete de datos (ajustar el tamaño según sea necesario)
-    rand bit [WIDTH - 1 : 0] pkg_payload;       // ID del paquete de datos (ajustar el tamaño según sea necesario)
+    rand bit [WIDTH - 9 : 0] pkg_payload;       // ID del paquete de datos (ajustar el tamaño según sea necesario)
     int                      send_time;         // Tiempo en el que se envió el paquete
     int                      receive_time;      // Tiempo en el que se recibió el paquete
     int                      receiver_monitor;  // Monitor receptor del paquete
@@ -84,7 +84,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
         int                 max_d   = 0, 
         int                 d       = 0, 
         bit [7 : 0]         id      = 0,
-        int [WIDTH - 1 : 0] payload = 0, 
+        int [WIDTH - 9 : 0] payload = 0, 
         int                 st      = 0, 
         int                 rt      = 0, 
         int                 rcv_mtr = 0, 
@@ -105,7 +105,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
 
     // funcion para limpiar los valores
     function void clean;
-    
+
         this.max_delay        = 0;
         this.delay            = 0;
         this.pkg_id           = 0;
