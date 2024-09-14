@@ -1,4 +1,3 @@
-
 //Definicion de tipos de datos
 
 ////////////////////////////////////////
@@ -21,14 +20,15 @@ typedef enum {
 } instrucciones_agente;
 
 ////////////////////////////////////////
-// Definición de estructura para generar comandos hacia el driver //
+// Definición del tipo de transacciones posibles en los drivers //
 ////////////////////////////////////////
 typedef enum {
 
     send,
+    broadcast,
     reset
 
-} instrucciones_driver;
+} tipo_trans;
 
 
 ////////////////////////////////////////
@@ -44,87 +44,99 @@ typedef enum {
     broadcast_report,
     result_condition,
     total_report
-    
+
 } consulta_sb;
 
-class intrucciones_monitor;
+// Clase para definir los datos que maneja y sus detalles las instrucciones driver_monitor
+// estos tipos de datos se transmiten desde el agente al driver_monitor y desde el driver_monitor al checker
+class instrucciones_driver_monitor # (parameter WIDTH = 16); 
 
     // Definición de los miembros de la clase
-    rand int         max_delay;         // Tiempo máximo de retraso en ciclos de reloj
-    rand int         delay;             // Retraso en ciclos de reloj
-    rand bit         pkg;               // Paquete de datos (ajustar el tamaño según sea necesario)
-    int              send_time;         // Tiempo en el que se envió el paquete
-    int              receive_time;      // Tiempo en el que se recibió el paquete
-    int              dest;              // Destino del paquete
-    int              receiver_monitor;  // Monitor receptor del paquete
-    rand int         id;                // Identificador de la transacción
-    rand bit         payload;           // Payload de la transacción (ajustar el tamaño según sea necesario)
+    rand int                 max_delay;         // Tiempo máximo de retraso en ciclos de reloj
+    rand int                 delay;             // Retraso en ciclos de reloj
+    rand bit [7 : 0]         pkg_id;            // ID del paquete de datos (ajustar el tamaño según sea necesario)
+    rand bit [WIDTH - 1 : 0] pkg_payload;       // ID del paquete de datos (ajustar el tamaño según sea necesario)
+    int                      send_time;         // Tiempo en el que se envió el paquete
+    int                      receive_time;      // Tiempo en el que se recibió el paquete
+    int                      receiver_monitor;  // Monitor receptor del paquete
+    rand tipo_trans          tipo_transaccion;  //Tipo de transaccion declarado tipo_trans
+   
+   //Constraint de retardo
+    constraint const_delay {
+        max_delay <= 5;         //Retardo maximo al randomizar, VERIFICAR
+        delay     <  max_delay; //Definir cotas del delay
+        delay     >= 0;
+    }
+    
+    //Constraint id if broadcast
+    constraint const_broad {
 
-    // Restricciones (si fueran necesarias)
-    // constraint const_delay {
-    //     delay < max_delay;
-    //     delay >= 0;
-    // }
+        if (tipo_transaccion == broadcast) begin //Definir el ID correcto en caso de randomizar 
+            pkg_id = 8'b11111111;                //en operacion de broadcast
+        end
+
+        else;
+    }
 
     // Constructor por defecto
-    function new(int max_d = 0, int d = 0, bit[7:0] pkg = 0, int st = 0, int rt = 0, string dst = "", string rcv_mtr = "", int i = 0, bit[15:0] pl = 0);
-        this.max_delay          = max_d;
-        this.delay              = d;
-        this.pkg                = pkg;
-        this.send_time          = st;
-        this.receive_time       = rt;
-        this.dest               = dst;
-        this.receiver_monitor   = rcv_mtr;
-        this.id                 = i;
-        this.payload            = pl;
+    function new(int max_d = 0, int d = 0, bit[7 : 0] id = '0, int [WIDTH - 1 : 0] payload = '0, int st = 0, int rt = 0, int rcv_mtr = 0, tipo_trans tipo = send);
+        this.max_delay        = max_d;
+        this.delay            = d;
+        this.pkg_id           = id;
+        this.pkg_payload      = payload;
+        this.send_time        = st;
+        this.receive_time     = rt;
+        this.receiver_monitor = rcv_mtr;
+        this.tipo_transaccion = tipo;
     endfunction
 
-    // Método para limpiar los valores
+    // funcion para limpiar los valores
     function void clean;
-        this.max_delay          = 0;
-        this.delay              = 0;
-        this.pkg                = 0;
-        this.send_time          = 0;
-        this.receive_time       = 0;
-        this.dest               = 0;
-        this.receiver_monitor   = 0;
-        this.id                 = 0;
-        this.payload            = 0;
+        this.max_delay        = 0;
+        this.delay            = 0;
+        this.pkg_id           = 0;
+        this.pkg_payload      = 0;
+        this.send_time        = 0;
+        this.receive_time     = 0;
+        this.receiver_monitor = 0;
+        this.tipo_transaccion = 0;
+
     endfunction
 
-    // Método para imprimir los valores
-    function void print(string tag = "");
-        $display("[%g] %s Max Delay=%d Delay=%d pkg=0x%h Send Time=%d Receive Time=%d Dest=%d Receiver Monitor=%d ID=%d Payload=0x%h", 
-                 $time, tag, max_delay, delay, pkg, send_time, receive_time, dest, receiver_monitor, id, payload);
+    // funcion para imprimir los valores de los datos en la clase y transaccionS
+    function void print(string tag = ""); //este tag se inicializa al llamar a la funcion
+        $display("[%g] %s Max Delay=%d Delay=%d pkg_id=0x%h pkg_payload=0x%h Send_Time=%d Receive_Time=%d Receiver Monitor=%d Tipo=0x%p", 
+                 $time, tag, max_delay, delay, pkg_id, pkg_payload, send_time, receive_time, receiver_monitor, tipo_transaccion);
     endfunction
 
 endclass
 
-
 //Definicion de mailboxes
 
 ////////////////////////////////////////
-// Definición de mailboxes de tipo definido instrucciones_agente para comunicar las interfaces //
+// Definición de mailboxes de tipo definido instrucciones_agente para comunicar las interfaces TEST -> AGENTE 
 ////////////////////////////////////////
 typedef mailbox # (instrucciones_agente) mbx_test_agent;
 
-////////////////////////////////////////
-// Definición de arreglo de mailboxes de tipo definido instrucciones_driver para comunicar las interfaces //
-////////////////////////////////////////
-typedef mailbox # (instrucciones_driver) mbx_agent_driver;
 
 ////////////////////////////////////////
-// Definición de arreglo de mailboxes de tipo definido instrucciones_monitor para comunicar las interfaces //
-////////////////////////////////////////
-typedef mailbox # (instrucciones_monitor) mbx_monitor_checker;
+// Definición de arreglo de mailboxes de tipo definido instrucciones_driver para comunicar las interfaces 
+//                                                                       AGENTE         -> DRIVER_MONITOR 
+//                                                                       DRIVER_MONITOR -> CHECKER
+////////////////////////////////////////                                 
+typedef mailbox # (instrucciones_driver_monitor) mbx_agent_driver_and_monitor_checker; 
+//Usamos el mismo mailbox para que sea el mismo dato que se modifique tanto en el monitor como en el driver
+//asi solo se acceden a los elementos necesarios en cada etapa de las transacciones
+
 
 ////////////////////////////////////////
-// Definición de arreglo de mailboxes de tipo definido res_check para comunicar las interfaces //
+// Definición de arreglo de mailboxes de tipo definido res_check para comunicar las interfaces CHECKER -> SCOREBOARD 
 ////////////////////////////////////////
 typedef mailbox # (res_check) mbx_checker_sb;
 
+
 ////////////////////////////////////////
-// Definición de arreglo de mailboxes de tipo definido consulta_sb para comunicar las interfaces //
+// Definición de arreglo de mailboxes de tipo definido consulta_sb para comunicar las interfaces TEST -> SCOREBOARD 
 ////////////////////////////////////////
 typedef mailbox # (consulta_sb) mbx_test_sb;
 
