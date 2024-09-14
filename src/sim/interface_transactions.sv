@@ -79,7 +79,19 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
     }
 
     // Constructor por defecto
-    function new(int max_d = 0, int d = 0, bit[7 : 0] id = '0, int [WIDTH - 1 : 0] payload = '0, int st = 0, int rt = 0, int rcv_mtr = 0, tipo_trans tipo = send);
+    function new (
+        
+        int                 max_d   = 0, 
+        int                 d       = 0, 
+        bit [7 : 0]         id      = 0,
+        int [WIDTH - 1 : 0] payload = 0, 
+        int                 st      = 0, 
+        int                 rt      = 0, 
+        int                 rcv_mtr = 0, 
+        tipo_trans          tipo    = send
+    
+    );
+
         this.max_delay        = max_d;
         this.delay            = d;
         this.pkg_id           = id;
@@ -88,10 +100,12 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
         this.receive_time     = rt;
         this.receiver_monitor = rcv_mtr;
         this.tipo_transaccion = tipo;
+
     endfunction
 
     // funcion para limpiar los valores
     function void clean;
+    
         this.max_delay        = 0;
         this.delay            = 0;
         this.pkg_id           = 0;
@@ -139,4 +153,3 @@ typedef mailbox # (res_check) mbx_checker_sb;
 // Definición de arreglo de mailboxes de tipo definido consulta_sb para comunicar las interfaces TEST -> SCOREBOARD 
 ////////////////////////////////////////
 typedef mailbox # (consulta_sb) mbx_test_sb;
-
