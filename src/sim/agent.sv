@@ -10,12 +10,15 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     bit        [WIDTH - 9 : 0] payload_spec;
     int                        send_time_spec;
     rand int                   driver_spec;
-    rand tipo_trans            tipo_spec;
+    tipo_trans                 tipo_spec;
+    rand bit                   rand_reset;                        
  
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion;
 
     constraint const_illegal_ID {id_spec >= DRVS; id_spec > 0;} //constraint para que el ID sea invalido
     constraint const_legal_ID   {id_spec <= DRVS; id_spec > 0;} //constraint para que el ID sea valido
+    constraint inst_prop        {rand_reset dist {0 := 90, 1 := 10}; } //constraint para que el driver sea valido
+
 
     function new();
         num_transacciones = 100;
@@ -74,7 +77,9 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                     end
 
                     send_w_mid_reset: begin
-
+                        const_illegal_ID.constraint_mode(0);
+                        const_legal_ID.constraint_mode(0);
+                        inst_prop.constraint_mode(1);
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
@@ -87,8 +92,14 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion.print("Agente: transacción send_w_mid_reset creada para posterior reset");
                             agnt_drv_mbx[driver_spec].put(transaccion);
 
-                            tipo_spec.randomize();
-                            transaccion.tipo_transaccion = tipo_spec;
+                            
+                            if (rand_reset == 1) begin
+                                transaccion.tipo_transaccion = reset;
+                            end
+                            
+                            else begin  
+                                transaccion.tipo_transaccion = send;
+                            end
                             driver_spec.randomize();
                             transaccion.print("Agente: transacción send_w_mid_reset creada como potencial reset");
                             agnt_drv_mbx[driver_spec].put(transaccion);
