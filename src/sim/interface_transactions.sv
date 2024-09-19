@@ -63,8 +63,8 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
    
    //Constraint de retardo
     constraint const_delay {
-        max_delay <= 5;         //Retardo maximo al randomizar, VERIFICAR
-        delay     <  max_delay; //Definir cotas del delay
+        max_delay <= 10;         //Retardo maximo al randomizar, VERIFICAR
+        delay     <= max_delay; //Definir cotas del delay
         delay     >= 0;
     }
     
