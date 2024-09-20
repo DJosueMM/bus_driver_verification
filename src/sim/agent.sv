@@ -148,7 +148,24 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    some_sending_random: begin 
+                    all_broadcast: begin 
+                        const_illegal_ID.constraint_mode(0);
+                        const_legal_ID.constraint_mode(0);
+                        const_instrucciones_dist.constraint_mode(0);
+                        for(int i = 0; i < DRVS; i++) begin
+                            const_illegal_ID.constraint_mode(0);
+                            const_legal_ID.constraint_mode(1);
+                            transaccion = new();
+                            transaccion.randomize();
+                            transaccion.max_delay = max_retardo;
+                            tipo_spec = broadcast;                  // Se define el tipo de transacción
+                            transaccion.tipo_transaccion = tipo_spec;
+                            transaccion.print("Agente: transacción all_broadcast creada");
+                            agnt_drv_mbx[i].put(transaccion);
+                        end
+                    end
+
+                    some_broadcast: begin 
                         for (int i = 0; i < num_transacciones; i++) begin
                             transaccion = new();
                             transaccion.max_retardo = max_retardo;
@@ -158,7 +175,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    some_broadcast: begin 
+                    some_sending_random: begin 
                         for (int i = 0; i < num_transacciones; i++) begin
                             transaccion = new();
                             transaccion.max_retardo = max_retardo;
@@ -188,22 +205,6 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    all_broadcast: begin 
-                        const_illegal_ID.constraint_mode(0);
-                        const_legal_ID.constraint_mode(0);
-                        const_instrucciones_dist.constraint_mode(0);
-                        for(int i = 0; i < DRVS; i++) begin
-                            const_illegal_ID.constraint_mode(0);
-                            const_legal_ID.constraint_mode(1);
-                            transaccion = new();
-                            transaccion.randomize();
-                            transaccion.max_delay = max_retardo;
-                            tipo_spec = broadcast;                  // Se define el tipo de transacción
-                            transaccion.tipo_transaccion = tipo_spec;
-                            transaccion.print("Agente: transacción all_broadcast creada");
-                            agnt_drv_mbx[i].put(transaccion);
-                        end
-                    end
 
                     auto_send_random: begin 
                         for (int i = 0; i < num_transacciones; i++) begin
