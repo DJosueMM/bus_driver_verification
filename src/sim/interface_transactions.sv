@@ -10,7 +10,6 @@ typedef enum {
     send_w_mid_reset,
     consecutive_send,
     broadcast_random,
-    some_sending_random,
     some_broadcast,
     all_for_one,
     all_sending_random,
