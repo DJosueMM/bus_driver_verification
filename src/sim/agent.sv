@@ -6,7 +6,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     int                        num_transacciones;  // Número de transacciones para las funciones del agente
     int                        max_retardo;
     int                        retardo_spec;
-    bit        [7 : 0]         id_spec;
+    rand bit   [        7 : 0] id_spec;
     bit        [WIDTH - 9 : 0] payload_spec;
     int                        send_time_spec;
     rand int                   driver_spec;
@@ -21,6 +21,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     constraint const_instrucciones_dist   {rand_reset     dist {0 := 90, 1 := 10}; } //constraint para que el driver sea valido
     constraint const_rand_broadcast       {rand_broadcast dist {0 := 25, 1 := 75}; } //constraint para que el driver sea valido
     constraint const_no_reset             {tipo_spec    != reset;}                   //constraint para que el driver sea valido
+    constraint const_no_broadcast         {tipo_spec    != broadcast;}               //constraint para que el driver sea valido
     
     function new();
         num_transacciones = 100;
@@ -45,6 +46,8 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                     const_no_reset.constraint_mode(1);   
                     const_illegal_ID.constraint_mode(0);
                     const_legal_ID.constraint_mode(0);
+                    const_rand_broadcast.constraint_mode(0); 
+                    const_no_broadcast.constraint_mode(0); 
 
                     send_random_payload_legal_id: begin // Esta instruccion genera num_tranacciones escrituras seguidas del mismo número de lecturas
                 
@@ -108,7 +111,8 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    consecutive_send: begin 
+                    consecutive_send: begin
+
                         driver_spec.randomize();                        // Se elige un driver aleatorio
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_illegal_ID.constraint_mode(0);
@@ -122,10 +126,12 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    broadcast_random: begin 
+                    broadcast_random: begin
+
                         const_illegal_ID.constraint_mode(0);
                         const_legal_ID.constraint_mode(0);
                         const_instrucciones_dist.constraint_mode(0);
+
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_legal_ID.constraint_mode(1);
                             const_rand_broadcast.constraint_mode(1);
@@ -166,11 +172,12 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                     end
 
                     some_broadcast: begin 
+                        const_rand_broadcast.constraint_mode(1);
                         for (int i = 0; i < num_transacciones; i++) begin
                             transaccion = new();
                             transaccion.max_retardo = max_retardo;
                             transaccion.randomize();
-                            transaccion.print("Agente: transacción creada");
+                            transaccion.print("Agente: transacción some_broadcast creada");
                             agnt_drv_mbx.put(transaccion);
                         end
                     end
@@ -186,34 +193,57 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                     end
 
                     all_for_one: begin 
-                        for (int i = 0; i < num_transacciones; i++) begin
+
+                        id_spec.randomize();
+                        const_no_broadcast.constraint_mode(1); 
+
+                        for (int i = 0; i < DRVS; i++) begin
                             transaccion = new();
                             transaccion.max_retardo = max_retardo;
                             transaccion.randomize();
-                            transaccion.print("Agente: transacción creada");
-                            agnt_drv_mbx.put(transaccion);
+                            transaccion.pkg_id = id_spec;
+                            transaccion.print("Agente: transacción all_for_one creada");
+                            agnt_drv_mbx[i].put(transaccion);
                         end
                     end
 
                     all_sending_random: begin 
-                        for (int i = 0; i < num_transacciones; i++) begin
+
+                        const_legal_ID.constraint_mode(1);
+                        
+                        for (int i = 0; i < DRVS; i++) begin
                             transaccion = new();
-                            transaccion.max_retardo = max_retardo;
                             transaccion.randomize();
-                            transaccion.print("Agente: transacción creada");
-                            agnt_drv_mbx.put(transaccion);
+                            transaccion.max_delay = max_retardo;
+                            tipo_spec = send;                  // Se define el tipo de transacción
+                            transaccion.tipo_transaccion = tipo_spec;
+                            transaccion.print("Agente: transacción all_sending_random creada");
+                            agnt_drv_mbx[i].put(transaccion);
                         end
                     end
 
-
+                    
                     auto_send_random: begin 
+
+                        const_illegal_ID.constraint_mode(0);
+                        const_legal_ID.constraint_mode(1);
+                        const_instrucciones_dist.constraint_mode(0);
+                        const_no_broadcast.constraint_mode(1); 
+                        
+                        
                         for (int i = 0; i < num_transacciones; i++) begin
+
+                            driver_spec.randomize();     
                             transaccion = new();
-                            transaccion.max_retardo = max_retardo;
                             transaccion.randomize();
-                            transaccion.print("Agente: transacción creada");
-                            agnt_drv_mbx.put(transaccion);
+                            transaccion.max_retardo = max_retardo;
+                            id_spec = driver_spec; //revisar asignacion de int a bit
+                            transaccion.pkg_id = id_spec;
+                            
+                            transaccion.print("Agente: transacción auto_send_random creada");
+                            agnt_drv_mbx[driver_spec].put(transaccion);
                         end
+
                     end
                     default: begin
                         $display("[%g] Agente: instrucción no reconocida", $time);
