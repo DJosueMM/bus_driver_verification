@@ -3,25 +3,22 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     mbx_test_agent                                       test_agent_mbx;   // Mailbox del test al agente
     mbx_agent_driver_and_monitor_checker [DRVS - 1 : 0]  agnt_drv_mbx;     // Arreglo de mailboxes del agente a cada driver
     
-    int                        num_transacciones;  // Número de transacciones para las funciones del agente
-    int                        max_retardo;
-    int                        retardo_spec;
-    rand bit   [        7 : 0] id_spec;
-    bit        [WIDTH - 9 : 0] payload_spec;
-    int                        send_time_spec;
-    rand int                   driver_spec;
-    tipo_trans                 tipo_spec;
-    rand bit                   rand_reset;                        
-    rand bit                   rand_broadcast; 
+    int                        num_transacciones;   // Número de transacciones para las funciones del agente
+    int                        max_retardo;         // Retardo máximo para las funciones del agente
+    rand bit    [7 : 0]        id_spec;             // ID del driver receptor
+    rand int                   driver_spec;         // Driver que envía la transacción
+    tipo_trans                 tipo_spec;           // Tipo de transacción
+    rand bit                   rand_reset;          // Variable para reset                  
+    rand bit                   rand_broadcast;      // Variable para broadcast
 
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion;
 
-    constraint const_illegal_ID           {id_spec        >= DRVS; id_spec > 0;}     //constraint para que el ID sea invalido
-    constraint const_legal_ID             {id_spec        <= DRVS; id_spec > 0;}     //constraint para que el ID sea valido
-    constraint const_instrucciones_dist   {rand_reset     dist {0 := 90, 1 := 10}; } //constraint para que el driver sea valido
-    constraint const_rand_broadcast       {rand_broadcast dist {0 := 25, 1 := 75}; } //constraint para que el driver sea valido
-    constraint const_no_reset             {tipo_spec    != reset;}                   //constraint para que el driver sea valido
-    constraint const_no_broadcast         {tipo_spec    != broadcast;}               //constraint para que el driver sea valido
+    constraint const_illegal_ID           {id_spec        >= DRVS; id_spec > 0;}        //constraint para que el ID sea invalido
+    constraint const_legal_ID             {id_spec        <= DRVS; id_spec > 0;}        //constraint para que el ID sea valido
+    constraint const_reset_dist           {rand_reset     dist {0 := 90, 1 := 10}; }    //constraint para la distribucion de reset
+    constraint const_rand_broadcast       {rand_broadcast dist {0 := 25, 1 := 75}; }    //constraint para la distribucion de broadcast
+    constraint const_no_reset             {tipo_spec    != reset;}                      //constraint para que no haya reset
+    constraint const_no_broadcast         {tipo_spec    != broadcast;}                  //constraint para que no haya broadcast
     
     function new();
         num_transacciones = 100;
@@ -49,7 +46,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                     const_rand_broadcast.constraint_mode(0); 
                     const_no_broadcast.constraint_mode(0); 
 
-                    send_random_payload_legal_id: begin // Esta instruccion genera num_tranacciones escrituras seguidas del mismo número de lecturas
+                    send_random_payload_legal_id: begin  // Esta instruccion genera transacciones aleatorias
                 
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_illegal_ID.constraint_mode(0);
@@ -65,7 +62,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    send_random_payload_ilegal_id: begin // Esta instruccion genera transacciones aleatorias
+                    send_random_payload_ilegal_id: begin    // Esta instruccion genera transacciones aleatorias con ID ilegal
                  
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_illegal_ID.constraint_mode(1);
@@ -81,11 +78,11 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    send_w_mid_reset: begin
+                    send_w_mid_reset: begin             // Esta instruccion genera transacciones aleatorias con reset
                         const_no_reset.constraint_mode(0);   
                         const_illegal_ID.constraint_mode(0);
                         const_legal_ID.constraint_mode(0);
-                        const_instrucciones_dist.constraint_mode(1);
+                        const_reset_dist.constraint_mode(1);
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
@@ -111,7 +108,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    consecutive_send: begin
+                    consecutive_send: begin             // Esta instruccion genera transacciones consecutivas
 
                         driver_spec.randomize();                        // Se elige un driver aleatorio
                         for(int i = 0; i < num_transacciones; i++) begin
@@ -126,11 +123,11 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    broadcast_random: begin
+                    broadcast_random: begin        // Esta instruccion genera transacciones broadcast aleatorias
 
                         const_illegal_ID.constraint_mode(0);
                         const_legal_ID.constraint_mode(0);
-                        const_instrucciones_dist.constraint_mode(0);
+                        const_reset_dist.constraint_mode(0);
 
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_legal_ID.constraint_mode(1);
@@ -154,10 +151,10 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    all_broadcast: begin 
+                    all_broadcast: begin         // Esta instruccion genera transacciones broadcast para todos los drivers
                         const_illegal_ID.constraint_mode(0);
                         const_legal_ID.constraint_mode(0);
-                        const_instrucciones_dist.constraint_mode(0);
+                        const_reset_dist.constraint_mode(0);
                         for(int i = 0; i < DRVS; i++) begin
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
@@ -171,7 +168,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    some_broadcast: begin 
+                    some_broadcast: begin      // Esta instruccion genera transacciones broadcast aleatorias para algunos drivers
                         const_rand_broadcast.constraint_mode(1);
                         for (int i = 0; i < DRVS; i++) begin
                             transaccion = new();
@@ -193,7 +190,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    all_for_one: begin 
+                    all_for_one: begin      // Esta instruccion genera transacciones para todos para un ID
 
                         id_spec.randomize();
                         const_no_broadcast.constraint_mode(1); 
@@ -208,7 +205,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
 
-                    all_sending_random: begin 
+                    all_sending_random: begin   // Esta instruccion genera transacciones aleatorias para todos los drivers
 
                         const_legal_ID.constraint_mode(1);
                         
@@ -223,11 +220,11 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         end
                     end
                     
-                    auto_send_random: begin 
+                    auto_send_random: begin     // Esta instruccion hace que se envíen transacciones a sí mismo
 
                         const_illegal_ID.constraint_mode(0);
                         const_legal_ID.constraint_mode(1);
-                        const_instrucciones_dist.constraint_mode(0);
+                        const_reset_dist.constraint_mode(0);
                         const_no_broadcast.constraint_mode(1); 
                          
                         for (int i = 0; i < num_transacciones; i++) begin
