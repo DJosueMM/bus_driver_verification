@@ -22,7 +22,7 @@ class driver_monitor # (parameter WIDTH = 16);
             $display("[ %g ] El Driver espera por una transacción", $time);
             espera = 0;
             
-            @(posedge vif.clk);
+            @(posedge vif_fifo_agent_checker.clk);
                 agnt_drv_mbx.get(transaction);
                 transaction.print("Driver: Transacción recibida en el driver");
                 $display("Transacciones pendientes en el mbx agnt_drv = %g", agnt_drv_mbx.num());
@@ -37,24 +37,34 @@ class driver_monitor # (parameter WIDTH = 16);
 
             case (transaction.tipo_transaccion)
                 send: begin
-                    transaction.dato = vif.dato_out;
-                    transaction.tiempo = $time;
-                    @(posedge vif.clk);
-                    vif.pop = 1;
+          
+                    @(posedge vif_fifo_agent_checker.clk);
+                        vif_fifo_agent_checker.push = 1;
+                        vif_fifo_agent_checker.rst  = 0;
+                        transaction.print("Driver: Transacción send enviada a la FIFO de entrada");
+                    
+                    //aqui se lo metemos a la fifo de entrada
+                    
+
+                    //se conecta la fifo de entrada con el dut por vif_fifo_dut
+                    //al enviar al dut, se mete en send time con $time
                     drv_chkr_mbx.put(transaction);
-                    transaction.print("Driver: Transacción ejecutada");
-                end
+                
+                end 
                 broadcast: begin
+
+                    //se repite lo del send
                     vif.push = 1;
                     transaction.tiempo = $time;
                     drv_chkr_mbx.put(transaction);
-                    transaction.print("Driver: Transacción ejecutada");
+                    transaction.print("Driver: Transacción broadcast ejecutada");
                 end
                 reset: begin
+                    //se repite lo del send con rst
                     vif.rst = 1;
                     transaction.tiempo = $time;
                     drv_chkr_mbx.put(transaction);
-                    transaction.print("Driver: Transacción ejecutada");
+                    transaction.print("Driver: Transacción reset ejecutada");
                 end
  
                 default: begin
@@ -62,6 +72,10 @@ class driver_monitor # (parameter WIDTH = 16);
                     $finish;
                 end
             endcase
+
+            //agregar logica de estar muestreando la senal de pndg de la fifo de salida emulada
+            //cuando hay un dato hacer el pop en la interfaz vif_fifo_agent_checker
+            
             @(posedge vif.clk);
         end
     endtask
