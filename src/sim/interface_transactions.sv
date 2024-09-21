@@ -152,3 +152,18 @@ typedef mailbox # (res_check) mbx_checker_sb;
 // Definición de arreglo de mailboxes de tipo definido consulta_sb para comunicar las interfaces TEST -> SCOREBOARD 
 ////////////////////////////////////////
 typedef mailbox # (consulta_sb) mbx_test_sb;
+
+
+interface fifo_if # (parameter width = 16) (
+
+    input clk
+);
+    
+    logic rst;
+    logic pndng;
+    logic push;
+    logic pop;
+    logic [width - 1 : 0] dpush;
+    logic [width - 1 : 0] dpop;
+
+endinterface
