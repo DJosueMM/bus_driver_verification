@@ -173,22 +173,23 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
 
                     some_broadcast: begin 
                         const_rand_broadcast.constraint_mode(1);
-                        for (int i = 0; i < num_transacciones; i++) begin
+                        for (int i = 0; i < DRVS; i++) begin
                             transaccion = new();
-                            transaccion.max_retardo = max_retardo;
                             transaccion.randomize();
-                            transaccion.print("Agente: transacción some_broadcast creada");
-                            agnt_drv_mbx.put(transaccion);
-                        end
-                    end
+                            transaccion.max_retardo = max_retardo;
 
-                    some_sending_random: begin 
-                        for (int i = 0; i < num_transacciones; i++) begin
-                            transaccion = new();
-                            transaccion.max_retardo = max_retardo;
-                            transaccion.randomize();
-                            transaccion.print("Agente: transacción creada");
-                            agnt_drv_mbx.put(transaccion);
+                            if (rand_broadcast == 1) begin
+                                tipo_spec = broadcast;
+                            end
+                            
+                            else begin  
+                                tipo_spec = send;
+                            end
+
+                            transaccion.tipo_transaccion = tipo_spec;
+                            transaccion.print("Agente: transacción some_broadcast creada");
+                            agnt_drv_mbx[i].put(transaccion);
+
                         end
                     end
 
@@ -221,7 +222,6 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             agnt_drv_mbx[i].put(transaccion);
                         end
                     end
-
                     
                     auto_send_random: begin 
 
@@ -229,8 +229,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         const_legal_ID.constraint_mode(1);
                         const_instrucciones_dist.constraint_mode(0);
                         const_no_broadcast.constraint_mode(1); 
-                        
-                        
+                         
                         for (int i = 0; i < num_transacciones; i++) begin
 
                             driver_spec.randomize();     
