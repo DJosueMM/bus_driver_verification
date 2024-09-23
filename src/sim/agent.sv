@@ -1,7 +1,7 @@
 class agent # (parameter WIDTH = 16, DRVS = 4);
 
     mbx_test_agent                                       test_agent_mbx;   // Mailbox del test al agente
-    mbx_agent_driver_and_monitor_checker [DRVS - 1 : 0]  agnt_drv_mbx;     // Arreglo de mailboxes del agente a cada driver
+    mbx_agent_driver [DRVS - 1 : 0]                      agnt_drv_mbx;     // Arreglo de mailboxes del agente a cada driver
     
     int                        num_transacciones;   // Número de transacciones para las funciones del agente
     int                        max_retardo;         // Retardo máximo para las funciones del agente
@@ -11,6 +11,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     rand bit                   rand_reset;          // Variable para reset                  
     rand bit                   rand_broadcast;      // Variable para broadcast
 
+    instrucciones_agente  instruccion; // para guardar la última instruccion leída
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion;
 
     constraint const_illegal_ID           {id_spec        >= DRVS; id_spec > 0;}        //constraint para que el ID sea invalido
