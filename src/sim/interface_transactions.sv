@@ -137,10 +137,9 @@ typedef mailbox # (instrucciones_agente) mbx_test_agent;
 //                                                                       AGENTE         -> DRIVER_MONITOR 
 //                                                                       DRIVER_MONITOR -> CHECKER
 ////////////////////////////////////////                                 
-typedef mailbox # (instrucciones_driver_monitor) mbx_agent_driver_and_monitor_checker; 
-//Usamos el mismo mailbox para que sea el mismo dato que se modifique tanto en el monitor como en el driver
-//asi solo se acceden a los elementos necesarios en cada etapa de las transacciones
-
+typedef mailbox # (instrucciones_driver_monitor) mbx_agent_driver;
+typedef mailbox # (instrucciones_driver_monitor) mbx_driver_checker;
+typedef mailbox # (instrucciones_driver_monitor) mbx_monitor_checker;
 
 ////////////////////////////////////////
 // Definición de arreglo de mailboxes de tipo definido res_check para comunicar las interfaces CHECKER -> SCOREBOARD 
@@ -167,4 +166,20 @@ interface fifo_if # (parameter width = 16) (
     logic [width - 1 : 0] dpush;
     logic [width - 1 : 0] dpop;
 
+endinterface
+
+interface dut_compl_if # (
+    
+    parameter width = 16, 
+    parameter drvs = 8, 
+    parameter bits = 1    
+)(
+    input clk
+);
+    logic               reset;
+    logic               pndng [bits-1:0][drvrs-1:0],
+    logic               push  [bits-1:0][drvrs-1:0],
+    logic               pop   [bits-1:0][drvrs-1:0],
+    logic [pckg_sz-1:0] D_pop [bits-1:0][drvrs-1:0],
+    logic [pckg_sz-1:0] D_push[bits-1:0][drvrs-1:0]
 endinterface
