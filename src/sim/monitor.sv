@@ -1,6 +1,6 @@
 class monitor # (parameter WIDTH = 16, MNT_ID = 0);
  
-    mbx_agent_driver_and_monitor_checker mnt_ckecker_mbx;  
+    mbx_monitor_checker mnt_ckecker_mbx;  
     
     virtual fifo_if #(.width(WIDTH)) vif_fifo_agent_checker;
     virtual fifo_if #(.width(WIDTH)) vif_fifo_dut;
