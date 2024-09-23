@@ -1,13 +1,12 @@
 class driver # (parameter WIDTH = 16);
 
-    mbx_agent_driver_and_monitor_checker agnt_drv_mbx;     
-    mbx_agent_driver_and_monitor_checker mnt_ckecker_mbx;  
+    mbx_agent_driver agnt_drv_mbx;     
+    mbx_driver_checker drv_chkr_mbx;
     
     virtual fifo_if #(.width(WIDTH)) vif_fifo_agent_checker;
     virtual fifo_if #(.width(WIDTH)) vif_fifo_dut;
 
     fifo_in  [$];
-//    fifo_out [$];
 
     int espera;
 
