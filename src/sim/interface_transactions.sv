@@ -153,6 +153,7 @@ typedef mailbox # (res_check) mbx_checker_sb;
 ////////////////////////////////////////
 typedef mailbox # (consulta_sb) mbx_test_sb;
 
+//agregar mailbox del driver al checker y revisarlo en el driver
 
 interface fifo_if # (parameter width = 16) (
 
