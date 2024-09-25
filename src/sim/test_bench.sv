@@ -7,7 +7,7 @@
 //`include "score_board.sv"
 `include "agent.sv"
 `include "ambiente.sv"
-`include "test.sv"
+`include "secuencer.sv"
 
 //-----------------------------------------------//
 // Modulo para correr la prueba //
@@ -19,16 +19,16 @@ module test_bench;
   parameter width = 16;
   parameter DRVS  = 8;
 
-  test #( .depth(depth), .width(width) ) test_0;
+  secuencer #( .depth(depth), .width(width) ) test_0;
 
-  dut_compl_if #(.width(width), .drvrs(DRVS)) _if(.clk(clk));
+  dut_compl_if #(.width(width), .drvs(DRVS)) _if (.clk(clk));
   
   always #10 clk = ~clk;
 
     //BUS DRIVER    
-    bs_gnrtr_n_rbtr #(.pckg_sz(width), .drvs(DRVS)) DUT (
+    bs_gnrtr_n_rbtr #(.pckg_sz(width), .drvrs(DRVS)) DUT (
         .clk      (clk),
-        .reset    (),
+        .reset    (1'b0),
         .pndng    (_if.pndng),
         .push     (_if.push),
         .pop      (_if.pop),

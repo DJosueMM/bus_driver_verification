@@ -39,13 +39,14 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                 $display("[%g] Agente: recibe instruccion", $time);
                 test_agent_mbx.get(instruccion);
         
+                const_no_reset.constraint_mode(1);   
+                const_illegal_ID.constraint_mode(0);
+                const_legal_ID.constraint_mode(0);
+                const_rand_broadcast.constraint_mode(0); 
+                const_no_broadcast.constraint_mode(0); 
                 
                 case(instruccion)
-                    const_no_reset.constraint_mode(1);   
-                    const_illegal_ID.constraint_mode(0);
-                    const_legal_ID.constraint_mode(0);
-                    const_rand_broadcast.constraint_mode(0); 
-                    const_no_broadcast.constraint_mode(0); 
+                    
 
                     send_random_payload_legal_id: begin  // Esta instruccion genera transacciones aleatorias
                 

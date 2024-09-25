@@ -1,0 +1,18 @@
+---
+# Note: The contents of this file are automatically generated.
+# Any changes made by hand may be overwritten.
+version: '0.2'
+work_dir: .
+design_root_dir: ../src/rtl/
+simulations:
+  - name: bus_driver_sim
+    options: >-
+      -top dut.test_bench -L dut_verif -build-all +acc +b -waves
+      waves_bus_driver.mxd
+source_files:
+  - language: verilog
+    path: funct_verif_files.f
+    library_name: dut
+    file_list: relative-to-file
+library_search_paths:
+  - $STD_LIBS/ieee93

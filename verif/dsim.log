@@ -1,0 +1,18 @@
+=N:[UsageMeter (2024-09-24 09:40:32 -0600)] usage server initial connection
+=N:[License] 
+Licensed for Metrics Design Automation.
+=N:[License] New lease granted.
+Analyzing...
+Elaborating...
+  Top-level modules:
+    $unit
+    test_bench
+=E:[UnresolvedModule]:
+    Unable to find definitions for the following       
+    module/interface/program/UDP/checker instances:    
+
+    ../src/sim/test_bench.sv:24:46    dut_compl_if       
+
+    ../src/sim/test_bench.sv:29:54    bs_gnrtr_n_rbtr    
+
+  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:ubuntu_22.04)

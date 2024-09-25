@@ -1,4 +1,4 @@
-class test #(parameter width = 16, parameter DRVS = 8);
+class secuencer #(parameter width = 16, parameter DRVS = 8);
 
     mbx_test_agent test_agent_mbx;
 

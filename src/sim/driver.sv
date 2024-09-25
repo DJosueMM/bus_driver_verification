@@ -6,7 +6,7 @@ class driver # (parameter WIDTH = 16);
     virtual fifo_if #(.width(WIDTH)) vif_fifo_agent_checker;
     virtual fifo_if #(.width(WIDTH)) vif_fifo_dut;
 
-    fifo_in  [$];
+    logic [WIDTH - 1 : 0] fifo_in [$];
 
     int espera;
 

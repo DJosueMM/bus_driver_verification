@@ -49,6 +49,7 @@ typedef enum {
 // Clase para definir los datos que maneja y sus detalles las instrucciones driver_monitor
 // estos tipos de datos se transmiten desde el agente al driver_monitor y desde el driver_monitor al checker
 class instrucciones_driver_monitor # (parameter WIDTH = 16); 
+   
 
     // Definición de los miembros de la clase
     rand int                 max_delay;         // Tiempo máximo de retraso en ciclos de reloj
@@ -70,11 +71,8 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
     //Constraint id if broadcast
     constraint const_broad {
 
-        if (tipo_transaccion == broadcast) begin //Definir el ID correcto en caso de randomizar 
-            pkg_id = 8'b11111111;                //en operacion de broadcast
-        end
-
-        else;
+        if (tipo_transaccion == broadcast) //Definir el ID correcto en caso de randomizar 
+            pkg_id == 8'b11111111;                //en operacion de broadcast
     }
 
     // Constructor por defecto
@@ -83,7 +81,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
         int                 max_d   = 0, 
         int                 d       = 0, 
         bit [7 : 0]         id      = 0,
-        int [WIDTH - 9 : 0] payload = 0, 
+        bit [WIDTH - 9 : 0] payload = 0, 
         int                 st      = 0, 
         int                 rt      = 0, 
         int                 rcv_mtr = 0, 
@@ -112,7 +110,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
         this.send_time        = 0;
         this.receive_time     = 0;
         this.receiver_monitor = 0;
-        this.tipo_transaccion = 0;
+      //  this.tipo_transaccion = reset;
 
     endfunction
 
@@ -144,7 +142,7 @@ typedef mailbox # (instrucciones_driver_monitor) mbx_monitor_checker;
 ////////////////////////////////////////
 // Definición de arreglo de mailboxes de tipo definido res_check para comunicar las interfaces CHECKER -> SCOREBOARD 
 ////////////////////////////////////////
-typedef mailbox # (res_check) mbx_checker_sb;
+//typedef mailbox # (res_check) mbx_checker_sb;
 
 
 ////////////////////////////////////////
@@ -177,9 +175,10 @@ interface dut_compl_if # (
     input clk
 );
     logic               reset;
-    logic               pndng [bits-1:0][drvrs-1:0],
-    logic               push  [bits-1:0][drvrs-1:0],
-    logic               pop   [bits-1:0][drvrs-1:0],
-    logic [pckg_sz-1:0] D_pop [bits-1:0][drvrs-1:0],
-    logic [pckg_sz-1:0] D_push[bits-1:0][drvrs-1:0]
+    logic               pndng [bits-1:0][drvs-1:0];
+    logic               push  [bits-1:0][drvs-1:0];
+    logic               pop   [bits-1:0][drvs-1:0];
+    logic [width-1:0] D_pop [bits-1:0][drvs-1:0];
+    logic [width-1:0] D_push[bits-1:0][drvs-1:0];
+
 endinterface
