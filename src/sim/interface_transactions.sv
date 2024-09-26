@@ -1,3 +1,4 @@
+
 //Definicion de tipos de datos
 
 ////////////////////////////////////////
@@ -152,25 +153,34 @@ typedef mailbox # (consulta_sb) mbx_test_sb;
 
 //agregar mailbox del driver al checker y revisarlo en el driver
 
-interface fifo_if # (parameter width = 16) (
+interface fifo_if_in # (parameter width = 16) (
 
     input clk
 );
     
     logic rst;
-    logic pndng;
     logic push;
-    logic pop;
     logic [width - 1 : 0] dpush;
+
+endinterface
+
+interface fifo_if_out # (parameter width = 16) (
+
+    input clk
+);
+    
+    logic pndng;
+    logic pop;
     logic [width - 1 : 0] dpop;
 
 endinterface
 
+
 interface dut_compl_if # (
     
     parameter width = 16, 
-    parameter drvs = 8, 
-    parameter bits = 1    
+    parameter drvs  = 8, 
+    parameter bits  = 1    
 )(
     input clk
 );
@@ -178,7 +188,7 @@ interface dut_compl_if # (
     logic               pndng [bits-1:0][drvs-1:0];
     logic               push  [bits-1:0][drvs-1:0];
     logic               pop   [bits-1:0][drvs-1:0];
-    logic [width-1:0] D_pop [bits-1:0][drvs-1:0];
-    logic [width-1:0] D_push[bits-1:0][drvs-1:0];
+    logic [width-1:0]   D_pop [bits-1:0][drvs-1:0];
+    logic [width-1:0]   D_push[bits-1:0][drvs-1:0];
 
 endinterface

@@ -1,3 +1,4 @@
+
 class ambiente #(parameter width = 16, parameter DRVS = 8);
 
     // Declaración de los componentes del ambiente
@@ -8,8 +9,10 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
 
     // Definición de la interface que conecta el DUT
-    fifo_if #(.width(width)) _dut_if  [DRVS];
-    fifo_if #(.width(WIDTH)) _agent_checker_if [DRVS];
+    fifo_if_out #(.width(width)) _driver_dut_if  [DRVS];
+    fifo_if_in  #(.width(width)) _dut_monitor_if  [DRVS];
+    fifo_if_in  #(.width(width)) _agent_driver_if [DRVS];
+    fifo_if_out #(.width(width)) _monitor_checker_if [DRVS];
 
     virtual dut_compl_if #(.width(width), .drvs(DRVS)) _compl_dut_if_;
 
@@ -54,20 +57,20 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
             driver_inst[d].agnt_drv_mbx = agent_driver_mbx[d];
             driver_inst[d].drv_chkr_mbx = driver_checker_mbx[d];
             //interface con driver
-            driver_inst[d].vif_fifo_agent_checker = _agent_checker_if [d];
-            driver_inst[d].vif_fifo_dut = _dut_if [d];
+            driver_inst[d].vif_fifo_agent_checker = _agent_driver_if [d];
+            driver_inst[d].vif_fifo_dut = _driver_dut_if [d];
             //monitor mbx
             monitor_inst[d].mnt_ckecker_mbx = monitor_checker_mbx[d];
             //interface con monitor
-            monitor_inst[d].vif_fifo_agent_checker = _agent_checker_if [d];
-            monitor_inst[d].vif_fifo_dut = _dut_if [d];
+            monitor_inst[d].vif_fifo_agent_checker = _monitor_checker_if [d];
+            monitor_inst[d].vif_fifo_dut = _dut_monitor_if [d];
             
             //interfases individuales al la interfaz completa
-            _compl_dut_if_.pndng[0][d] = _dut_if[d].pndng;
-            _compl_dut_if_.push [0][d] = _dut_if[d].push;
-            _compl_dut_if_.pop  [0][d] = _dut_if[d].pop;
-            _compl_dut_if_.dpush[0][d] = _dut_if[d].dpush;
-            _compl_dut_if_.dpop [0][d] = _dut_if[d].dpop;
+            _compl_dut_if_.pndng[0][d] = _driver_dut_if [d].pndng;
+            _compl_dut_if_.push [0][d] = _dut_monitor_if[d].push;
+            _compl_dut_if_.pop  [0][d] = _driver_dut_if [d].pop;
+            _compl_dut_if_.dpush[0][d] = _dut_monitor_if[d].dpush;
+            _compl_dut_if_.dpop [0][d] = _driver_dut_if [d].dpop;
             //este es mas complejo _compl_dut_if_.reset = _dut_if[d].rst;
         end
     endfunction
