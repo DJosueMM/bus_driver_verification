@@ -2,8 +2,8 @@ class monitor # (parameter WIDTH = 16, MNT_ID = 0);
  
     mbx_monitor_checker mnt_ckecker_mbx;  
     
-    virtual fifo_if #(.width(WIDTH)) vif_fifo_agent_checker;
-    virtual fifo_if #(.width(WIDTH)) vif_fifo_dut;
+    virtual fifo_if_out #(.width(WIDTH)) vif_fifo_agent_checker;
+    virtual fifo_if_in #(.width(WIDTH)) vif_fifo_dut;
 
     logic [WIDTH - 1 : 0] fifo_out [$];
 
