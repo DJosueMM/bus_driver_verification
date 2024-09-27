@@ -22,8 +22,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     mbx_agent_driver     agent_driver_mbx    [DRVS - 1 : 0];  // mailbox del agente al driver
     mbx_driver_checker   driver_checker_mbx  [DRVS - 1 : 0];  // mailbox del driver al checker
     mbx_monitor_checker  monitor_checker_mbx [DRVS - 1 : 0];  // mailbox del monitor al checker
-    mbx_checker_sb       checker_sb_mbx;                       // mailbox del checker al scoreboard
-    mbx_test_sb          test_sb_mbx;                          // mailbox del test al scoreboard
+    //mbx_checker_sb       checker_sb_mbx;                       // mailbox del checker al scoreboard
+    //mbx_test_sb          test_sb_mbx;                          // mailbox del test al scoreboard
 
 
     function new();
