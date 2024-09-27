@@ -79,8 +79,10 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         $display("[%g] El ambiente fue inicializado",$time);
         fork
             for (int f = 0; f < DRVS; f++) begin
-                driver_inst[f].run();
-                monitor_inst[f].run();
+                
+                automatic int a = f;
+                driver_inst [a].run();
+                monitor_inst[a].run();
             end
             agent_inst.run();
             //checker_inst.run();
