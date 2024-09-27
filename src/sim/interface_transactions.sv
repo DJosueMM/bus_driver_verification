@@ -169,7 +169,7 @@ interface fifo_if_out # (parameter width = 16) (
     input clk
 );
     
-    logic pndng;
+    logic pndg;
     logic pop;
     logic [width - 1 : 0] dpop;
 

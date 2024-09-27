@@ -36,7 +36,7 @@ class driver # (parameter WIDTH = 16);
                 $display("Transacciones pendientes en el mbx agnt_drv = %g", agnt_drv_mbx.num());
             end
 
-            while (espera < transaction_send.retardo) begin
+            while (espera < transaction_send.delay) begin
                     @(posedge vif_fifo_agent_checker.clk); begin
                         espera = espera + 1;
                         vif_fifo_agent_checker.dpush = {transaction_send.pkg_id, transaction_send.pkg_payload};
