@@ -46,15 +46,16 @@ module test_bench;
     test_0 = new();
 
     test_0.final_if = final_if;
-
-    //interfases individuales al la interfaz completa
-    test_0.ambiente_inst._compl_dut_if_.pndng[0][d] = test_0.ambiente_inst._driver_dut_if [d].pndng;
-    test_0.ambiente_inst._compl_dut_if_.push [0][d] = test_0.ambiente_inst._dut_monitor_if[d].push;
-    test_0.ambiente_inst._compl_dut_if_.pop  [0][d] = test_0.ambiente_inst._driver_dut_if [d].pop;
-    test_0.ambiente_inst._compl_dut_if_.dpush[0][d] = test_0.ambiente_inst._dut_monitor_if[d].dpush;
-    test_0.ambiente_inst._compl_dut_if_.dpop [0][d] = test_0.ambiente_inst._driver_dut_if [d].dpop;
-    test_0.ambiente_inst._compl_dut_if_ = final_if;
-
+    
+    for (int d = 0; d < DRVS; d++) begin
+      //interfases individuales al la interfaz completa
+      test_0.ambiente_inst._compl_dut_if_.pndng[0][d] = test_0.ambiente_inst._driver_dut_if [d].pndng;
+      test_0.ambiente_inst._compl_dut_if_.push [0][d] = test_0.ambiente_inst._dut_monitor_if[d].push;
+      test_0.ambiente_inst._compl_dut_if_.pop  [0][d] = test_0.ambiente_inst._driver_dut_if [d].pop;
+      test_0.ambiente_inst._compl_dut_if_.dpush[0][d] = test_0.ambiente_inst._dut_monitor_if[d].dpush;
+      test_0.ambiente_inst._compl_dut_if_.dpop [0][d] = test_0.ambiente_inst._driver_dut_if [d].dpop;
+      test_0.ambiente_inst._compl_dut_if_ = final_if;
+    end
     fork
       test_0.run();
     join_none
