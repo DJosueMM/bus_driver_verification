@@ -24,6 +24,10 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     function new();
         num_transacciones = 100;
         max_retardo       = 10;
+        driver_spec       = 0;
+        id_spec           = 0;       ;             // ID del driver receptor
+        rand_reset        = 0;          // Variable para reset                  
+        rand_broadcast    = 0;     // Variable para broadcast
     endfunction
 
     task run;
