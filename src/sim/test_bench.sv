@@ -43,7 +43,7 @@ module test_bench;
     clk    = 0;
     test_0 = new();
 
-    test_0.final_if = final_if;
+    test_0._if = final_if;
     
     for (int d = 0; d < DRVS; d++) begin
       //interfases individuales al la interfaz completa
@@ -51,7 +51,7 @@ module test_bench;
       //test_0.ambiente_inst._compl_dut_if_.push [0][d] = test_0.ambiente_inst._dut_monitor_if[d].push;
       test_0.ambiente_inst._compl_dut_if_.pop  [0][d] = test_0.ambiente_inst._driver_dut_if [d].pop;
       //test_0.ambiente_inst._compl_dut_if_.dpush[0][d] = test_0.ambiente_inst._dut_monitor_if[d].dpush;
-      test_0.ambiente_inst._compl_dut_if_.dpop [0][d] = test_0.ambiente_inst._driver_dut_if [d].dpop;
+      test_0.ambiente_inst._compl_dut_if_.Dpop [0][d] = test_0.ambiente_inst._driver_dut_if [d].dpop;
       test_0.ambiente_inst._compl_dut_if_ = final_if;
     end
     fork

@@ -178,7 +178,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         for (int i = 0; i < DRVS; i++) begin
                             transaccion = new();
                             transaccion.randomize();
-                            transaccion.max_retardo = max_retardo;
+                            transaccion.max_delay = max_retardo;
 
                             if (rand_broadcast == 1) begin
                                 tipo_spec = broadcast;
@@ -202,7 +202,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
 
                         for (int i = 0; i < DRVS; i++) begin
                             transaccion = new();
-                            transaccion.max_retardo = max_retardo;
+                            transaccion.max_delay = max_retardo;
                             transaccion.randomize();
                             transaccion.pkg_id = id_spec;
                             transaccion.print("Agente: transacción all_for_one creada");
