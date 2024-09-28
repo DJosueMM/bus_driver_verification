@@ -237,7 +237,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             driver_spec = $urandom_range(0, DRVS);     
                             transaccion = new();
                             transaccion.randomize();
-                            transaccion.max_retardo = max_retardo;
+                            transaccion.max_delay = max_retardo;
                             id_spec = driver_spec; //revisar asignacion de int a bit
                             transaccion.pkg_id = id_spec;
                             
