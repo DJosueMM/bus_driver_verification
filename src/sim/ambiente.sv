@@ -9,7 +9,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
 
     // Definición de la interface que conecta el DUT
-    virtual fifo_if_out #(.width(width)) _driver_dut_if  [DRVS];
+    fifo_if_out #(.width(width)) _driver_dut_if  [DRVS];
     //virtual fifo_if_in  #(.width(width)) _dut_monitor_if  [DRVS];
 
     virtual dut_compl_if #(.width(width), .drvs(DRVS)) _compl_dut_if_;
