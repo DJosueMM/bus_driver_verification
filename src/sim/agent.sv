@@ -14,12 +14,6 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     instrucciones_agente  instruccion; // para guardar la última instruccion leída
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion;
 
-    id_spec        = new();
-    driver_spec    = new();
-    rand_reset     = new();
-    rand_broadcast = new();
-
-
     constraint const_illegal_ID           {id_spec        >= DRVS; id_spec > 0;}        //constraint para que el ID sea invalido
     constraint const_legal_ID             {id_spec        <= DRVS; id_spec > 0;}        //constraint para que el ID sea valido
     constraint const_reset_dist           {rand_reset     dist {0 := 90, 1 := 10}; }    //constraint para la distribucion de reset
@@ -30,6 +24,10 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     function new();
         num_transacciones = 100;
         max_retardo       = 10;
+        id_spec        = new();
+        driver_spec    = new();
+        rand_reset     = new();
+        rand_broadcast = new();
     endfunction
 
     task run;
