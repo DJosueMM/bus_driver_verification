@@ -26,14 +26,14 @@ class driver # (parameter WIDTH = 16);
 
             espera = 0;
             
-            @(posedge vif_fifo_agent_checker.clk); begin
+            @(posedge vif_fifo_dut.clk); begin
                 agnt_drv_mbx.get(transaction_send);
                 transaction_send.print("Driver: Transacción recibida en el driver");
                 $display("Transacciones pendientes en el mbx agnt_drv = %g", agnt_drv_mbx.num());
             end
 
             while (espera < transaction_send.delay) begin
-                    @(posedge vif_fifo_agent_checker.clk); begin
+                    @(posedge vif_fifo_dut.clk); begin
                         espera = espera + 1;
                     end
             end
@@ -42,7 +42,7 @@ class driver # (parameter WIDTH = 16);
 
                 send: begin
           
-                    @(posedge vif_fifo_agent_checker.clk); begin
+                    @(posedge vif_fifo_dut.clk); begin
 
                         fifo_in.push_front({transaction_send.pkg_id, transaction_send.pkg_payload});  //aqui se lo metemos a la fifo de entrada
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");
@@ -78,7 +78,7 @@ class driver # (parameter WIDTH = 16);
 
                 broadcast: begin
           
-                    @(posedge vif_fifo_agent_checker.clk); begin
+                    @(posedge vif_fifo_dut.clk); begin
 
                         fifo_in.push_front({transaction_send.pkg_id, transaction_send.pkg_payload});  //aqui se lo metemos a la fifo de entrada
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");

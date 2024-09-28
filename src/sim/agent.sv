@@ -6,7 +6,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     int                        num_transacciones;   // Número de transacciones para las funciones del agente
     int                        max_retardo;         // Retardo máximo para las funciones del agente
     rand bit    [7 : 0]        id_spec;             // ID del driver receptor
-    rand int                   driver_spec;         // Driver que envía la transacción
+    rand bit                   driver_spec;         // Driver que envía la transacción
     tipo_trans                 tipo_spec;           // Tipo de transacción
     rand bit                   rand_reset;          // Variable para reset                  
     rand bit                   rand_broadcast;      // Variable para broadcast
