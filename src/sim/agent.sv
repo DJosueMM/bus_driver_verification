@@ -9,6 +9,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
 
     instrucciones_agente  instruccion; // para guardar la última instruccion leída
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion;
+    aux_var aux_var_inst;
 
 
     constraint const_illegal_ID           {id_spec        >= DRVS; id_spec > 0;}        //constraint para que el ID sea invalido
@@ -26,7 +27,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     task run;
 
         $display("[%g] El Agente fue inicializado", $time);
-        aux_var aux_var_inst = new();
+        aux_var_inst = new();
 
         forever begin
             
