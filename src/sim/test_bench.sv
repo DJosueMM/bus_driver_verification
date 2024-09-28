@@ -2,7 +2,7 @@
 `include "Library.sv"
 `include "interface_transactions.sv"
 `include "driver.sv"
-`include "monitor.sv"
+//`include "monitor.sv"
 `include "agent.sv"
 `include "ambiente.sv"
 `include "secuencer.sv"
@@ -23,10 +23,8 @@ module test_bench;
   secuencer    # (.width(width), .DRVS(DRVS)) test_0;
   dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) final_if (.clk(clk));
   fifo_if_out  #(.width(width))  _driver_dut_if     [DRVS - 1 : 0] (.clk(clk));
-  fifo_if_in   #(.width(width)) _dut_monitor_if     [DRVS - 1 : 0] (.clk(clk));
-  fifo_if_in   #(.width(width)) _agent_driver_if    [DRVS - 1 : 0] (.clk(clk)); 
-  fifo_if_out  #(.width(width)) _monitor_checker_if [DRVS - 1 : 0] (.clk(clk));
-  
+  //fifo_if_in   #(.width(width)) _dut_monitor_if     [DRVS - 1 : 0] (.clk(clk));
+
   //BUS DRIVER    
   bs_gnrtr_n_rbtr # (.pckg_sz(width), .drvrs(DRVS)) DUT (
       .clk      (clk),
@@ -50,9 +48,9 @@ module test_bench;
     for (int d = 0; d < DRVS; d++) begin
       //interfases individuales al la interfaz completa
       test_0.ambiente_inst._compl_dut_if_.pndng[0][d] = test_0.ambiente_inst._driver_dut_if [d].pndng;
-      test_0.ambiente_inst._compl_dut_if_.push [0][d] = test_0.ambiente_inst._dut_monitor_if[d].push;
+      //test_0.ambiente_inst._compl_dut_if_.push [0][d] = test_0.ambiente_inst._dut_monitor_if[d].push;
       test_0.ambiente_inst._compl_dut_if_.pop  [0][d] = test_0.ambiente_inst._driver_dut_if [d].pop;
-      test_0.ambiente_inst._compl_dut_if_.dpush[0][d] = test_0.ambiente_inst._dut_monitor_if[d].dpush;
+      //test_0.ambiente_inst._compl_dut_if_.dpush[0][d] = test_0.ambiente_inst._dut_monitor_if[d].dpush;
       test_0.ambiente_inst._compl_dut_if_.dpop [0][d] = test_0.ambiente_inst._driver_dut_if [d].dpop;
       test_0.ambiente_inst._compl_dut_if_ = final_if;
     end
