@@ -26,7 +26,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     task run;
 
         $display("[%g] El Agente fue inicializado", $time);
-        aux_var aux_var = new();
+        aux_var aux_var_inst = new();
 
         forever begin
             
@@ -54,7 +54,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            aux_var.driver_spec.randomize();
+                            aux_var_inst.driver_spec.randomize();
                             tipo_spec = send;
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción send_random_payload_legal_id creada");
@@ -70,7 +70,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            aux_var.driver_spec.randomize();
+                            aux_var_inst.driver_spec.randomize();
                             tipo_spec = send;
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción send_random_payload_ilegal_id creada");
@@ -89,7 +89,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            aux_var.driver_spec.randomize();
+                            aux_var_inst.driver_spec.randomize();
                             tipo_spec = send;
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción send_w_mid_reset creada para posterior reset");
@@ -102,7 +102,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             else begin  
                                 transaccion.tipo_transaccion = send;
                             end
-                            aux_var.driver_spec.randomize();
+                            aux_var_inst.driver_spec.randomize();
                             transaccion.print("Agente: transacción send_w_mid_reset creada como potencial reset");
                             agnt_drv_mbx[driver_spec].put(transaccion);
                         end
@@ -135,7 +135,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            aux_var.driver_spec.randomize();
+                            aux_var_inst.driver_spec.randomize();
 
                             if (rand_broadcast == 1) begin
                                 tipo_spec = broadcast;
@@ -192,7 +192,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
 
                     all_for_one: begin      // Esta instruccion genera transacciones para todos para un ID
 
-                        aux_var.id_spec.randomize();
+                        aux_var_inst.id_spec.randomize();
                         const_no_broadcast.constraint_mode(1); 
 
                         for (int i = 0; i < DRVS; i++) begin
@@ -229,7 +229,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                          
                         for (int i = 0; i < num_transacciones; i++) begin
 
-                            aux_var.driver_spec.randomize();     
+                            aux_var_inst.driver_spec.randomize();     
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_retardo = max_retardo;
