@@ -6,7 +6,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     int                        num_transacciones;   // Número de transacciones para las funciones del agente
     int                        max_retardo;         // Retardo máximo para las funciones del agente
     rand bit    [7 : 0]        id_spec;             // ID del driver receptor
-    rand bit                   driver_spec;         // Driver que envía la transacción
+    rand int                   driver_spec;         // Driver que envía la transacción
     tipo_trans                 tipo_spec;           // Tipo de transacción
     rand bit                   rand_reset;          // Variable para reset                  
     rand bit                   rand_broadcast;      // Variable para broadcast
@@ -24,15 +24,15 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     function new();
         num_transacciones = 100;
         max_retardo       = 10;
-        driver_spec       = 0;
-        id_spec           = 0;       ;             // ID del driver receptor
-        rand_reset        = 0;          // Variable para reset                  
-        rand_broadcast    = 0;     // Variable para broadcast
     endfunction
 
     task run;
 
         $display("[%g] El Agente fue inicializado", $time);
+        id_spec = new();
+        driver_spec = new();
+        rand_reset = new();
+        rand_broadcast = new();
 
         forever begin
             
