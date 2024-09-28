@@ -27,7 +27,6 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     task run;
 
         $display("[%g] El Agente fue inicializado", $time);
-        aux_var_inst = new();
 
         forever begin
             
@@ -53,6 +52,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
                             transaccion = new();
+                            aux_var_inst = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             aux_var_inst.driver_spec.randomize();
@@ -69,6 +69,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             const_illegal_ID.constraint_mode(1);
                             const_legal_ID.constraint_mode(0);
                             transaccion = new();
+                            aux_var_inst = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             aux_var_inst.driver_spec.randomize();
@@ -88,6 +89,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
                             transaccion = new();
+                            aux_var_inst = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             aux_var_inst.driver_spec.randomize();
@@ -116,6 +118,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
                             transaccion = new();
+                            aux_var_inst = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             transaccion.tipo_transaccion = tipo_spec;
@@ -134,6 +137,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             const_legal_ID.constraint_mode(1);
                             const_rand_broadcast.constraint_mode(1);
                             transaccion = new();
+                            aux_var_inst = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             aux_var_inst.driver_spec.randomize();
