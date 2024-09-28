@@ -24,6 +24,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     function new();
         num_transacciones = 100;
         max_retardo       = 10;
+        this.id_spec = new();
     endfunction
 
     task run;
@@ -31,6 +32,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
         $display("[%g] El Agente fue inicializado", $time);
 
         forever begin
+
             
             #1;
 
