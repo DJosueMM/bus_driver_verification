@@ -27,7 +27,6 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     function new();
         // Instanciación de los mailboxes
         test_agent_mbx      = new();
-        agent_driver_mbx    = new();
         //driver_checker_mbx  = new();
         //monitor_checker_mbx = new();
         //checker_sb_mbx      = new();
@@ -36,7 +35,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         // Instanciación de los componentes del ambiente
         for (int i = 0; i < DRVS; i++) begin
             driver_inst[i] = new();
-            monitor_inst[i] = new();
+            agent_driver_mbx[i] = new();
+            //monitor_inst[i] = new();
         end
 
         agent_inst = new();
@@ -53,7 +53,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
             //driver mbx
             driver_inst[d].agnt_drv_mbx = agent_driver_mbx[d];
-            driver_inst[d].drv_chkr_mbx = driver_checker_mbx[d];
+            //driver_inst[d].drv_chkr_mbx = driver_checker_mbx[d];
             //interface con driver
             driver_inst[d].vif_fifo_dut = _driver_dut_if [d];
             //monitor mbx

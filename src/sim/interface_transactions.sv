@@ -123,28 +123,6 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
 
 endclass
 
-class aux_var; 
-
-    rand bit    [7 : 0]        id_spec;             // ID del driver receptor
-    rand int                   driver_spec;         // Driver que envía la transacción
-    rand bit                   rand_reset;          // Variable para reset                  
-    rand bit                   rand_broadcast;      // Variable para broadcast
-    
-    // Constructor por defecto
-    function new (
-        
-        bit [7 : 0]  id_spec        = '0,
-        int          driver_spec    =  0, 
-        bit          rand_reset     =  0, 
-        bit          rand_broadcast =  0 
-    );
-
-        this.id_spec        = id_spec;
-        this.driver_spec    = driver_spec;
-        this.rand_reset     = rand_reset;
-        this.rand_broadcast = rand_broadcast;
-    endfunction
-endclass
 //Definicion de mailboxes
 
 ////////////////////////////////////////
