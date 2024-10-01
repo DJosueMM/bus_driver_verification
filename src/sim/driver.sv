@@ -19,7 +19,7 @@ class driver # (parameter WIDTH = 16, DRVS = 8);
         
         $display("[%g] El driver fue inicializado", $time);
         
-        @(posedge vif_fifo_dut.clk);
+       // @(posedge vif_fifo_dut.clk);
         forever begin
 
             instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaction_send;
