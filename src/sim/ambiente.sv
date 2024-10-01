@@ -47,8 +47,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         agent_inst.test_agent_mbx = test_agent_mbx;
         agent_inst.agnt_drv_mbx   = agent_driver_mbx;
 
-        for (int d = 0; d < DRVS; d++) begin
-            automatic int c = d;
+        for (int c = 0; c < DRVS; c++) begin
+            //automatic int c = d;
             //driver mbx
             driver_inst[c].agnt_drv_mbx = agent_driver_mbx[c];
             //driver_inst[c].drv_chkr_mbx = driver_checker_mbx[c];
