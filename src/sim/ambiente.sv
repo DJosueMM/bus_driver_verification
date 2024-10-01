@@ -9,13 +9,10 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
 
     // Definición de la interface que conecta el DUT
-    fifo_if_out #(.width(width)) _driver_dut_if  [DRVS];
+    virtual dut_compl_if #(.width(WIDTH)) vif_fifo_dut;
     //virtual fifo_if_in  #(.width(width)) _dut_monitor_if  [DRVS];
 
-    virtual dut_compl_if #(.width(width), .drvs(DRVS)) _compl_dut_if_;
-
     // declaración de los mailboxes
-
     mbx_test_agent       test_agent_mbx;                      // mailbox del test al agente         
     mbx_agent_driver     agent_driver_mbx    [DRVS - 1 : 0];  // mailbox del agente al driver
     //mbx_driver_checker   driver_checker_mbx  [DRVS - 1 : 0];  // mailbox del driver al checker
@@ -35,8 +32,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         // Instanciación de los componentes del ambiente
         for (int i = 0; i < DRVS; i++) begin
             automatic int b = i;
-            _driver_dut_if[b] = new();
-            driver_inst[b] = new();
+            driver_inst[b] = new(b);
             agent_driver_mbx[b] = new();
             //monitor_inst[i] = new();
         end
@@ -46,8 +42,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         //checker_inst = new();
         //scoreboard_inst = new();
 
-
         // Conexión de las interfaces y mailboxes en el ambiente
+        agent_inst.vif_agnt_dut = vif_fifo_dut;
         agent_inst.test_agent_mbx = test_agent_mbx;
         agent_inst.agnt_drv_mbx   = agent_driver_mbx;
 
@@ -57,12 +53,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
             driver_inst[c].agnt_drv_mbx = agent_driver_mbx[c];
             //driver_inst[c].drv_chkr_mbx = driver_checker_mbx[c];
             //interface con driver
-            _driver_dut_if[c].clk = _compl_dut_if_.clk;
-            _driver_dut_if[c].pndg = _compl_dut_if_.pndng[0][c];
-            _driver_dut_if[c].pop = _compl_dut_if_.pop[0][c];
-            _driver_dut_if[c].d_pop = _compl_dut_if_.D_pop[0][c];
-            driver_inst[c].vif_fifo_dut = _driver_dut_if [c];
-            
+            driver_inst[c].vif_fifo_dut = vif_fifo_dut;
             //monitor mbx
             //monitor_inst[c].mnt_ckecker_mbx = monitor_checker_mbx[c];
             //interface con monitor
@@ -76,7 +67,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
             for (int f = 0; f < DRVS; f++) begin
                 
                 automatic int a = f;
-                driver_inst [a].run();
+                driver_inst[a].run();
                 //monitor_inst[a].run();
             end
             agent_inst.run();

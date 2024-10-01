@@ -22,13 +22,13 @@ module test_bench;
 
   secuencer    # (.width(width), .DRVS(DRVS)) test_0;
   dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) final_if (.clk(clk));
-  //fifo_if_out  # (.width(width)) _driver_dut_if [DRVS] (.clk(clk));
+
   //fifo_if_in   #(.width(width)) _dut_monitor_if     [DRVS - 1 : 0] (.clk(clk));
 
   //BUS DRIVER    
   bs_gnrtr_n_rbtr # (.pckg_sz(width), .drvrs(DRVS)) DUT (
       .clk      (clk),
-      .reset    (1'b0),
+      .reset    (final_if.reset),
       .pndng    (final_if.pndng),
       .push     (final_if.push),
       .pop      (final_if.pop),
@@ -43,21 +43,8 @@ module test_bench;
 
     clk    = 0;
     test_0 = new();
+    test_0.vif_fifo_dut = final_if;
 
-    test_0._if = final_if;
-        
-    // for (int d = 0; d < DRVS; d++) begin
-      
-    //   automatic int a = d;
-    //                             //este de abajo falla
-    //   //test_0._driver_dut_if[a] = _driver_dut_if[a];
-    //   //interfases individuales al la interfaz completa
-    //   //test_0._if.pndng[0][a] = test_0._driver_dut_if [a].pndg;
-    //   //test_0.ambiente_inst._compl_dut_if_.push [0][a] = test_0.ambiente_inst._dut_monitor_if[a].push;
-    //   //test_0._if.pop  [0][a] = test_0._driver_dut_if [a].pop;
-    //   //test_0.ambiente_inst._compl_dut_if_.dpush[0][a] = test_0.ambiente_inst._dut_monitor_if[a].dpush;
-    //   //test_0._if.D_pop [0][a] = test_0._driver_dut_if[a].dpop;
-    // end
     fork
       test_0.run();
     join_none

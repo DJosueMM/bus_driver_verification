@@ -12,6 +12,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     rand bit                   rand_broadcast;      // Variable para broadcast
 
     instrucciones_agente  instruccion; // para guardar la última instruccion leída
+    virtual dut_compl_if #(.width(WIDTH)) vif_agnt_dut;
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion;
 
     constraint const_illegal_ID           {id_spec        >= DRVS; id_spec > 0;}        //constraint para que el ID sea invalido
@@ -45,7 +46,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                 const_legal_ID.constraint_mode(0);
                 const_rand_broadcast.constraint_mode(0); 
                 const_no_broadcast.constraint_mode(0); 
-                
+                vif_agnt_dut.reset = 0;
                 case(instruccion)
                     
 
@@ -101,10 +102,12 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             
                             if (rand_reset == 1) begin
                                 transaccion.tipo_transaccion = reset;
+                                vif_agnt_dut.reset = 1;
                             end
                             
                             else begin  
                                 transaccion.tipo_transaccion = send;
+                                vif_agnt_dut.reset = 0;
                             end
                             driver_spec = $urandom_range(0, DRVS);
                             transaccion.print("Agente: transacción send_w_mid_reset creada como potencial reset");

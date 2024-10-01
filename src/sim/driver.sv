@@ -1,14 +1,19 @@
 
 class driver # (parameter WIDTH = 16);
 
-    mbx_agent_driver agnt_drv_mbx;     
+    mbx_agent_driver   agnt_drv_mbx;     
     mbx_driver_checker drv_chkr_mbx;
+    int                drv_id;
     
-    virtual fifo_if_out #(.width(WIDTH)) vif_fifo_dut;
+    virtual dut_compl_if #(.width(WIDTH)) vif_fifo_dut;
 
     logic [WIDTH - 1 : 0] fifo_in [$];
 
     int espera;
+
+    function new(int driver_id = 0);
+        this.drv_id = driver_id;
+    endfunction
 
     task run();
         
@@ -18,9 +23,9 @@ class driver # (parameter WIDTH = 16);
         forever begin
 
             instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaction_send;
-            vif_fifo_dut.pndg              = '0;
-            vif_fifo_dut.pop               = '0;
-            vif_fifo_dut.dpop              = '0;
+            vif_fifo_dut.pndng [0][drv_id] = '0;
+            vif_fifo_dut.pop   [0][drv_id] = '0;
+            vif_fifo_dut.D_pop [0][drv_id] = '0;
 
             $display("[ %g ] El Driver espera por una transacción", $time);
 
@@ -49,21 +54,21 @@ class driver # (parameter WIDTH = 16);
     
                         //se comprueba si hay datos pendientes para entrar al dut en la fifo de entrada
                         if (fifo_in.size() == 0)
-                            vif_fifo_dut.pndg = 0;
+                            vif_fifo_dut.pndng[0][drv_id] = 0;
 
-                        else vif_fifo_dut.pndg = 1;
+                        else vif_fifo_dut.pndng[0][drv_id] = 1;
 
                         //se conecta la fifo de entrada con el dut por vif_fifo_dut
-                        vif_fifo_dut.dpop = fifo_in[$];
+                        vif_fifo_dut.D_pop[0][drv_id] = fifo_in[$];
                         
                         //me quedo esperando a que el bus atienda al driver
-                        while (vif_fifo_dut.pop == 0) begin
+                        while (vif_fifo_dut.pop [0][drv_id] == 0) begin
                             @(posedge vif_fifo_dut.clk);
                         end
                          
                         //se envia al dut la info
-                        if (vif_fifo_dut.pop == 1) begin
-                            vif_fifo_dut.dpop = fifo_in[$];
+                        if (vif_fifo_dut.pop[0][drv_id] == 1) begin
+                            vif_fifo_dut.D_pop[0][drv_id] = fifo_in[$];
                             transaction_send.send_time = $time;
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time
                             drv_chkr_mbx.put(transaction_send); //se envia al checker
@@ -85,21 +90,21 @@ class driver # (parameter WIDTH = 16);
     
                         //se comprueba si hay datos pendientes para entrar al dut en la fifo de entrada
                         if (fifo_in.size() == 0)
-                            vif_fifo_dut.pndg = 0;
+                            vif_fifo_dut.pndng[0][drv_id] = 0;
 
-                        else vif_fifo_dut.pndg = 1;
+                        else vif_fifo_dut.pndng[0][drv_id] = 1;
 
                         //se conecta la fifo de entrada con el dut por vif_fifo_dut
-                        vif_fifo_dut.dpop = fifo_in[$];
+                        vif_fifo_dut.D_pop[0][drv_id] = fifo_in[$];
                         
                         //me quedo esperando a que el bus atienda al driver
-                        while (vif_fifo_dut.pop == 0) begin
+                        while (vif_fifo_dut.pop [0][drv_id] == 0) begin
                             @(posedge vif_fifo_dut.clk);
                         end
                          
                         //se envia al dut la info
-                        if (vif_fifo_dut.pop == 1) begin
-                            vif_fifo_dut.dpop = fifo_in[$];
+                        if (vif_fifo_dut.pop[0][drv_id] == 1) begin
+                            vif_fifo_dut.D_pop[0][drv_id] = fifo_in[$];
                             transaction_send.send_time = $time;
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time
                             drv_chkr_mbx.put(transaction_send); //se envia al checker
