@@ -35,6 +35,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         // Instanciación de los componentes del ambiente
         for (int i = 0; i < DRVS; i++) begin
             automatic int b = i;
+            _driver_dut_if[b] = new();
             driver_inst[b] = new();
             agent_driver_mbx[b] = new();
             //monitor_inst[i] = new();
