@@ -22,7 +22,7 @@ module test_bench;
 
   secuencer    # (.width(width), .DRVS(DRVS)) test_0;
   dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) final_if (.clk(clk));
-  fifo_if_out  # (.width(width)) _driver_dut_if [DRVS] (.clk(clk));
+  //fifo_if_out  # (.width(width)) _driver_dut_if [DRVS] (.clk(clk));
   //fifo_if_in   #(.width(width)) _dut_monitor_if     [DRVS - 1 : 0] (.clk(clk));
 
   //BUS DRIVER    
@@ -36,13 +36,6 @@ module test_bench;
       .D_push   (final_if.D_push)
   );
   
-  initial begin
-    for (int i = 0; i < DRVS; i++) begin
-      automatic int a = i;
-      test_0._driver_dut_if[a] = _driver_dut_if[a];
-    end
-  end
-  
   
   always #10 clk = ~clk;
 
@@ -53,18 +46,18 @@ module test_bench;
 
     test_0._if = final_if;
         
-    for (int d = 0; d < DRVS; d++) begin
+    // for (int d = 0; d < DRVS; d++) begin
       
-      automatic int a = d;
-                                //este de abajo falla
-      //test_0._driver_dut_if[a] = _driver_dut_if[a];
-      //interfases individuales al la interfaz completa
-      test_0._if.pndng[0][a] = test_0._driver_dut_if [a].pndg;
-      //test_0.ambiente_inst._compl_dut_if_.push [0][a] = test_0.ambiente_inst._dut_monitor_if[a].push;
-      test_0._if.pop  [0][a] = test_0._driver_dut_if [a].pop;
-      //test_0.ambiente_inst._compl_dut_if_.dpush[0][a] = test_0.ambiente_inst._dut_monitor_if[a].dpush;
-      test_0._if.D_pop [0][a] = test_0._driver_dut_if[a].dpop;
-    end
+    //   automatic int a = d;
+    //                             //este de abajo falla
+    //   //test_0._driver_dut_if[a] = _driver_dut_if[a];
+    //   //interfases individuales al la interfaz completa
+    //   //test_0._if.pndng[0][a] = test_0._driver_dut_if [a].pndg;
+    //   //test_0.ambiente_inst._compl_dut_if_.push [0][a] = test_0.ambiente_inst._dut_monitor_if[a].push;
+    //   //test_0._if.pop  [0][a] = test_0._driver_dut_if [a].pop;
+    //   //test_0.ambiente_inst._compl_dut_if_.dpush[0][a] = test_0.ambiente_inst._dut_monitor_if[a].dpush;
+    //   //test_0._if.D_pop [0][a] = test_0._driver_dut_if[a].dpop;
+    // end
     fork
       test_0.run();
     join_none

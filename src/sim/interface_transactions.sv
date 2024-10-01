@@ -164,11 +164,9 @@ interface fifo_if_in # (parameter width = 16) (
 
 endinterface
 
-interface fifo_if_out # (parameter width = 16) (
-
-    input clk
-);
+interface fifo_if_out # (parameter width = 16);
     
+    logic clk;
     logic pndg;
     logic pop;
     logic [width - 1 : 0] dpop;

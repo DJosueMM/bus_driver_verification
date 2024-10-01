@@ -12,7 +12,7 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
 
     // Definición de la interface a la que se conectará el DUT
     virtual dut_compl_if #(.width(width), .drvs(DRVS)) _if;
-    virtual fifo_if_out #(.width(width)) _driver_dut_if  [DRVS];
+    //virtual fifo_if_out #(.width(width)) _driver_dut_if  [DRVS];
 
     // definición de las condiciones iniciales del test
     function new();
@@ -27,10 +27,7 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         ambiente_inst.agent_inst.num_transacciones = num_transacciones;
         ambiente_inst.agent_inst.max_retardo = max_retardo;
         
-        for (int i = 0; i < DRVS; i++) begin
-            automatic int a = i;
-            ambiente_inst._driver_dut_if[a] = _driver_dut_if[a];
-        end
+
     endfunction
 
     task run;

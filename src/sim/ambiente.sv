@@ -9,7 +9,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
 
     // Definición de la interface que conecta el DUT
-    virtual fifo_if_out #(.width(width)) _driver_dut_if  [DRVS];
+    fifo_if_out #(.width(width)) _driver_dut_if  [DRVS];
     //virtual fifo_if_in  #(.width(width)) _dut_monitor_if  [DRVS];
 
     virtual dut_compl_if #(.width(width), .drvs(DRVS)) _compl_dut_if_;
@@ -34,8 +34,9 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
         // Instanciación de los componentes del ambiente
         for (int i = 0; i < DRVS; i++) begin
-            driver_inst[i] = new();
-            agent_driver_mbx[i] = new();
+            automatic int b = i;
+            driver_inst[b] = new();
+            agent_driver_mbx[b] = new();
             //monitor_inst[i] = new();
         end
 
@@ -50,16 +51,21 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         agent_inst.agnt_drv_mbx   = agent_driver_mbx;
 
         for (int d = 0; d < DRVS; d++) begin
-
+            automatic int c = d;
             //driver mbx
-            driver_inst[d].agnt_drv_mbx = agent_driver_mbx[d];
-            //driver_inst[d].drv_chkr_mbx = driver_checker_mbx[d];
+            driver_inst[c].agnt_drv_mbx = agent_driver_mbx[c];
+            //driver_inst[c].drv_chkr_mbx = driver_checker_mbx[c];
             //interface con driver
-            driver_inst[d].vif_fifo_dut = _driver_dut_if [d];
+            _driver_dut_if[c].clk = _compl_dut_if_.clk;
+            _driver_dut_if[c].pndg = _compl_dut_if_.pndng[0][c];
+            _driver_dut_if[c].pop = _compl_dut_if_.pop[0][c];
+            _driver_dut_if[c].d_pop = _compl_dut_if_.D_pop[0][c];
+            driver_inst[c].vif_fifo_dut = _driver_dut_if [c];
+            
             //monitor mbx
-            //monitor_inst[d].mnt_ckecker_mbx = monitor_checker_mbx[d];
+            //monitor_inst[c].mnt_ckecker_mbx = monitor_checker_mbx[c];
             //interface con monitor
-            //monitor_inst[d].vif_fifo_dut = _dut_monitor_if [d];
+            //monitor_inst[c].vif_fifo_dut = _dut_monitor_if [c];
         end
     endfunction
 
