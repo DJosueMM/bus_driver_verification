@@ -17,7 +17,7 @@ module test_bench;
 
   logic     clk   = 0;
   parameter width = 16;
-  parameter DRVS  = 8;
+  parameter DRVS  = 4;
   
 
   secuencer    # (.width(width), .DRVS(DRVS)) test_0;
