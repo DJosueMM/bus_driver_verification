@@ -1,11 +1,11 @@
 
-class driver # (parameter WIDTH = 16);
+class driver # (parameter WIDTH = 16, DRVS = 8);
 
     mbx_agent_driver   agnt_drv_mbx;     
     mbx_driver_checker drv_chkr_mbx;
     int                drv_id;
     
-    virtual dut_compl_if #(.width(WIDTH)) vif_fifo_dut;
+    virtual dut_compl_if # (.width(WIDTH), .drvs(DRVS), .bits(1)) vif_fifo_dut;
 
     logic [WIDTH - 1 : 0] fifo_in [$];
 

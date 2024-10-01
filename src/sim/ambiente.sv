@@ -4,12 +4,12 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     // Declaración de los componentes del ambiente
     agent   #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
 
-    driver  #(.WIDTH(width))                driver_inst [DRVS];
+    driver  #(.width(width),.DRVS(DRVS)) driver_inst [DRVS];
     //monitor #(.WIDTH(width), .MNT_ID(DRVS)) monitor_inst [DRVS];
 
 
     // Definición de la interface que conecta el DUT
-    virtual dut_compl_if #(.width(WIDTH)) vif_fifo_dut;
+    virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_fifo_dut;
     //virtual fifo_if_in  #(.width(width)) _dut_monitor_if  [DRVS];
 
     // declaración de los mailboxes

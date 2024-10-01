@@ -12,7 +12,7 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
 
     // Definición de la interface a la que se conectará el DUT
     //virtual dut_compl_if #(.width(width), .drvs(DRVS)) _if;
-    virtual dut_compl_if #(.width(WIDTH)) vif_fifo_dut;
+    virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_fifo_dut;
 
     // definición de las condiciones iniciales del test
     function new();
