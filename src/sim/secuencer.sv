@@ -20,12 +20,12 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
 
         // Definición y conexión del driver
         ambiente_inst = new();
-        //ambiente_inst._compl_dut_if_ = _if;
+        ambiente_inst.vif_fifo_dut = vif_fifo_dut;
         ambiente_inst.test_agent_mbx = test_agent_mbx;
         ambiente_inst.agent_inst.test_agent_mbx = test_agent_mbx;
         ambiente_inst.agent_inst.num_transacciones = num_transacciones;
         ambiente_inst.agent_inst.max_retardo = max_retardo;
-        ambiente_inst.vif_fifo_dut = vif_fifo_dut;
+        
     endfunction
 
     task run;
