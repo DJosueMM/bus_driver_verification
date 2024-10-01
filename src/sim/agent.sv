@@ -1,7 +1,7 @@
 class agent # (parameter WIDTH = 16, DRVS = 4);
 
-    mbx_test_agent                                       test_agent_mbx;   // Mailbox del test al agente
-    mbx_agent_driver [DRVS - 1 : 0]                      agnt_drv_mbx;     // Arreglo de mailboxes del agente a cada driver
+    mbx_test_agent   test_agent_mbx;   // Mailbox del test al agente
+    mbx_agent_driver agnt_drv_mbx [DRVS];     // Arreglo de mailboxes del agente a cada driver
     
     int                        num_transacciones;   // Número de transacciones para las funciones del agente
     int                        max_retardo;         // Retardo máximo para las funciones del agente
@@ -12,6 +12,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
     rand bit                   rand_broadcast;      // Variable para broadcast
 
     instrucciones_agente  instruccion; // para guardar la última instruccion leída
+    virtual dut_compl_if #(.width(WIDTH)) vif_agnt_dut;
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion;
 
     constraint const_illegal_ID           {id_spec        >= DRVS; id_spec > 0;}        //constraint para que el ID sea invalido
@@ -31,6 +32,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
         $display("[%g] El Agente fue inicializado", $time);
 
         forever begin
+
             
             #1;
 
@@ -39,13 +41,14 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                 $display("[%g] Agente: recibe instruccion", $time);
                 test_agent_mbx.get(instruccion);
         
-                
+                const_no_reset.constraint_mode(1);   
+                const_illegal_ID.constraint_mode(0);
+                const_legal_ID.constraint_mode(0);
+                const_rand_broadcast.constraint_mode(0); 
+                const_no_broadcast.constraint_mode(0); 
+                vif_agnt_dut.reset = 0;
                 case(instruccion)
-                    const_no_reset.constraint_mode(1);   
-                    const_illegal_ID.constraint_mode(0);
-                    const_legal_ID.constraint_mode(0);
-                    const_rand_broadcast.constraint_mode(0); 
-                    const_no_broadcast.constraint_mode(0); 
+                    
 
                     send_random_payload_legal_id: begin  // Esta instruccion genera transacciones aleatorias
                 
@@ -55,7 +58,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            driver_spec.randomize();
+                            driver_spec = $urandom_range(0, DRVS); 
                             tipo_spec = send;
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción send_random_payload_legal_id creada");
@@ -71,7 +74,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            driver_spec.randomize();
+                            driver_spec = $urandom_range(0, DRVS);
                             tipo_spec = send;
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción send_random_payload_ilegal_id creada");
@@ -90,7 +93,8 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            driver_spec.randomize();
+                            driver_spec = $urandom_range(0, DRVS);
+                            rand_reset  = $urandom_range(0, 1);
                             tipo_spec = send;
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción send_w_mid_reset creada para posterior reset");
@@ -98,12 +102,14 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             
                             if (rand_reset == 1) begin
                                 transaccion.tipo_transaccion = reset;
+                                vif_agnt_dut.reset = 1;
                             end
                             
                             else begin  
                                 transaccion.tipo_transaccion = send;
+                                vif_agnt_dut.reset = 0;
                             end
-                            driver_spec.randomize();
+                            driver_spec = $urandom_range(0, DRVS);
                             transaccion.print("Agente: transacción send_w_mid_reset creada como potencial reset");
                             agnt_drv_mbx[driver_spec].put(transaccion);
                         end
@@ -111,7 +117,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
 
                     consecutive_send: begin             // Esta instruccion genera transacciones consecutivas
 
-                        driver_spec.randomize();                        // Se elige un driver aleatorio
+                        driver_spec = $urandom_range(0, DRVS);                       // Se elige un driver aleatorio
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
@@ -136,7 +142,8 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            driver_spec.randomize();
+                            driver_spec = $urandom_range(0, DRVS);
+                            rand_broadcast = $urandom_range(0, 1);
 
                             if (rand_broadcast == 1) begin
                                 tipo_spec = broadcast;
@@ -174,7 +181,7 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                         for (int i = 0; i < DRVS; i++) begin
                             transaccion = new();
                             transaccion.randomize();
-                            transaccion.max_retardo = max_retardo;
+                            transaccion.max_delay = max_retardo;
 
                             if (rand_broadcast == 1) begin
                                 tipo_spec = broadcast;
@@ -193,12 +200,12 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
 
                     all_for_one: begin      // Esta instruccion genera transacciones para todos para un ID
 
-                        id_spec.randomize();
+                        id_spec = $urandom_range(0, DRVS);
                         const_no_broadcast.constraint_mode(1); 
 
                         for (int i = 0; i < DRVS; i++) begin
                             transaccion = new();
-                            transaccion.max_retardo = max_retardo;
+                            transaccion.max_delay = max_retardo;
                             transaccion.randomize();
                             transaccion.pkg_id = id_spec;
                             transaccion.print("Agente: transacción all_for_one creada");
@@ -230,10 +237,10 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                          
                         for (int i = 0; i < num_transacciones; i++) begin
 
-                            driver_spec.randomize();     
+                            driver_spec = $urandom_range(0, DRVS);     
                             transaccion = new();
                             transaccion.randomize();
-                            transaccion.max_retardo = max_retardo;
+                            transaccion.max_delay = max_retardo;
                             id_spec = driver_spec; //revisar asignacion de int a bit
                             transaccion.pkg_id = id_spec;
                             

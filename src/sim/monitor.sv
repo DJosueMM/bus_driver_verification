@@ -2,10 +2,10 @@ class monitor # (parameter WIDTH = 16, MNT_ID = 0);
  
     mbx_monitor_checker mnt_ckecker_mbx;  
     
-    virtual fifo_if #(.width(WIDTH)) vif_fifo_agent_checker;
-    virtual fifo_if #(.width(WIDTH)) vif_fifo_dut;
+    virtual fifo_if_out #(.width(WIDTH)) vif_fifo_agent_checker;
+    virtual fifo_if_in #(.width(WIDTH)) vif_fifo_dut;
 
-    fifo_out [$];
+    logic [WIDTH - 1 : 0] fifo_out [$];
 
     task run();
         
@@ -38,7 +38,6 @@ class monitor # (parameter WIDTH = 16, MNT_ID = 0);
                         vif_fifo_agent_checker.pndg = 1;
                         vif_fifo_agent_checker.dpop = fifo_out[$];
                         vif_fifo_agent_checker.pop = 1;
-                        vif_fifo_agent_checker.dpop = fifo_in.pop_back();
 
                         transaction_receive.receive_time = $time;
                         transaction_receive.receiver_monitor = MNT_ID;
@@ -56,6 +55,7 @@ class monitor # (parameter WIDTH = 16, MNT_ID = 0);
                         transaccion_receive.max_delay = 0;
                         transaction_receive.print("Driver: Transacción recibida en el monitor");
                         mnt_ckecker_mbx.put(transaction_receive);
+                        fifo_in.pop_back();
                     end      
                 end
             end

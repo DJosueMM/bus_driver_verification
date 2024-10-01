@@ -1,4 +1,4 @@
-class test #(parameter width = 16, parameter DRVS = 8);
+class secuencer #(parameter width = 16, parameter DRVS = 8);
 
     mbx_test_agent test_agent_mbx;
 
@@ -11,7 +11,7 @@ class test #(parameter width = 16, parameter DRVS = 8);
     ambiente #(.width(width),.DRVS(DRVS)) ambiente_inst;
 
     // Definición de la interface a la que se conectará el DUT
-    virtual dut_compl_if #(.width(width), .drvs(DRVS)) _if;
+    virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_test_fifo_dut;
 
     // definición de las condiciones iniciales del test
     function new();
@@ -20,11 +20,12 @@ class test #(parameter width = 16, parameter DRVS = 8);
 
         // Definición y conexión del driver
         ambiente_inst = new();
-        ambiente_inst._compl_dut_if_ = _if;
+        ambiente_inst.vif_ambiente_fifo_dut = vif_test_fifo_dut;
         ambiente_inst.test_agent_mbx = test_agent_mbx;
         ambiente_inst.agent_inst.test_agent_mbx = test_agent_mbx;
         ambiente_inst.agent_inst.num_transacciones = num_transacciones;
         ambiente_inst.agent_inst.max_retardo = max_retardo;
+        
     endfunction
 
     task run;
