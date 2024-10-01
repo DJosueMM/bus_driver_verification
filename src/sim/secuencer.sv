@@ -28,7 +28,8 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         ambiente_inst.agent_inst.max_retardo = max_retardo;
         
         for (int i = 0; i < DRVS; i++) begin
-            ambiente_inst._driver_dut_if[i] = _driver_dut_if[i];
+            automatic int a = i;
+            ambiente_inst._driver_dut_if[a] = _driver_dut_if[a];
         end
     endfunction
 
