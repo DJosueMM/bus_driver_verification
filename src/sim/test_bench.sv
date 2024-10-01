@@ -45,6 +45,7 @@ module test_bench;
     test_0 = new();
     for (int w = 0; w < DRVS; w++) begin
       test_0.ambiente_inst.driver_inst[w].vif_driver_fifo_dut = final_if;
+      test_0.ambiente_inst.agent_inst.vif_agnt_dut = final_if;
     end
     
     fork
