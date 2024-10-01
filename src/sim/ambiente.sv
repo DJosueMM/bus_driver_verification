@@ -9,7 +9,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
 
     // Definición de la interface que conecta el DUT
-    virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_fifo_dut;
+    virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_ambiente_fifo_dut;
     //virtual fifo_if_in  #(.width(width)) _dut_monitor_if  [DRVS];
 
     // declaración de los mailboxes
@@ -43,7 +43,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         //scoreboard_inst = new();
 
         // Conexión de las interfaces y mailboxes en el ambiente
-        agent_inst.vif_agnt_dut   = vif_fifo_dut;
+        agent_inst.vif_agnt_dut   = vif_ambiente_fifo_dut;
         agent_inst.test_agent_mbx = test_agent_mbx;
         agent_inst.agnt_drv_mbx   = agent_driver_mbx;
 
@@ -53,7 +53,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
             driver_inst[c].agnt_drv_mbx = agent_driver_mbx[c];
             //driver_inst[c].drv_chkr_mbx = driver_checker_mbx[c];
             //interface con driver
-            driver_inst[c].vif_fifo_dut = vif_fifo_dut;
+            driver_inst[c].vif_driver_fifo_dut = vif_ambiente_fifo_dut;
             //monitor mbx
             //monitor_inst[c].mnt_ckecker_mbx = monitor_checker_mbx[c];
             //interface con monitor

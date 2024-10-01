@@ -43,7 +43,7 @@ module test_bench;
 
     clk    = 0;
     test_0 = new();
-    test_0.vif_fifo_dut = final_if;
+    test_0.vif_test_fifo_dut = final_if;
 
     fork
       test_0.run();
