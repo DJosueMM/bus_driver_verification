@@ -35,11 +35,14 @@ module test_bench;
       .D_pop    (final_if.D_pop),
       .D_push   (final_if.D_push)
   );
-
-  for (int i = 0; i < DRVS; i++) begin
-    automatic int a = i;
-    test_0._driver_dut_if[a] = _driver_dut_if[a];
+  
+  initial begin
+    for (int i = 0; i < DRVS; i++) begin
+      automatic int a = i;
+      test_0._driver_dut_if[a] = _driver_dut_if[a];
+    end
   end
+  
   
   always #10 clk = ~clk;
 
