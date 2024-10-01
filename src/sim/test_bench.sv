@@ -22,7 +22,7 @@ module test_bench;
 
   secuencer    # (.width(width), .DRVS(DRVS)) test_0;
   dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) final_if (.clk(clk));
-  fifo_if_out [DRVS] # (.width(width)) _driver_dut_if (.clk(clk));
+  fifo_if_out  # (.width(width)) _driver_dut_if [DRVS];
   //fifo_if_in   #(.width(width)) _dut_monitor_if     [DRVS - 1 : 0] (.clk(clk));
 
   //BUS DRIVER    
@@ -48,7 +48,8 @@ module test_bench;
     for (int d = 0; d < DRVS; d++) begin
       
       automatic int a = d;
-
+                                //este de abajo falla
+      _driver_dut_if[a] = fifo_if_out (.(clk));
       test_0._driver_dut_if[a] = _driver_dut_if[a];
       //interfases individuales al la interfaz completa
       test_0._if.pndng[0][a] = test_0._driver_dut_if [a].pndg;
