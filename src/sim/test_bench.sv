@@ -48,7 +48,7 @@ module test_bench;
     for (int d = 0; d < DRVS; d++) begin
       
       automatic int a = d;
-      test_0._driver_dut_if[a] = _driver_dut_if[a];
+      //test_0._driver_dut_if[a] = _driver_dut_if[a];
       //interfases individuales al la interfaz completa
       test_0.ambiente_inst._compl_dut_if_.pndng[0][a] = test_0.ambiente_inst._driver_dut_if [a].pndg;
       //test_0.ambiente_inst._compl_dut_if_.push [0][a] = test_0.ambiente_inst._dut_monitor_if[a].push;
