@@ -43,7 +43,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         //scoreboard_inst = new();
 
         // Conexión de las interfaces y mailboxes en el ambiente
-        agent_inst.vif_agnt_dut = vif_fifo_dut;
+        //agent_inst.vif_agnt_dut = vif_fifo_dut;
         agent_inst.test_agent_mbx = test_agent_mbx;
         agent_inst.agnt_drv_mbx   = agent_driver_mbx;
 
