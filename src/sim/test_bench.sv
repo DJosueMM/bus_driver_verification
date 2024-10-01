@@ -22,7 +22,7 @@ module test_bench;
 
   secuencer    # (.width(width), .DRVS(DRVS)) test_0;
   dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) final_if (.clk(clk));
-  fifo_if_out  # (.width(width)) [DRVS] _driver_dut_if (.clk(clk));
+  fifo_if_out  # (.width(width)) _driver_dut_if [DRVS] (.clk(clk));
   //fifo_if_in   #(.width(width)) _dut_monitor_if     [DRVS - 1 : 0] (.clk(clk));
 
   //BUS DRIVER    
