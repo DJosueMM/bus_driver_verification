@@ -35,6 +35,11 @@ module test_bench;
       .D_pop    (final_if.D_pop),
       .D_push   (final_if.D_push)
   );
+
+  for (int i = 0; i < DRVS; i++) begin
+    automatic int a = i;
+    test_0._driver_dut_if[a] = _driver_dut_if[a];
+  end
   
   always #10 clk = ~clk;
 
@@ -49,8 +54,7 @@ module test_bench;
       
       automatic int a = d;
                                 //este de abajo falla
-      _driver_dut_if[a] = fifo_if_out (.(clk));
-      test_0._driver_dut_if[a] = _driver_dut_if[a];
+      //test_0._driver_dut_if[a] = _driver_dut_if[a];
       //interfases individuales al la interfaz completa
       test_0._if.pndng[0][a] = test_0._driver_dut_if [a].pndg;
       //test_0.ambiente_inst._compl_dut_if_.push [0][a] = test_0.ambiente_inst._dut_monitor_if[a].push;
