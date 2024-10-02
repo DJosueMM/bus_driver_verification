@@ -28,6 +28,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                     $display("[%g] El Monitor [%g] removio el pasado valor en la FIFO", $time, mnt_id);
                     fifo_out.push_front(vif_monitor_fifo_dut.D_push[0][mnt_id]);
                     $display("[%g] El Monitor [%g] ingreso el valor del DUT a la FIFO", $time, mnt_id);
+                    transaction_receive = new();
                     transaction_receive.pkg_id      = fifo_out [$] [WIDTH-1:WIDTH-8];
                     transaction_receive.pkg_payload = fifo_out [$] [WIDTH-9:0];
                     transaction_receive.receive_time = $time;
