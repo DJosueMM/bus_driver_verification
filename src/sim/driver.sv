@@ -17,7 +17,7 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
 
     task run();
         
-        $display("[%g] El driver fue inicializado", $time);
+        $display("[%g] El driver [%g] fue inicializado", $time, drv_id);
         
        @(posedge vif_driver_fifo_dut.clk);
         forever begin
