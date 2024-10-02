@@ -34,6 +34,17 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
             ambiente_inst.run();
         join_none
 
+
+        vif_test_fifo_dut.reset = 1;
+        #30;
+        vif_test_fifo_dut.reset = 0;
+
+        instr_agent = init;
+        test_agent_mbx.put(instr_agent);
+        $display("[%g] Test: Comenzando la inicializacion", $time);
+        
+        #15;
+
         instr_agent = send_random_payload_legal_id;
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada la primera instruccion al agente llenado aleatorio con num_transacciones %g", $time,num_transacciones);

@@ -1,4 +1,4 @@
-class agent # (parameter WIDTH = 16, DRVS = 4);
+class agent # (parameter WIDTH = 16, parameter DRVS = 4);
 
     mbx_test_agent   test_agent_mbx;   // Mailbox del test al agente
     mbx_agent_driver agnt_drv_mbx [DRVS];     // Arreglo de mailboxes del agente a cada driver
@@ -49,6 +49,35 @@ class agent # (parameter WIDTH = 16, DRVS = 4);
                 vif_agnt_dut.reset = 0;
                 case(instruccion)
                     
+                    init : begin
+
+                        if (DRVS == 0) begin
+                            transaccion.print("Solo hay un Driver, no se puede inicializar desde el agente");
+                        end
+
+                        else begin
+
+                            transaccion = new();
+                            transaccion.randomize();
+                            transaccion.pkg_payload = '0;
+                            transaccion.delay = 5;
+
+                            tipo_spec = broadcast;
+                            transaccion.tipo_transaccion = tipo_spec;
+                            transaccion.print("Agente: transacción de inicializacion creada");
+                            agnt_drv_mbx[DRVS].put(transaccion);
+                            
+                            transaccion = new();
+                            transaccion.randomize();
+                            transaccion.pkg_payload = '0;
+                            transaccion.delay = 10;
+
+                            tipo_spec = broadcast;
+                            transaccion.tipo_transaccion = tipo_spec;
+                            transaccion.print("Agente: transacción de inicializacion creada");
+                            agnt_drv_mbx[0].put(transaccion);
+                        end
+                    end
 
                     send_random_payload_legal_id: begin  // Esta instruccion genera transacciones aleatorias
                 
