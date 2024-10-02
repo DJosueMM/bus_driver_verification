@@ -18,15 +18,15 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
         forever begin
 
             instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaction_receive;
-            vif_monitor_fifo_dut.push    = '0;
-            vif_monitor_fifo_dut.D_push  = '0;
+            vif_monitor_fifo_dut.push   [0][mnt_id] = '0;
+            vif_monitor_fifo_dut.D_push [0][mnt_id] = '0;
             $display("[%g] El Monitor [%g] espera por una transacción", $time, mnt_id);
 
             @(posedge vif_monitor_fifo_dut); begin
-                if (vif_monitor_fifo_dut.push == 1) begin
+                if (vif_monitor_fifo_dut.push[0][mnt_id] == 1) begin
                     fifo_out.pop_back();
                     $display("[%g] El Monitor [%g] removio el pasado valor en la FIFO", $time, mnt_id);
-                    fifo_out.push_front(vif_monitor_fifo_dut.D_push);
+                    fifo_out.push_front(vif_monitor_fifo_dut.D_push[0][mnt_id]);
                     $display("[%g] El Monitor [%g] ingreso el valor del DUT a la FIFO", $time, mnt_id);
                     transaction_receive.pkg_id      = fifo_out [$] [WIDTH-1:WIDTH-8];
                     transaction_receive.pkg_payload = fifo_out [$] [WIDTH-9:0];
