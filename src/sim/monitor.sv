@@ -4,7 +4,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
     virtual dut_compl_if # (.width(WIDTH), .drvs(DRVS), .bits(1)) vif_monitor_fifo_dut;
 
     int mnt_id;
-    logic [WIDTH - 1 : 0] fifo_out [$];
+    //logic [WIDTH - 1 : 0] fifo_out [$];
     logic [WIDTH - 1 : 0] aux_reconstr;
 
     function new(int monitor_id = 0);
@@ -15,32 +15,26 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
         
         $display("[%g] El monitor [%g] fue inicializado", $time, mnt_id);
         
+        vif_monitor_fifo_dut.push   [0][mnt_id] = '0;
+        vif_monitor_fifo_dut.D_push [0][mnt_id] = '0;
+        
         @(posedge vif_monitor_fifo_dut.clk);
+
         forever begin
 
             instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaction_receive;
-            vif_monitor_fifo_dut.push   [0][mnt_id] = '0;
-            vif_monitor_fifo_dut.D_push [0][mnt_id] = '0;
+            
             $display("[%g] El Monitor [%g] espera por una transacción", $time, mnt_id);
 
             @(posedge vif_monitor_fifo_dut.clk); begin
                 if (vif_monitor_fifo_dut.push[0][mnt_id] == 1) begin
-                    fifo_out.pop_back();
-                    
-                    $display("[%g] El Monitor [%g] removio el pasado valor en la FIFO", $time, mnt_id);
-                    
-                    fifo_out.push_front(vif_monitor_fifo_dut.D_push[0][mnt_id]);
-                    
-                    $display("[%g] El Monitor [%g] ingreso el valor del DUT a la FIFO", $time, mnt_id);
+                                      
+                    $display("[%g] El Monitor [%g] obtuvo un dato del DUT", $time, mnt_id);
                     
                     transaction_receive= new();
                     
-                    if (fifo_out.size() > 0) begin
-                        this.aux_reconstr = fifo_out[$];
-                    end
-                    $display("[%g] El Monitor [%g] FIFO reconstruye [%b]", $time, mnt_id, aux_reconstr);
-                    //transaction_receive.pkg_id = aux_reconstr[WIDTH - 1 : WIDTH - 8];
-                    //transaction_receive.pkg_payload = aux_reconstr[WIDTH - 9 : 0];
+                    transaction_receive.pkg_id = vif_monitor_fifo_dut.D_push[WIDTH - 1 : WIDTH - 8];
+                    transaction_receive.pkg_payload = vif_monitor_fifo_dut.D_push[WIDTH - 9 : WIDTH - 0];
                     transaction_receive.receive_time = $time;
                     transaction_receive.receiver_monitor = mnt_id;
 
@@ -50,7 +44,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                     else begin
                         transaction_receive.tipo_transaccion = send;
                     end
-
+                    
                     transaction_receive.delay = 0;
                     transaction_receive.max_delay = 0;
                     transaction_receive.print("Driver: Transacción reconstruida en el monitor");
