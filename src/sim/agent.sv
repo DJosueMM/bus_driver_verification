@@ -163,7 +163,6 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             tipo_spec = send;
 
                             id_spec = $urandom_range(0, DRVS - 1);  // Se elige un ID aleatorio
-                            driver_spec = $urandom_range(0, DRVS - 1); 
                             transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
 
                             transaccion.tipo_transaccion = tipo_spec;
