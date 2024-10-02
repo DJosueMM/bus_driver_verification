@@ -5,7 +5,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     // Declaración de los componentes del ambiente
     agent   #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
 
-    driver  #(.WIDTH(width),.DRVS(DRVS)) driver_inst [DRVS];
+    driver  #(.WIDTH(width),.DRVS(DRVS)) driver_inst [DRVS - 1 : 0];
     //monitor #(.WIDTH(width), .MNT_ID(DRVS)) monitor_inst [DRVS];
 
 
