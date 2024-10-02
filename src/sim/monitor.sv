@@ -39,8 +39,8 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                         this.aux_reconstr = fifo_out[$];
                     end
 
-                    transaction_receive.pkg_id = aux_reconstr[WIDTH - 1 : WIDTH - 8];
-                    transaction_receive.pkg_payload = aux_reconstr[WIDTH - 9 : 0];
+                    //transaction_receive.pkg_id = aux_reconstr[WIDTH - 1 : WIDTH - 8];
+                    //transaction_receive.pkg_payload = aux_reconstr[WIDTH - 9 : 0];
                     transaction_receive.receive_time = $time;
                     transaction_receive.receiver_monitor = mnt_id;
 
