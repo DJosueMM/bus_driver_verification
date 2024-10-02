@@ -61,6 +61,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.pkg_payload = '0;
+                            transaccion.pkg_id = '1;
                             transaccion.delay = 5;
                             tipo_spec = broadcast;
                             transaccion.tipo_transaccion = tipo_spec;
@@ -70,6 +71,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.pkg_payload = '0;
+                            transaccion.pkg_id = '1;
                             transaccion.delay = 10;
 
                             tipo_spec = broadcast;
