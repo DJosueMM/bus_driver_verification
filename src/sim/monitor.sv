@@ -22,7 +22,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
             vif_monitor_fifo_dut.D_push [0][mnt_id] = '0;
             $display("[%g] El Monitor [%g] espera por una transacción", $time, mnt_id);
 
-            @(posedge vif_monitor_fifo_dut); begin
+            @(posedge vif_monitor_fifo_dut.clk); begin
                 if (vif_monitor_fifo_dut.push[0][mnt_id] == 1) begin
                     fifo_out.pop_back();
                     $display("[%g] El Monitor [%g] removio el pasado valor en la FIFO", $time, mnt_id);
