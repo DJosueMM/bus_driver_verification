@@ -1,7 +1,7 @@
 class agent # (parameter WIDTH = 16, parameter DRVS = 4);
 
     mbx_test_agent   test_agent_mbx;   // Mailbox del test al agente
-    mbx_agent_driver agnt_drv_mbx [DRVS];     // Arreglo de mailboxes del agente a cada driver
+    mbx_agent_driver agnt_drv_mbx [DRVS - 1 : 0];     // Arreglo de mailboxes del agente a cada driver
     
     int                        num_transacciones;   // Número de transacciones para las funciones del agente
     int                        max_retardo;         // Retardo máximo para las funciones del agente
