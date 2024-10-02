@@ -156,12 +156,18 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
+
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             tipo_spec = send;
+
+                            id_spec = $urandom_range(0, DRVS - 1);  // Se elige un ID aleatorio
+                            driver_spec = $urandom_range(0, DRVS - 1); 
+                            transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
+
                             transaccion.tipo_transaccion = tipo_spec;
-                            transaccion.print("Agente: transacción send_random_payload_legal_id creada");
+                            transaccion.print("Agente: transacción consecutive_send creada");
                             agnt_drv_mbx[driver_spec].put(transaccion);
                         end
                     end
