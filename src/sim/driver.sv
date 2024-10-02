@@ -27,7 +27,7 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
             vif_driver_fifo_dut.pop   [0][drv_id] = '0;
             vif_driver_fifo_dut.D_pop [0][drv_id] = '0;
 
-            $display("[ %g ] El Driver [%g] espera por una transacción", drv_id, $time);
+            $display("[ %g ] El Driver [%g] espera por una transacción", $time, drv_id);
 
             espera = 0;
             
