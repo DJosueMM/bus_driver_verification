@@ -50,7 +50,7 @@ typedef enum {
 
 // Clase para definir los datos que maneja y sus detalles las instrucciones driver_monitor
 // estos tipos de datos se transmiten desde el agente al driver_monitor y desde el driver_monitor al checker
-class instrucciones_driver_monitor # (parameter WIDTH = 16); 
+class instrucciones_driver_monitor # (parameter WIDTH = 4); 
    
 
     // Definición de los miembros de la clase
