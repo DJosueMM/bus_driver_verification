@@ -106,7 +106,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             
-                            id_spec = $urandom % 100;  // Se elige un ID aleatorio con posibilidad de invalido
+                            id_spec = $urandom % 25;  // Se elige un ID aleatorio con posibilidad de invalido
                             driver_spec = $urandom_range(0, DRVS - 1); 
                             transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
 
