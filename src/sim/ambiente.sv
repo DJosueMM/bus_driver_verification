@@ -1,16 +1,17 @@
 
 class ambiente #(parameter width = 16, parameter DRVS = 8);
 
+    localparam DRIVERS_Q = DRVS;
     // Declaración de los componentes del ambiente
     agent   #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
 
-    driver  #(.width(width),.DRVS(DRVS)) driver_inst [DRVS];
+    driver  #(.WIDTH(width),.DRVS(DRVS)) driver_inst [DRVS - 1 : 0];
     //monitor #(.WIDTH(width), .MNT_ID(DRVS)) monitor_inst [DRVS];
 
 
     // Definición de la interface que conecta el DUT
     virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_ambiente_fifo_dut;
-    //virtual fifo_if_in  #(.width(width)) _dut_monitor_if  [DRVS];
+
 
     // declaración de los mailboxes
     mbx_test_agent       test_agent_mbx;                      // mailbox del test al agente         
@@ -31,9 +32,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
         // Instanciación de los componentes del ambiente
         for (int i = 0; i < DRVS; i++) begin
-            automatic int b = i;
-            driver_inst[b] = new(b);
-            agent_driver_mbx[b] = new();
+            driver_inst[i] = new(i);
+            agent_driver_mbx[i] = new();
             //monitor_inst[i] = new();
         end
 
@@ -64,13 +64,16 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     virtual task run();
         $display("[%g] El ambiente fue inicializado",$time);
         fork
-            for (int f = 0; f < DRVS; f++) begin
-                
-                automatic int a = f;
-                driver_inst[a].run();
-                //monitor_inst[a].run();
-            end
             agent_inst.run();
+
+            for (int j = 0; j < DRIVERS_Q; j++) begin
+                fork     
+                    automatic int a = j;
+                    driver_inst[a].run();
+                    $display("[%g] El driver [%g] fue inicializado", $time, a);
+                join_none
+            end
+            
             //checker_inst.run();
             //scoreboard_inst.run();
         join_none

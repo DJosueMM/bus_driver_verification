@@ -1,4 +1,4 @@
-class checker (parameter WIDTH = 16, DRVS = 4);
+class checker (parameter WIDTH = 16, parameter DRVS = 4);
 
     instrucciones_driver_monitor #(.width(WIDTH)) transaccion; // Transacción recibida en el mailbox
     instrucciones_driver_monitor #(.width(width)) auxiliar;   // Transacción usada como auxiliar para leer el fifo emulado
