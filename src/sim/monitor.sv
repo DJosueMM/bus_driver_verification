@@ -33,15 +33,15 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                     transaction_receive.pkg_payload = fifo_out [$] [WIDTH-9:0];
                     transaction_receive.receive_time = $time;
                     transaction_receive.receiver_monitor = mnt_id;
-                    if (transaccion_receive.pkg_id == 8'b11111111) begin
+                    if (transaction_receive.pkg_id == 8'b11111111) begin
                         transaction_receive.tipo_transaccion = broadcast;
                     end
                     else begin
                         transaction_receive.tipo_transaccion = send;
                     end
 
-                    transaccion_receive.delay = 0;
-                    transaccion_receive.max_delay = 0;
+                    transaction_receive.delay = 0;
+                    transaction_receive.max_delay = 0;
                     transaction_receive.print("Driver: Transacción reconstruida en el monitor");
                     mnt_ckecker_mbx.put(transaction_receive);
                     transaction_receive.print("Driver: Transacción enviada al Checker");
