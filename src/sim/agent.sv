@@ -86,10 +86,17 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
+
+
+
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
+                            
+                            id_spec = $urandom_range(0, DRVS);  // Se elige un ID aleatorio
                             driver_spec = $urandom_range(0, DRVS); 
+                            transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
+
                             tipo_spec = send;
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción send_random_payload_legal_id creada");
