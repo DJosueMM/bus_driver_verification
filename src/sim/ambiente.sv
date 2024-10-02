@@ -67,8 +67,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
             for (int f = 0; f < DRVS; f++) begin
                 
                 automatic int a = f;
-                $display(a)
-                $display(f)
+                $display(a);
+                $display(f);
                 driver_inst[a].run();
                 $display("[%g] El driver [%g] fue inicializado", $time, a);
                 //monitor_inst[a].run();
