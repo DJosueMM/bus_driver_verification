@@ -64,11 +64,11 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     virtual task run();
         $display("[%g] El ambiente fue inicializado",$time);
         fork
-            for (int f = 0; f < DRVS; f++) begin
+            for (int j = 0; j < DRVS; j++) begin
                 
-                automatic int a = f;
+                automatic int a = j;
                 $display(a);
-                $display(f);
+                $display(j);
                 driver_inst[a].run();
                 $display("[%g] El driver [%g] fue inicializado", $time, a);
                 //monitor_inst[a].run();
