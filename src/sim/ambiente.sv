@@ -31,7 +31,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         //test_sb_mbx         = new();
 
         // Instanciación de los componentes del ambiente
-        for (int i = 0; i < DRIVERS_Q; i++) begin
+        for (int i = 0; i < DRVS; i++) begin
             driver_inst[i] = new(i);
             agent_driver_mbx[i] = new();
             //monitor_inst[i] = new();
@@ -64,16 +64,16 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     virtual task run();
         $display("[%g] El ambiente fue inicializado",$time);
         fork
-            for (int j = 0; j < DRIVERS_Q; j++) begin
-                
-                automatic int a = j;
-                $display(a);
-                $display(j);
-                driver_inst[a].run();
-                $display("[%g] El driver [%g] fue inicializado", $time, a);
-                //monitor_inst[a].run();
-            end
             agent_inst.run();
+
+            for (int j = 0; j < DRIVERS_Q; j++) begin
+                fork     
+                    automatic int a = j;
+                    driver_inst[a].run();
+                    $display("[%g] El driver [%g] fue inicializado", $time, a);
+                join_none
+            end
+            
             //checker_inst.run();
             //scoreboard_inst.run();
         join_none
