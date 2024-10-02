@@ -93,8 +93,8 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             
-                            id_spec = $urandom_range(0, DRVS);  // Se elige un ID aleatorio
-                            driver_spec = $urandom_range(0, DRVS); 
+                            id_spec = $urandom_range(0, DRVS - 1);  // Se elige un ID aleatorio
+                            driver_spec = $urandom_range(0, DRVS - 1); 
                             transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
 
                             tipo_spec = send;
@@ -112,7 +112,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            driver_spec = $urandom_range(0, DRVS);
+                            driver_spec = $urandom_range(0, DRVS - 1);
                             tipo_spec = send;
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción send_random_payload_ilegal_id creada");
@@ -131,7 +131,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            driver_spec = $urandom_range(0, DRVS);
+                            driver_spec = $urandom_range(0, DRVS - 1);
                             rand_reset  = $urandom_range(0, 1);
                             tipo_spec = send;
                             transaccion.tipo_transaccion = tipo_spec;
@@ -147,7 +147,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                                 transaccion.tipo_transaccion = send;
                                 vif_agnt_dut.reset = 0;
                             end
-                            driver_spec = $urandom_range(0, DRVS);
+                            driver_spec = $urandom_range(0, DRVS - 1);
                             transaccion.print("Agente: transacción send_w_mid_reset creada como potencial reset");
                             agnt_drv_mbx[driver_spec].put(transaccion);
                         end
@@ -155,7 +155,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
 
                     consecutive_send: begin             // Esta instruccion genera transacciones consecutivas
 
-                        driver_spec = $urandom_range(0, DRVS);                       // Se elige un driver aleatorio
+                        driver_spec = $urandom_range(0, DRVS - 1);                       // Se elige un driver aleatorio
                         for(int i = 0; i < num_transacciones; i++) begin
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
@@ -180,7 +180,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            driver_spec = $urandom_range(0, DRVS);
+                            driver_spec = $urandom_range(0, DRVS - 1);
                             rand_broadcast = $urandom_range(0, 1);
 
                             if (rand_broadcast == 1) begin
@@ -238,7 +238,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
 
                     all_for_one: begin      // Esta instruccion genera transacciones para todos para un ID
 
-                        id_spec = $urandom_range(0, DRVS);
+                        id_spec = $urandom_range(0, DRVS - 1);
                         const_no_broadcast.constraint_mode(1); 
 
                         for (int i = 0; i < DRVS; i++) begin
@@ -275,7 +275,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                          
                         for (int i = 0; i < num_transacciones; i++) begin
 
-                            driver_spec = $urandom_range(0, DRVS);     
+                            driver_spec = $urandom_range(0, DRVS - 1);     
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
