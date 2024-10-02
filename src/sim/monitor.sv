@@ -5,6 +5,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
 
     int mnt_id;
     logic [WIDTH - 1 : 0] fifo_out [$];
+    logic [WIDTH - 1 : 0] aux_reconstr;
 
     function new(int monitor_id = 0);
         this.mnt_id = monitor_id;
@@ -25,14 +26,20 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
             @(posedge vif_monitor_fifo_dut.clk); begin
                 if (vif_monitor_fifo_dut.push[0][mnt_id] == 1) begin
                     fifo_out.pop_back();
+                    
                     $display("[%g] El Monitor [%g] removio el pasado valor en la FIFO", $time, mnt_id);
+                    
                     fifo_out.push_front(vif_monitor_fifo_dut.D_push[0][mnt_id]);
+                    
                     $display("[%g] El Monitor [%g] ingreso el valor del DUT a la FIFO", $time, mnt_id);
-                    transaction_receive = new();
-                    transaction_receive.pkg_id      = fifo_out [$] [WIDTH-1:WIDTH-8];
-                    transaction_receive.pkg_payload = fifo_out [$] [WIDTH-9:0];
-                    transaction_receive.receive_time = $time;
+                    
+                    transaction_receive                  = new();
+                    this.aux_reconstr                    = fifo_out [$];
+                    transaction_receive.pkg_id           = aux_reconstr[WIDTH-1:WIDTH-8];
+                    transaction_receive.pkg_payload      = aux_reconstr[WIDTH-9:0];
+                    transaction_receive.receive_time     = $time;
                     transaction_receive.receiver_monitor = mnt_id;
+
                     if (transaction_receive.pkg_id == 8'b11111111) begin
                         transaction_receive.tipo_transaccion = broadcast;
                     end
