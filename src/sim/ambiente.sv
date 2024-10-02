@@ -1,6 +1,7 @@
 
 class ambiente #(parameter width = 16, parameter DRVS = 8);
 
+    localparam DRIVERS_Q = DRVS;
     // Declaración de los componentes del ambiente
     agent   #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
 
@@ -30,10 +31,9 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         //test_sb_mbx         = new();
 
         // Instanciación de los componentes del ambiente
-        for (int i = 0; i < DRVS; i++) begin
-            automatic int b = i;
-            driver_inst[b] = new(b);
-            agent_driver_mbx[b] = new();
+        for (int i = 0; i < DRIVERS_Q; i++) begin
+            driver_inst[i] = new(i);
+            agent_driver_mbx[i] = new();
             //monitor_inst[i] = new();
         end
 
@@ -64,7 +64,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     virtual task run();
         $display("[%g] El ambiente fue inicializado",$time);
         fork
-            for (int j = 0; j < DRVS; j++) begin
+            for (int j = 0; j < DRIVERS_Q; j++) begin
                 
                 automatic int a = j;
                 $display(a);
