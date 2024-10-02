@@ -65,7 +65,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             tipo_spec = broadcast;
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción de inicializacion creada");
-                            agnt_drv_mbx[DRVS].put(transaccion);
+                            agnt_drv_mbx[DRVS-1].put(transaccion);
                             
                             transaccion = new();
                             transaccion.randomize();
