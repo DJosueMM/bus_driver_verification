@@ -10,7 +10,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
     // Definición de la interface que conecta el DUT
     virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_ambiente_fifo_dut;
-    //virtual fifo_if_in  #(.width(width)) _dut_monitor_if  [DRVS];
+
 
     // declaración de los mailboxes
     mbx_test_agent       test_agent_mbx;                      // mailbox del test al agente         
@@ -68,6 +68,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
                 
                 automatic int a = f;
                 driver_inst[a].run();
+                $display("[%g] El driver [%g] fue inicializado", $time, a);
                 //monitor_inst[a].run();
             end
             agent_inst.run();
