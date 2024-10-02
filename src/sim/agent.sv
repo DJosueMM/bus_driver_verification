@@ -173,17 +173,14 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
 
                     broadcast_random: begin        // Esta instruccion genera transacciones broadcast aleatorias
 
-                        const_illegal_ID.constraint_mode(0);
-                        const_legal_ID.constraint_mode(0);
-                        const_reset_dist.constraint_mode(0);
-
                         for(int i = 0; i < num_transacciones; i++) begin
-                            const_legal_ID.constraint_mode(1);
-                            const_rand_broadcast.constraint_mode(1);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             driver_spec = $urandom_range(0, DRVS - 1);
+                            id_spec = $urandom_range(0, DRVS - 1);  // Se elige un ID aleatorio
+                            transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
+
                             rand_broadcast = $urandom_range(0, 1);
 
                             if (rand_broadcast == 1) begin
