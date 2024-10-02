@@ -38,7 +38,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                     if (fifo_out.size() > 0) begin
                         this.aux_reconstr = fifo_out[$];
                     end
-
+                    $display("[%g] El Monitor [%g] FIFO reconstruye [%b]", $time, mnt_id, aux_reconstr);
                     //transaction_receive.pkg_id = aux_reconstr[WIDTH - 1 : WIDTH - 8];
                     //transaction_receive.pkg_payload = aux_reconstr[WIDTH - 9 : 0];
                     transaction_receive.receive_time = $time;
