@@ -6,6 +6,7 @@
 ////////////////////////////////////////
 typedef enum {
 
+    init,
     send_random_payload_legal_id,
     send_random_payload_ilegal_id,
     send_w_mid_reset,

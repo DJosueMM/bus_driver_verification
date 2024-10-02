@@ -1,5 +1,5 @@
 
-class driver # (parameter WIDTH = 16, DRVS = 8);
+class driver # (parameter WIDTH = 16, parameter DRVS = 8);
 
     mbx_agent_driver   agnt_drv_mbx;     
     mbx_driver_checker drv_chkr_mbx;
