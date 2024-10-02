@@ -33,11 +33,15 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                     
                     $display("[%g] El Monitor [%g] ingreso el valor del DUT a la FIFO", $time, mnt_id);
                     
-                    transaction_receive                  = new();
-                    this.aux_reconstr                    = fifo_out [$];
-                    transaction_receive.pkg_id           = aux_reconstr[WIDTH-1:WIDTH-8];
-                    transaction_receive.pkg_payload      = aux_reconstr[WIDTH-9:0];
-                    transaction_receive.receive_time     = $time;
+                    transaction_receive= new();
+                    
+                    if (fifo_out.size() > 0) begin
+                        this.aux_reconstr = fifo_out[$];
+                    end
+
+                    transaction_receive.pkg_id = aux_reconstr[WIDTH - 1 : WIDTH - 8];
+                    transaction_receive.pkg_payload = aux_reconstr[WIDTH - 9 : 0];
+                    transaction_receive.receive_time = $time;
                     transaction_receive.receiver_monitor = mnt_id;
 
                     if (transaction_receive.pkg_id == 8'b11111111) begin
@@ -58,4 +62,3 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
         end
     endtask
 endclass
-
