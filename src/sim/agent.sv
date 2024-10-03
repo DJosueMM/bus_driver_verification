@@ -49,37 +49,57 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                 vif_agnt_dut.reset = 0;
 
                 case(instruccion)
-                    
-                    init : begin
 
+                    init : begin  // Bloque de inicialización para setear todo en 0
+
+                        // Comprobar si hay al menos un driver activo (DRVS > 0)
                         if (DRVS == 0) begin
+                            // Si no hay más de un driver (DRVS == 0), imprime un mensaje de advertencia
                             transaccion.print("Solo hay un Driver, no se puede inicializar desde el agente");
                         end
-
                         else begin
-
+                            // Si hay más de un driver, proceder con la creación de transacciones de inicialización
+                            
+                            // Crear una nueva transacción y aleatorizar sus campos
                             transaccion = new();
                             transaccion.randomize();
-                            transaccion.pkg_payload = '0;
-                            transaccion.pkg_id = '1;
-                            transaccion.delay = 5;
+
+                            // Asignar valores específicos a los campos de la transacción
+                            transaccion.pkg_payload = '0;  // Asignar 0 al payload del paquete
+                            transaccion.pkg_id = '1;       // Asignar 1 al ID del paquete
+                            transaccion.delay = 5;         // Asignar un retraso de 5 unidades de tiempo
+
+                            // Establecer el tipo de transacción como broadcast
                             tipo_spec = broadcast;
                             transaccion.tipo_transaccion = tipo_spec;
+
+                            // Imprimir los detalles de la transacción creada
                             transaccion.print("Agente: transacción de inicializacion creada");
+
+                            // Enviar la transacción al último driver en la lista de mailboxes (agnt_drv_mbx[DRVS-1])
                             agnt_drv_mbx[DRVS-1].put(transaccion);
                             
+                            // Crear y aleatorizar otra nueva transacción
                             transaccion = new();
                             transaccion.randomize();
-                            transaccion.pkg_payload = '0;
-                            transaccion.pkg_id = '1;
-                            transaccion.delay = 10;
 
+                            // Asignar nuevamente los valores específicos a la nueva transacción
+                            transaccion.pkg_payload = '0;  // Payload de 0
+                            transaccion.pkg_id = '1;       // ID del paquete de 1
+                            transaccion.delay = 10;        // Retraso de 10 unidades de tiempo
+
+                            // El tipo de transacción se establece como broadcast
                             tipo_spec = broadcast;
                             transaccion.tipo_transaccion = tipo_spec;
+                            
+                            // Imprimir los detalles de la segunda transacción
                             transaccion.print("Agente: transacción de inicializacion creada");
+
+                            // Enviar esta transacción al primer driver en la lista de mailboxes (agnt_drv_mbx[0])
                             agnt_drv_mbx[0].put(transaccion);
                         end
                     end
+
 
                     send_random_payload_legal_id: begin  // Esta instruccion genera transacciones aleatorias
                 

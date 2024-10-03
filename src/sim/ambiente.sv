@@ -1,7 +1,7 @@
-
 class ambiente #(parameter width = 16, parameter DRVS = 8);
 
-    localparam DRIVERS_Q = DRVS;
+    localparam DRIVERS_Q = DRVS;  // Definición de un parámetro local que indica la cantidad de drivers
+    
     // Declaración de los componentes del ambiente
 
     
@@ -16,8 +16,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
 
     // Definición de la interface que conecta el DUT
-    virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_ambiente_fifo_dut;
-
+    virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_ambiente_fifo_dut;  // Interfaz virtual para la comunicación con el DUT
 
     // declaración de los mailboxes
     mbx_test_agent       test_agent_mbx;                      // mailbox del test al agente         
@@ -38,13 +37,9 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
         // Instanciación de los componentes del ambiente
         for (int i = 0; i < DRVS; i++) begin
-
-            driver_inst         [i] = new(i);
-            //monitor_inst        [i] = new(i);
-
-            agent_driver_mbx    [i] = new();
-            //driver_checker_mbx  [i] = new();
-            //monitor_checker_mbx [i] = new();
+            driver_inst         [i] = new(i);  // Instanciación de cada driver con su ID
+            //monitor_inst        [i] = new(i);  // Instanciación de cada monitor (comentado)
+            agent_driver_mbx    [i] = new();  // Mailbox para la comunicación del agente con el driver
         end
 
         agent_inst = new();
@@ -64,33 +59,33 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         checker_inst.checker_sb_mbx = checker_sb_mbx;
 
         for (int c = 0; c < DRVS; c++) begin
-          
-            //driver
-            driver_inst[c].agnt_drv_mbx        = agent_driver_mbx  [c];
-            //driver_inst[c].drv_chkr_mbx        = driver_checker_mbx[c];
-            driver_inst[c].vif_driver_fifo_dut = vif_ambiente_fifo_dut;
+            // Driver
+            driver_inst[c].agnt_drv_mbx        = agent_driver_mbx  [c];  // Mailbox del agente al driver
+            driver_inst[c].vif_driver_fifo_dut = vif_ambiente_fifo_dut;  // Conexión del driver con la interfaz del DUT
             
-            //monitor
-            monitor_inst[c].mnt_ckecker_mbx      = monitor_checker_mbx [c];
-            monitor_inst[c].vif_monitor_fifo_dut = vif_ambiente_fifo_dut;
-
+            // Monitor
+            monitor_inst[c].mnt_ckecker_mbx      = monitor_checker_mbx [c];  // Mailbox del monitor al checker
+            monitor_inst[c].vif_monitor_fifo_dut = vif_ambiente_fifo_dut;  // Conexión del monitor con la interfaz del DUT
         end
     endfunction
 
+    // Tarea principal que ejecuta el ambiente
     virtual task run();
-        $display("[%g] El ambiente fue inicializado",$time);
+        $display("[%g] El ambiente fue inicializado",$time);  // Mensaje de inicialización
         fork
             agent_inst.run();
             checker_inst.run();
             sb_inst.run();
 
+            // Ejecución de los drivers y monitores en paralelo
             for (int j = 0; j < DRIVERS_Q; j++) begin
                 fork     
-                    automatic int a = j;
-                    driver_inst[a].run();
-                    monitor_inst[a].run();
+                    automatic int a = j;    //se declara como variable automatica para que no se mantenga el valor de j final
+                    driver_inst[a].run();  // Ejecución del driver j
+                    monitor_inst[a].run();  // Ejecución del monitor j
                 join_none
             end
         join_none
     endtask
 endclass
+
