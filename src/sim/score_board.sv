@@ -133,7 +133,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                 end
 
                 default: begin
-                    $display("Error: Consulta no reconocida");
+                    
                 end
             endcase
         end
