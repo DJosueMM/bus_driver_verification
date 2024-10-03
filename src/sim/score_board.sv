@@ -32,7 +32,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
         $display("[%g] El Score Board fue inicializado", $time); // Mensaje de inicialización
   
         forever begin
-            
+
             instrucciones_driver_monitor #(.WIDTH(width)) complete_transaction;
             @(posedge vif_sb_fifo_dut.clk); // Esperar al flanco positivo del reloj
             clk_cycles++;
@@ -66,8 +66,8 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
             end
 
             // Procesar el mailbox de comandos del test
-            test_sb_mbx.tryget(consulta_test_sb); // Obtener la transacción del mailbox
-                
+            test_sb_mbx.try_get(consulta_test_sb); // Obtener la transacción del mailbox
+               
             case (consulta_test_sb)
 
                 transacciones_completadas: begin
