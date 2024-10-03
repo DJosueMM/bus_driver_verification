@@ -4,9 +4,9 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     localparam DRIVERS_Q = DRVS;
     // Declaración de los componentes del ambiente
 
+    score_board #(.WIDTH(width), .DRVS(DRVS)) sb_inst;
     checker #(.WIDTH(width), .DRVS(DRVS)) checker_inst;
     agent   #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
-    score_board #(.WIDTH(width), .DRVS(DRVS)) sb_inst;
     driver  #(.WIDTH(width), .DRVS(DRVS)) driver_inst  [DRVS - 1 : 0];
     monitor #(.WIDTH(width), .DRVS(DRVS)) monitor_inst [DRVS - 1 : 0];
     
