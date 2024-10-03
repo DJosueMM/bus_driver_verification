@@ -85,6 +85,7 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                             transaction_send.send_time = $time;
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time
                             drv_chkr_mbx.put(transaction_send); //se envia al checker
+                            $display("[ %g ] El Driver [%g] envio la transaccion al checker", $time, drv_id);
                             fifo_in.pop_back();
                         end
 
@@ -131,6 +132,7 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                             transaction_send.send_time = $time;
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time
                             drv_chkr_mbx.put(transaction_send); //se envia al checker
+                            $display("[ %g ] El Driver [%g] envio la transaccion al checker", $time, drv_id);
                             fifo_in.pop_back();
                         end
 
