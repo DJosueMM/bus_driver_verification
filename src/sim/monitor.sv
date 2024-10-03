@@ -35,7 +35,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                     
                     transaction_receive= new();
                     
-                    assign transaction_receive.pkg_id = {shift_aux{1'b0}, vif_monitor_fifo_dut.D_push};
+                    assign transaction_receive.pkg_id = {{shift_aux{1'b0}}, vif_monitor_fifo_dut.D_push};
                     assign transaction_receive.pkg_payload = vif_monitor_fifo_dut.D_push;
                     transaction_receive.receive_time = $time;
                     transaction_receive.receiver_monitor = mnt_id;
