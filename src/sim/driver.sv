@@ -8,6 +8,8 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
     virtual dut_compl_if # (.width(WIDTH), .drvs(DRVS), .bits(1)) vif_driver_fifo_dut;
 
     logic [WIDTH - 1 : 0] fifo_in [$];
+    logic [7 : 0] current_pkg_id;
+    logic [WIDTH - 9 : 0] current_payload;
 
     int espera;
 
@@ -89,6 +91,10 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                         fifo_in.push_front({transaction_send.pkg_id, transaction_send.pkg_payload});  //aqui se lo metemos a la fifo de entrada
                         $display("pkg_payload[%h]", transaction_send.pkg_payload);
                         $display("pkg_id[%h]", transaction_send.pkg_id);
+                        this.current_payload = transaction_send.pkg_payload;
+                        this.current_pkg_id = transaction_send.pkg_id;
+                        $display("pkg_payload[%h]", current_payload);aws
+                        $display("pkg_id[%h]", current_pkg_id);
                         $display("TENGO ESTO EN LA FIFO [%h]", fifo_in[1]);
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");
     
