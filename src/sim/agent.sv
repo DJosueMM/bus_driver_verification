@@ -179,7 +179,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion.max_delay = max_retardo;
                             driver_spec = $urandom_range(0, DRVS - 1);
                             id_spec = $urandom_range(0, DRVS - 1);  // Se elige un ID aleatorio
-                            transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
+                            transaccion.pkg_id = '1; // Se asigna el ID a la transacción
 
                             rand_broadcast = $urandom_range(0, 1);
 
