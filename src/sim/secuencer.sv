@@ -22,7 +22,6 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         test_sb_mbx    = new();
         // Definición y conexión del driver
         ambiente_inst = new();
-        consulta_test_sb.new();
         ambiente_inst.sb_inst.test_sb_mbx = test_sb_mbx;
         ambiente_inst.vif_ambiente_fifo_dut = vif_test_fifo_dut;
         ambiente_inst.test_agent_mbx = test_agent_mbx;
@@ -54,7 +53,7 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         $display("[%g] Test: Enviada la primera instruccion al agente llenado aleatorio con num_transacciones %g", $time,num_transacciones);
 
         #20000
-
+        
         consulta_test_sb = complete_report;
         test_sb_mbx.put(consulta_test_sb);
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
