@@ -87,6 +87,8 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                     @(posedge vif_driver_fifo_dut.clk); begin
 
                         fifo_in.push_front({transaction_send.pkg_id, transaction_send.pkg_payload});  //aqui se lo metemos a la fifo de entrada
+                        $display("pkg_payload[%h]", transaction_send.pkg_payload);
+                        $display("pkg_id[%h]", transaction_send.pkg_id);
                         $display("TENGO ESTO EN LA FIFO [%h]", fifo_in[1]);
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");
     
