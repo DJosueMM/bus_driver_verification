@@ -83,8 +83,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                         revisando = new();
                         revisando = driver_fifo[w];
                         $display("[%g] Checker: revisando coincidencia de transaccion recibida en el monitor con la transaccion [%g]", $time, w)
-                        if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload && 
-                            this.rcv_mnt_mnt == revisando.receiver_monitor && this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
+                        if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload && this.rcv_mnt_mnt == revisando.receiver_monitor && this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
                         
                             $display ("[%g] Checker: las transacciones coinciden", $time)
                             this.match_found = 1;
