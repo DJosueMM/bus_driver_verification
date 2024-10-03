@@ -7,8 +7,7 @@
 `include "agent.sv"
 `include "ambiente.sv"
 `include "secuencer.sv"
-
-//`include "score_board.sv"
+`include "score_board.sv"
 
 //-----------------------------------------------//
 // Modulo para correr la prueba //
