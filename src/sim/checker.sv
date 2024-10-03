@@ -100,7 +100,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
     
                             transaccion_to_sb.print("Checker: transaccion completa reconstruida");
                             checker_sb_mbx.put(transaccion_to_sb);
-                            $display ("[%g] Checker: transaccion enviada al sb", $time)
+                            $display ("[%g] Checker: transaccion enviada al sb", $time);
                             driver_fifo.delete(w);
                             break;
                         end
