@@ -49,8 +49,14 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
             @(posedge vif_checker_fifo_dut.clk);
             // Iterar sobre todas las transacciones de los drivers
             this.match_found = 0;  // Reiniciar indicador de coincidencia
+            this.pkg_id_mnt = '0;
+            this.pkg_payload_mnt = '0;
+            this.rcv_mnt_mnt = 0;
+            this.tipo_transaccion_mnt = '0;
+            this.match_found = 0;
             this.success_get_driver = 0;
             this.success_get_monitor = 0;
+
             for (int i = 0; i < DRVS; i++) begin
                 
                 this.success_get_driver = driver_checker_mbx[i].try_get(transaccion_drv_received);  // Intentar recibir la transacción del driver
@@ -58,7 +64,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                 
                 if (this.success_get_driver) begin
                     // Añadir la transacción recibida a la FIFO correspondiente
-                    driver_fifo.push_back(transaccion_drv_received);
+                    driver_fifo.push_front(transaccion_drv_received);
                     $display("Se añadió una transacción a la FIFO del Driver[%0d]", i);
 
                     transaccion_drv_received.print("Checker: Se recibe transacción desde el driver");
