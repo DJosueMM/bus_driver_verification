@@ -91,8 +91,8 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
 
                         this.current_payload = transaction_send.pkg_payload;
                         this.current_pkg_id = transaction_send.pkg_id;
-                        this.current_data_tx = {transaction_send.pkg_id, transaction_send.pkg_payload};
-                        fifo_in.push_front(current_data_tx);  //aqui se lo metemos a la fifo de entrada
+                        this.current_data_tx = {current_pkg_id, current_payload};
+                        fifo_in.push_front(this.current_data_tx);  //aqui se lo metemos a la fifo de entrada
                         
                         $display("pkg_payload[%h]", transaction_send.pkg_payload);
                         $display("pkg_id[%h]", transaction_send.pkg_id);
