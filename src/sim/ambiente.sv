@@ -3,10 +3,12 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
     localparam DRIVERS_Q = DRVS;
     // Declaración de los componentes del ambiente
+    
+    checker #(.WIDTH(width), .DRVS(DRVS)) checker_inst;
     agent   #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
-    driver  #(.WIDTH(width),.DRVS(DRVS)) driver_inst  [DRVS - 1 : 0];
-    monitor #(.WIDTH(width),.DRVS(DRVS)) monitor_inst [DRVS - 1 : 0];
-    checker #(.WIDTH(width),.DRVS(DRVS)) checker_inst;
+    driver  #(.WIDTH(width), .DRVS(DRVS)) driver_inst  [DRVS - 1 : 0];
+    monitor #(.WIDTH(width), .DRVS(DRVS)) monitor_inst [DRVS - 1 : 0];
+    
 
 
     // Definición de la interface que conecta el DUT
