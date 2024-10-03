@@ -1,7 +1,7 @@
 class score_board # (parameter width = 16, parameter DRVS = 4);
 
     // Mailboxes para la comunicación
-    mbx_checker_sb chkr_sb_mbx;      // Mailbox para recibir transacciones del monitor
+    mbx_checker_sb checker_sb_mbx;      // Mailbox para recibir transacciones del monitor
     mbx_test_sb    test_sb_mbx;      // Mailbox para recibir comandos del test
 
     // Interfaz del scoreboard
@@ -41,8 +41,8 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
             instrucciones_driver_monitor #(.WIDTH(width)) complete_transaction;
       
             // Procesar transacciones en el mailbox del scoreboard
-            if (chkr_sb_mbx.num() > 0) begin
-                chkr_sb_mbx.get(complete_transaction); // Obtener la transacción del mailbox
+            if (checker_sb_mbx.num() > 0) begin
+                checker_sb_mbx.get(complete_transaction); // Obtener la transacción del mailbox
                 $display("[%g] SB recibe una transaccion del Checker", $time);
                 
                 transacciones_completadas ++;
