@@ -6,6 +6,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
     int mnt_id;
     //logic [WIDTH - 1 : 0] fifo_out [$];
     logic [WIDTH - 1 : 0] aux_reconstr;
+    localparam shift_aux = WIDTH - 8;
 
     function new(int monitor_id = 0);
         this.mnt_id = monitor_id;
@@ -26,15 +27,16 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
             
             $display("[%g] El Monitor [%g] espera por una transacción", $time, mnt_id);
 
-            @(posedge vif_monitor_fifo_dut.clk); begin
+            @(posedge vif_monitor_fifo_dut.clk);
+
                 if (vif_monitor_fifo_dut.push[0][mnt_id] == 1) begin
                                       
                     $display("[%g] El Monitor [%g] obtuvo un dato del DUT", $time, mnt_id);
                     
                     transaction_receive= new();
                     
-                    transaction_receive.pkg_id = vif_monitor_fifo_dut.D_push[WIDTH - 1 : WIDTH - 8];
-                    transaction_receive.pkg_payload = vif_monitor_fifo_dut.D_push[WIDTH - 9 : WIDTH - 0];
+                    transaction_receive.pkg_id = {shift_aux{1'b0}, vif_monitor_fifo_dut.D_push};
+                    transaction_receive.pkg_payload = vif_monitor_fifo_dut.D_push;
                     transaction_receive.receive_time = $time;
                     transaction_receive.receiver_monitor = mnt_id;
 
@@ -53,6 +55,5 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                     $display("[%g] El Monitor [%g] envio la transaccion al Checker", $time, mnt_id);
                 end
             end
-        end
     endtask
 endclass
