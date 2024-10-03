@@ -86,7 +86,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                         if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload &&
                             this.rcv_mnt_mnt == revisando.receiver_monitor && this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
                         
-                            $display ("[%g] Checker: las transacciones coinciden", $time)
+                            $display ("[%g] Checker: las transacciones coinciden", $time);
                             this.match_found = 1;
                             transaccion_to_sb = new();
                             transaccion_to_sb.max_delay        = transaccion_drv_received.max_delay;
