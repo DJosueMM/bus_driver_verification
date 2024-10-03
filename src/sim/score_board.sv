@@ -1,4 +1,4 @@
-class score_board #(parameter width = 16, parameter DRVS = 4);
+class score_board # (parameter width = 16, parameter DRVS = 4);
 
     // Mailboxes para la comunicación
     mbx_checker_sb chkr_sb_mbx;      // Mailbox para recibir transacciones del monitor
