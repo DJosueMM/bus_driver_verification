@@ -107,7 +107,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                     end
 
                     if (this.match_found == 0) begin
-                        $display ("[%g] ERROR Checker: las transaccion recibida no coincide con ninguna enviada", $time)
+                        $display ("[%g] ERROR Checker: las transaccion recibida no coincide con ninguna enviada", $time);
                     end
                 end
             end
