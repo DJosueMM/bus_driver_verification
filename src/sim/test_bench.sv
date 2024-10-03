@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
-`include "score_board.sv"
 `include "Library.sv"
 `include "interface_transactions.sv"
+`include "score_board.sv"
 `include "checker.sv"
 `include "driver.sv"
 `include "monitor.sv"

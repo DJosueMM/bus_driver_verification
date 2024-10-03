@@ -1,11 +1,9 @@
 class score_board # (parameter width = 16, parameter DRVS = 4);
 
-    // Interfaz del scoreboard
     virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_sb_fifo_dut;
 
-    consulta_sb consulta_test_sb; // Transacción recibida
+    consulta_sb consulta_test_sb;
 
-    // Mailboxes para la comunicación
     mbx_checker_sb checker_sb_mbx;     
     mbx_test_sb test_sb_mbx;
 
@@ -18,7 +16,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
     int time_elapsed = 0;
     logic [31:0] avr_delay_terminal [DRVS - 1:0];
 
-    integer csv_file;      //CSV
+    integer csv_file;    
 
     task run();
         // Abrir el archivo CSV para escritura
