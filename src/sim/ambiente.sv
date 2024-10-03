@@ -71,9 +71,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
                 fork     
                     automatic int a = j;
                     driver_inst[a].run();
-                    $display("[%g] El driver [%g] fue inicializado", $time, a);
                     monitor_inst[a].run();
-                    $display("[%g] El monitor [%g] fue inicializado", $time, a);
                 join_none
             end
         join_none
