@@ -1,13 +1,15 @@
 class score_board # (parameter width = 16, parameter DRVS = 4);
 
-    // Mailboxes para la comunicación
-    //mbx_checker_sb checker_sb_mbx;     
-    mbx_test_sb test_sb_mbx;
+    
 
     // Interfaz del scoreboard
     virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_sb_fifo_dut;
 
     consulta_sb consulta_test_sb; // Transacción recibida
+
+    // Mailboxes para la comunicación
+    mbx_checker_sb checker_sb_mbx;     
+    mbx_test_sb test_sb_mbx;
 
     int transacciones_completadas = 0;  
     int instr_broadcast = 0;               
