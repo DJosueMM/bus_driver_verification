@@ -32,10 +32,11 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
         $display("[%g] El Score Board fue inicializado", $time); // Mensaje de inicialización
   
         forever begin
+            
+            instrucciones_driver_monitor #(.WIDTH(width)) complete_transaction;
             @(posedge vif_sb_fifo_dut.clk); // Esperar al flanco positivo del reloj
             clk_cycles++;
             time_elapsed = clk_cycles * 20;
-            instrucciones_driver_monitor #(.WIDTH(width)) complete_transaction;
       
             // Procesar transacciones en el mailbox del scoreboard
             if (checker_sb_mbx.num() > 0) begin
