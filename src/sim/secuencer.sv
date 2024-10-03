@@ -53,7 +53,7 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         $display("[%g] Test: Enviada la primera instruccion al agente llenado aleatorio con num_transacciones %g", $time,num_transacciones);
 
         #20000
-        test_sb_mbx.new();
+   
         consulta_test_sb.new();
         consulta_test_sb = complete_report;
         test_sb_mbx.put(consulta_test_sb);
