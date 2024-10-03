@@ -53,7 +53,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
         // Conexión de las interfaces y mailboxes en el ambiente
         sb_inst.vif_sb_fifo_dut   = vif_ambiente_fifo_dut;
-        sb_inst.chkr_sb_mbx       = checker_sb_mbx;
+        sb_inst.checker_sb_mbx    = checker_sb_mbx;
         sb_inst.test_sb_mbx       = test_sb_mbx;
         agent_inst.vif_agnt_dut   = vif_ambiente_fifo_dut;
         checker_inst.vif_checker_fifo_dut = vif_ambiente_fifo_dut;
