@@ -37,16 +37,17 @@ typedef enum {
 ////////////////////////////////////////
 typedef enum {
 
-    pkg_rx,
-    pkg_tx,
-    avg_delay,
-    total_avg_delay,
-    total_transactions,
-    broadcast_report,
-    result_condition,
-    total_report
+    transacciones_completadas, 
+    instr_broadcast,             
+    instr_send,                    
+    latencia, 
+    total_avg_delay,                    
+    clk_cycles,
+    time_elapsed,
+    complete_report
 
 } consulta_sb;
+     $fdisplay(csv_file, "Tiempo, Transacciones Completadas, Instr_Broadcast, Instr_Send, Latencia, Total_avg_Delay, Clk_Cycles, Time_elapsed, Monitor_Terminal, Delay_Terminal");
 
 // Clase para definir los datos que maneja y sus detalles las instrucciones driver_monitor
 // estos tipos de datos se transmiten desde el agente al driver_monitor y desde el driver_monitor al checker

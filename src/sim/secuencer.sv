@@ -1,11 +1,13 @@
 class secuencer #(parameter width = 16, parameter DRVS = 8);
 
     mbx_test_agent test_agent_mbx;
+    mbx_test_sb    test_sb_mbx;
 
     parameter num_transacciones = 5;
     parameter max_retardo = 4;
 
     instrucciones_agente instr_agent;
+    consulta_sb consulta_test_sb;
 
     // Definición del ambiente de la prueba
     ambiente #(.width(width),.DRVS(DRVS)) ambiente_inst;
@@ -17,9 +19,10 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
     function new();
         // instanciación de los mailboxes
         test_agent_mbx = new();
-
+        test_sb_mbx    = new();
         // Definición y conexión del driver
         ambiente_inst = new();
+        ambiente_inst.sb_inst.test_sb_mbx = test_sb_mbx;
         ambiente_inst.vif_ambiente_fifo_dut = vif_test_fifo_dut;
         ambiente_inst.test_agent_mbx = test_agent_mbx;
         ambiente_inst.agent_inst.test_agent_mbx = test_agent_mbx;
@@ -50,8 +53,13 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         $display("[%g] Test: Enviada la primera instruccion al agente llenado aleatorio con num_transacciones %g", $time,num_transacciones);
 
         #20000
+        test_sb_mbx.new();
+        consulta_test_sb.new();
+        consulta_test_sb = complete_report;
+        test_sb_mbx.put(consulta_test_sb);
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
-        #20
+        ambiente_inst.sb_inst.close_csv();
+        #2000
         $finish;
     endtask
 endclass
