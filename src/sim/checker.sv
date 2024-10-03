@@ -9,7 +9,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
     mbx_checker_sb      checker_sb_mbx;
 
     // Crear FIFOs para cada mailbox
-    queue [instrucciones_driver_monitor#(.WIDTH(WIDTH))] driver_fifo; // FIFOs para los drivers
+    instrucciones_driver_monitor#(.WIDTH(WIDTH)) driver_fifo [$]; // FIFOs para los drivers
   
     // Definición de la interface a la que se conectará el DUT
     virtual dut_compl_if # (.width(WIDTH), .drvs(DRVS), .bits(1)) vif_checker_fifo_dut;
@@ -59,7 +59,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                 
                 if (this.success_get_driver) begin
                     // Añadir la transacción recibida a la FIFO correspondiente
-                    driver_fifo[i].push_back(transaccion_drv_received);
+                    driver_fifo.push_back(transaccion_drv_received);
                     $display("Se añadió una transacción a la FIFO del Driver[%0d]", i);
 
                     transaccion_drv_received.print("Checker: Se recibe transacción desde el driver");
