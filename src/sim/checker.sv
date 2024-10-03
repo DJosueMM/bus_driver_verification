@@ -49,6 +49,8 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
             @(posedge vif_checker_fifo_dut.clk);
             // Iterar sobre todas las transacciones de los drivers
             this.match_found = 0;  // Reiniciar indicador de coincidencia
+            this.success_get_driver = 0;
+            this.success_get_monitor = 0;
             for (int i = 0; i < DRVS; i++) begin
                 
                 this.success_get_driver = driver_checker_mbx[i].try_get(transaccion_drv_received);  // Intentar recibir la transacción del driver
