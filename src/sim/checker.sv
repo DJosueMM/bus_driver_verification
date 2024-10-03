@@ -49,7 +49,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
         forever begin
 
             
-            @(pos_edge vif_checker_fifo_dut.clk);
+            @(posedge vif_checker_fifo_dut.clk);
             // Iterar sobre todas las transacciones de los drivers
             this.match_found = 0;  // Reiniciar indicador de coincidencia
             for (int i = 0; i < DRVS; i++) begin
