@@ -43,13 +43,13 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Comenzando la inicializacion", $time);
         
-        //#100;
+        #1000;
 
-        //instr_agent = send_random_payload_legal_id;
-        //test_agent_mbx.put(instr_agent);
-        //$display("[%g] Test: Enviada la primera instruccion al agente llenado aleatorio con num_transacciones %g", $time,num_transacciones);
+        instr_agent = send_random_payload_legal_id;
+        test_agent_mbx.put(instr_agent);
+        $display("[%g] Test: Enviada la primera instruccion al agente llenado aleatorio con num_transacciones %g", $time,num_transacciones);
 
-        #10000
+        #20000
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
         #20
         $finish;

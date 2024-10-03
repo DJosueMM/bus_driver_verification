@@ -50,7 +50,7 @@ typedef enum {
 
 // Clase para definir los datos que maneja y sus detalles las instrucciones driver_monitor
 // estos tipos de datos se transmiten desde el agente al driver_monitor y desde el driver_monitor al checker
-class instrucciones_driver_monitor # (parameter WIDTH = 4); 
+class instrucciones_driver_monitor # (parameter WIDTH = 16); 
    
 
     // Definición de los miembros de la clase
@@ -61,7 +61,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 4);
     int                      send_time;         // Tiempo en el que se envió el paquete
     int                      receive_time;      // Tiempo en el que se recibió el paquete
     int                      receiver_monitor;  // Monitor receptor del paquete
-    rand tipo_trans          tipo_transaccion;  //Tipo de transaccion declarado tipo_trans
+    rand tipo_trans          tipo_transaccion;  // Tipo de transaccion declarado tipo_trans
    
    //Constraint de retardo
     constraint const_delay {
@@ -144,7 +144,7 @@ typedef mailbox # (instrucciones_driver_monitor) mbx_monitor_checker;
 ////////////////////////////////////////
 // Definición de arreglo de mailboxes de tipo definido res_check para comunicar las interfaces CHECKER -> SCOREBOARD 
 ////////////////////////////////////////
-//typedef mailbox # (res_check) mbx_checker_sb;
+typedef mailbox # (instrucciones_driver_monitor) mbx_checker_sb;
 
 
 ////////////////////////////////////////

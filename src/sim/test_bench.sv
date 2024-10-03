@@ -1,12 +1,13 @@
 `timescale 1ns/1ps
 `include "Library.sv"
 `include "interface_transactions.sv"
+`include "checker.sv"
 `include "driver.sv"
 //`include "monitor.sv"
 `include "agent.sv"
 `include "ambiente.sv"
 `include "secuencer.sv"
-//`include "checker.sv"
+
 //`include "score_board.sv"
 
 //-----------------------------------------------//
@@ -41,6 +42,7 @@ module test_bench;
     clk    = 0;
     test_0 = new();
     for (int w = 0; w < DRVS; w++) begin
+      test_0.ambiente_inst.checker_inst.vif_checker_fifo_dut    = final_if;
       test_0.ambiente_inst.driver_inst[w].vif_driver_fifo_dut   = final_if;
       test_0.ambiente_inst.agent_inst.vif_agnt_dut              = final_if;
       //test_0.ambiente_inst.monitor_inst[w].vif_monitor_fifo_dut = final_if;

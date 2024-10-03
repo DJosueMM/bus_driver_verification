@@ -8,6 +8,9 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
     virtual dut_compl_if # (.width(WIDTH), .drvs(DRVS), .bits(1)) vif_driver_fifo_dut;
 
     logic [WIDTH - 1 : 0] fifo_in [$];
+    logic [7 : 0]         current_pkg_id;
+    logic [WIDTH - 9 : 0] current_payload;
+    logic [WIDTH - 1 : 0] current_data_tx;
 
     int espera;
 
@@ -49,8 +52,17 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
           
                     @(posedge vif_driver_fifo_dut.clk); begin
 
-                        fifo_in.pop_back();
-                        fifo_in.push_front({transaction_send.pkg_id, transaction_send.pkg_payload});  //aqui se lo metemos a la fifo de entrada
+                        this.current_payload = transaction_send.pkg_payload;
+                        this.current_pkg_id = transaction_send.pkg_id;
+                        this.current_data_tx = {current_pkg_id, current_payload};
+                        fifo_in.push_front(this.current_data_tx);  //aqui se lo metemos a la fifo de entrada
+                        
+                        $display("pkg_payload[%h]", transaction_send.pkg_payload);
+                        $display("pkg_id[%h]", transaction_send.pkg_id);
+                        $display("pkg_payload[%h]", current_payload);
+                        $display("pkg_id[%h]", current_pkg_id);
+                        $display("current_data_tx[%h]", current_data_tx);
+
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");
     
                         //se comprueba si hay datos pendientes para entrar al dut en la fifo de entrada
@@ -71,22 +83,36 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                         if (vif_driver_fifo_dut.pop[0][drv_id] == 1) begin
                             vif_driver_fifo_dut.D_pop[0][drv_id] = fifo_in[$];
                             transaction_send.send_time = $time;
+                            transaction_send.receiver_monitor = transaction_send.pkg_id;
+                            transaction_send.pkg_payload      = transaction_send.pkg_payload;
+                            transaction_send.tipo_transaccion = transaction_send.tipo_transaccion;
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time
-                            //drv_chkr_mbx.put(transaction_send); //se envia al checker
+                            drv_chkr_mbx.put(transaction_send); //se envia al checker
+                            $display("[ %g ] El Driver [%g] envio la transaccion al checker", $time, drv_id);
+                            fifo_in.pop_back();
                         end
 
                         else begin
                             transaction_send.print("Driver: Transacción esperando en la fifo de entrada el pop del DUT"); //si aun no esta listo el dut, se espera
                         end
                     end                
-                end 
+                end  
 
                 broadcast: begin
           
                     @(posedge vif_driver_fifo_dut.clk); begin
 
-                        fifo_in.pop_back();
-                        fifo_in.push_front({transaction_send.pkg_id, transaction_send.pkg_payload});  //aqui se lo metemos a la fifo de entrada
+                        this.current_payload = transaction_send.pkg_payload;
+                        this.current_pkg_id = transaction_send.pkg_id;
+                        this.current_data_tx = {current_pkg_id, current_payload};
+                        fifo_in.push_front(this.current_data_tx);  //aqui se lo metemos a la fifo de entrada
+                        
+                        $display("pkg_payload[%h]", transaction_send.pkg_payload);
+                        $display("pkg_id[%h]", transaction_send.pkg_id);
+                        $display("pkg_payload[%h]", current_payload);
+                        $display("pkg_id[%h]", current_pkg_id);
+                        $display("current_data_tx[%h]", current_data_tx);
+
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");
     
                         //se comprueba si hay datos pendientes para entrar al dut en la fifo de entrada
@@ -107,8 +133,13 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                         if (vif_driver_fifo_dut.pop[0][drv_id] == 1) begin
                             vif_driver_fifo_dut.D_pop[0][drv_id] = fifo_in[$];
                             transaction_send.send_time = $time;
+                            transaction_send.receiver_monitor = transaction_send.pkg_id;
+                            transaction_send.pkg_payload      = transaction_send.pkg_payload;
+                            transaction_send.tipo_transaccion = transaction_send.tipo_transaccion;
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time
-                            //drv_chkr_mbx.put(transaction_send); //se envia al checker
+                            drv_chkr_mbx.put(transaction_send); //se envia al checker
+                            $display("[ %g ] El Driver [%g] envio la transaccion al checker", $time, drv_id);
+                            fifo_in.pop_back();
                         end
 
                         else begin
