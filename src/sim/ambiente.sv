@@ -16,7 +16,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     // declaración de los mailboxes
     mbx_test_agent       test_agent_mbx;                      // mailbox del test al agente         
     mbx_agent_driver     agent_driver_mbx    [DRVS - 1 : 0];  // mailbox del agente al driver
-    mbx_driver_checker   driver_checker_mbx  [DRVS - 1 : 0];  // mailbox del driver al checker
+    //mbx_driver_checker   driver_checker_mbx  [DRVS - 1 : 0];  // mailbox del driver al checker
     //mbx_monitor_checker  monitor_checker_mbx [DRVS - 1 : 0];  // mailbox del monitor al checker
     //mbx_checker_sb       checker_sb_mbx;                       // mailbox del checker al scoreboard
     //mbx_test_sb          test_sb_mbx;                          // mailbox del test al scoreboard
@@ -35,7 +35,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
             //monitor_inst        [i] = new(i);
 
             agent_driver_mbx    [i] = new();
-            driver_checker_mbx  [i] = new();
+            //driver_checker_mbx  [i] = new();
             //monitor_checker_mbx [i] = new();
         end
 
@@ -53,7 +53,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
           
             //driver
             driver_inst[c].agnt_drv_mbx        = agent_driver_mbx  [c];
-            driver_inst[c].drv_chkr_mbx        = driver_checker_mbx[c];
+            //driver_inst[c].drv_chkr_mbx        = driver_checker_mbx[c];
             driver_inst[c].vif_driver_fifo_dut = vif_ambiente_fifo_dut;
             
             //monitor
