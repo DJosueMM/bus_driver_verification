@@ -3,6 +3,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion_drv_received;   // Transacción recibida del driver
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion_mnt_received;   // Transacción recibida del monitor
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion_to_sb;          // Auxiliar para guardar transacciones temporales
+    instrucciones_driver_monitor #(.WIDTH(WIDTH)) revisando;
     
     mbx_driver_checker  driver_checker_mbx [DRVS - 1 : 0];  // Mailbox del driver al checker
     mbx_monitor_checker mnt_checker_mbx    [DRVS - 1 : 0];  // Mailbox del monitor al checker
@@ -79,7 +80,8 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
 
                         this.match_found = 0;
                         // Acceder al elemento en la posición w de la cola
-                        instrucciones_driver_monitor revisando = driver_fifo[w];
+                        revisando = new();
+                        revisando = driver_fifo[w];
                         $display("[%g] Checker: revisando coincidencia de transaccion recibida en el monitor con la transaccion [%g]", $time, w)
                         if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload && 
                             this.rcv_mnt_mnt == revisando.receiver_monitor && this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
