@@ -51,7 +51,7 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
 
                         fifo_in.pop_back();
                         fifo_in.push_front({transaction_send.pkg_id, transaction_send.pkg_payload});  //aqui se lo metemos a la fifo de entrada
-                        $display("TENGO ESTO EN LA FIFO [%h]" fifo_in[0]);
+                        $display("TENGO ESTO EN LA FIFO [%h]", fifo_in[0]);
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");
     
                         //se comprueba si hay datos pendientes para entrar al dut en la fifo de entrada
