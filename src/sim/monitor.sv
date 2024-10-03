@@ -2,9 +2,10 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
  
     mbx_monitor_checker mnt_ckecker_mbx;  
     virtual dut_compl_if # (.width(WIDTH), .drvs(DRVS), .bits(1)) vif_monitor_fifo_dut;
-    instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaction_receive;
 
     int mnt_id;
+    //logic [WIDTH - 1 : 0] fifo_out [$];
+    logic [WIDTH - 1 : 0] aux_reconstr;
 
     function new(int monitor_id = 0);
         this.mnt_id = monitor_id;
@@ -14,14 +15,15 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
         
         $display("[%g] El monitor [%g] fue inicializado", $time, mnt_id);
         
+        vif_monitor_fifo_dut.push   [0][mnt_id] = '0;
+        vif_monitor_fifo_dut.D_push [0][mnt_id] = '0;
         
         @(posedge vif_monitor_fifo_dut.clk);
 
-        vif_monitor_fifo_dut.push[0][mnt_id] = '0;
-        vif_monitor_fifo_dut.D_push[0][mnt_id] = '0;
-
         forever begin
-        
+
+            instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaction_receive;
+            
             $display("[%g] El Monitor [%g] espera por una transacción", $time, mnt_id);
 
             @(posedge vif_monitor_fifo_dut.clk);
@@ -32,8 +34,8 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                     
                     transaction_receive= new();
                     
-                    transaction_receive.pkg_id = vif_monitor_fifo_dut.D_push[0][mnt_id][WIDTH - 1 : WIDTH - 8];
-                    transaction_receive.pkg_payload = vif_monitor_fifo_dut.D_push[0][mnt_id][WIDTH - 9 : 0];
+                    transaction_receive.pkg_id = vif_monitor_fifo_dut.D_push[WIDTH - 1 : WIDTH - 8];
+                    transaction_receive.pkg_payload = vif_monitor_fifo_dut.D_push[WIDTH - 9 : WIDTH - 0];
                     transaction_receive.receive_time = $time;
                     transaction_receive.receiver_monitor = mnt_id;
 
