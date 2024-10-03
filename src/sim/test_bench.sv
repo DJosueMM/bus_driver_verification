@@ -1,4 +1,5 @@
 `timescale 1ns/1ps
+`include "score_board.sv"
 `include "Library.sv"
 `include "interface_transactions.sv"
 `include "checker.sv"
@@ -7,7 +8,7 @@
 `include "agent.sv"
 `include "ambiente.sv"
 `include "secuencer.sv"
-`include "score_board.sv"
+
 
 //-----------------------------------------------//
 // Modulo para correr la prueba //
