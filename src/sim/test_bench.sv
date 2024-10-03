@@ -16,14 +16,12 @@
 module test_bench;
 
   logic     clk   = 0;
-  parameter width = 4;
+  parameter width = 16;
   parameter DRVS  = 8;
   
 
   secuencer    # (.width(width), .DRVS(DRVS)) test_0;
   dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) final_if (.clk(clk));
-
-  //fifo_if_in   #(.width(width)) _dut_monitor_if     [DRVS - 1 : 0] (.clk(clk));
 
   //BUS DRIVER    
   bs_gnrtr_n_rbtr # (.pckg_sz(width), .drvrs(DRVS)) DUT (
@@ -36,7 +34,6 @@ module test_bench;
       .D_push   (final_if.D_push)
   );
   
-  
   always #10 clk = ~clk;
 
   initial begin
@@ -44,9 +41,10 @@ module test_bench;
     clk    = 0;
     test_0 = new();
     for (int w = 0; w < DRVS; w++) begin
-      test_0.ambiente_inst.driver_inst[w].vif_driver_fifo_dut = final_if;
-      test_0.ambiente_inst.agent_inst.vif_agnt_dut = final_if;
-      test_0.vif_test_fifo_dut = final_if;
+      test_0.ambiente_inst.driver_inst[w].vif_driver_fifo_dut   = final_if;
+      test_0.ambiente_inst.agent_inst.vif_agnt_dut              = final_if;
+      //test_0.ambiente_inst.monitor_inst[w].vif_monitor_fifo_dut = final_if;
+      test_0.vif_test_fifo_dut                                  = final_if;
     end
     
     fork

@@ -150,7 +150,7 @@ typedef mailbox # (instrucciones_driver_monitor) mbx_monitor_checker;
 ////////////////////////////////////////
 // Definición de arreglo de mailboxes de tipo definido consulta_sb para comunicar las interfaces TEST -> SCOREBOARD 
 ////////////////////////////////////////
-typedef mailbox # (consulta_sb) mbx_test_sb;
+//typedef mailbox # (consulta_sb) mbx_test_sb;
 
 //agregar mailbox del driver al checker y revisarlo en el driver
 
