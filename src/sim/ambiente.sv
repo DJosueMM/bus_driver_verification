@@ -3,7 +3,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
     localparam DRIVERS_Q = DRVS;
     // Declaración de los componentes del ambiente
-    
+
     checker #(.WIDTH(width), .DRVS(DRVS)) checker_inst;
     agent   #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
     driver  #(.WIDTH(width), .DRVS(DRVS)) driver_inst  [DRVS - 1 : 0];
@@ -51,7 +51,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         agent_inst.test_agent_mbx = test_agent_mbx;
         agent_inst.agnt_drv_mbx   = agent_driver_mbx;
         checker_inst.driver_checker_mbx = driver_checker_mbx;
-        checker_inst.mnt_checker_mbx = mnt_checker_mbx;
+        checker_inst.mnt_checker_mbx = monitor_checker_mbx;
         checker_inst.checker_sb_mbx = checker_sb_mbx;
 
         for (int c = 0; c < DRVS; c++) begin

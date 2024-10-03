@@ -26,10 +26,6 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
 
     // Constructor
     function new();
-        this.pkg_id_drv = '0;
-        this.pkg_payload_drv = '0;
-        this.rcv_mnt_drv = 0;
-        this.tipo_transaccion_drv = '0;
 
         this.pkg_id_mnt = '0;
         this.pkg_payload_mnt = '0;
