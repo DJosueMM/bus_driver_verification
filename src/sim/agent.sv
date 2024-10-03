@@ -179,12 +179,13 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion.max_delay = max_retardo;
                             driver_spec = $urandom_range(0, DRVS - 1);
                             id_spec = $urandom_range(0, DRVS - 1);  // Se elige un ID aleatorio
-                            transaccion.pkg_id = '1; // Se asigna el ID a la transacción
+
 
                             rand_broadcast = $urandom_range(0, 1);
 
                             if (rand_broadcast == 1) begin
                                 tipo_spec = broadcast;
+                                transaccion.pkg_id = '1; // Se asigna el ID a la transacción // Se asigna el ID a la transacción como broadcast
                             end
                             
                             else begin  
@@ -198,17 +199,18 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                     end
 
                     all_broadcast: begin         // Esta instruccion genera transacciones broadcast para todos los drivers
-                        const_illegal_ID.constraint_mode(0);
-                        const_legal_ID.constraint_mode(0);
-                        const_reset_dist.constraint_mode(0);
+
                         for(int i = 0; i < DRVS; i++) begin
                             const_illegal_ID.constraint_mode(0);
                             const_legal_ID.constraint_mode(1);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
+
                             tipo_spec = broadcast;                  // Se define el tipo de transacción
                             transaccion.tipo_transaccion = tipo_spec;
+                            transaccion.pkg_id = '1; // Se asigna el ID a la transacción como broadcast
+
                             transaccion.print("Agente: transacción all_broadcast creada");
                             agnt_drv_mbx[i].put(transaccion);
                         end
@@ -223,6 +225,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
 
                             if (rand_broadcast == 1) begin
                                 tipo_spec = broadcast;
+                                transaccion.pkg_id = '1; // Se asigna el ID a la transacción como broadcast
                             end
                             
                             else begin  
