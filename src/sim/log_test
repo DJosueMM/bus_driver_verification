@@ -6,7 +6,7 @@ Warning-[DEBUG_DEP] Option will be deprecated
 Command: vcs -Mupdate test_bench.sv -o salida -full64 -debug_all -kdb -sverilog -l \
 log_test +lint=TFIPC-L
                          Chronologic VCS (TM)
-       Version R-2020.12-SP2_Full64 -- Thu Sep 26 20:47:54 2024
+       Version R-2020.12-SP2_Full64 -- Thu Oct  3 07:15:25 2024
 
                     Copyright (c) 1991 - 2021 Synopsys, Inc.
    This software and the associated documentation are proprietary to Synopsys,
@@ -20,9 +20,11 @@ Warning-[DEBUG_DEP] Option will be deprecated
   '-debug_acc+all -debug_region+cell+encrypt' instead.
 
 Parsing design file 'test_bench.sv'
+Parsing included file 'Library.sv'.
+Back to file 'test_bench.sv'.
 Parsing included file 'interface_transactions.sv'.
 Back to file 'test_bench.sv'.
-Parsing included file 'Library.sv'.
+Parsing included file 'checker.sv'.
 Back to file 'test_bench.sv'.
 Parsing included file 'driver.sv'.
 Back to file 'test_bench.sv'.
@@ -34,10 +36,10 @@ Parsing included file 'ambiente.sv'.
 
 Error-[SE] Syntax error
   Following verilog source has syntax error :
-  "ambiente.sv", 12: token is '#'
-      fifo_if_out #(.width(width)) _driver_dut_if  [DRVS];
+  "ambiente.sv", 7: token is '#'
+      score_board #(.width(width), .DRVS(DRVS)) sb_inst;
                    ^
 
 1 warning
 1 error
-CPU time: .158 seconds to compile
+CPU time: .169 seconds to compile

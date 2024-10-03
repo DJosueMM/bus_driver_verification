@@ -37,14 +37,14 @@ typedef enum {
 ////////////////////////////////////////
 typedef enum {
 
-    pkg_rx,
-    pkg_tx,
-    avg_delay,
-    total_avg_delay,
-    total_transactions,
-    broadcast_report,
-    result_condition,
-    total_report
+    transacciones_completadas, 
+    instr_broadcast,             
+    instr_send,                    
+    latencia, 
+    total_avg_delay,                    
+    clk_cycles,
+    time_elapsed,
+    complete_report
 
 } consulta_sb;
 

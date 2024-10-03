@@ -4,10 +4,14 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     localparam DRIVERS_Q = DRVS;
     // Declaración de los componentes del ambiente
 
-    checker #(.WIDTH(width), .DRVS(DRVS)) checker_inst;
-    agent   #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
-    driver  #(.WIDTH(width), .DRVS(DRVS)) driver_inst  [DRVS - 1 : 0];
-    monitor #(.WIDTH(width), .DRVS(DRVS)) monitor_inst [DRVS - 1 : 0];
+    
+
+    score_board #(.width(width),.DRVS(DRVS)) sb_inst;
+    checker     #(.WIDTH(width), .DRVS(DRVS)) checker_inst;
+    agent       #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
+    driver      #(.WIDTH(width), .DRVS(DRVS)) driver_inst  [DRVS - 1 : 0];
+    monitor     #(.WIDTH(width), .DRVS(DRVS)) monitor_inst [DRVS - 1 : 0];
+    
     
 
 
@@ -21,14 +25,16 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     mbx_driver_checker   driver_checker_mbx  [DRVS - 1 : 0];  // mailbox del driver al checker
     mbx_monitor_checker  monitor_checker_mbx [DRVS - 1 : 0];  // mailbox del monitor al checker
     mbx_checker_sb       checker_sb_mbx;                       // mailbox del checker al scoreboard
-    //mbx_test_sb          test_sb_mbx;                          // mailbox del test al scoreboard
+    mbx_checker_sb       chkr_sb_mbx;     
+    mbx_test_sb          test_sb_mbx; 
 
 
     function new();
         // Instanciación de los mailboxes
         test_agent_mbx      = new();
         checker_sb_mbx      = new();
-        //test_sb_mbx         = new();
+        chkr_sb_mbx         = new();
+        test_sb_mbx         = new();
 
         // Instanciación de los componentes del ambiente
         for (int i = 0; i < DRVS; i++) begin
@@ -43,9 +49,12 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
         agent_inst = new();
         checker_inst = new();
-        //scoreboard_inst = new();
+        sb_inst = new();
 
         // Conexión de las interfaces y mailboxes en el ambiente
+        sb_inst.vif_sb_fifo_dut   = vif_ambiente_fifo_dut;
+        sb_inst.checker_sb_mbx    = checker_sb_mbx;
+        sb_inst.test_sb_mbx       = test_sb_mbx;
         agent_inst.vif_agnt_dut   = vif_ambiente_fifo_dut;
         checker_inst.vif_checker_fifo_dut = vif_ambiente_fifo_dut;
         agent_inst.test_agent_mbx = test_agent_mbx;
@@ -73,6 +82,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         fork
             agent_inst.run();
             checker_inst.run();
+            sb_inst.run();
 
             for (int j = 0; j < DRIVERS_Q; j++) begin
                 fork     
