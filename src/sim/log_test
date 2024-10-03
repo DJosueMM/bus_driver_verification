@@ -6,7 +6,7 @@ Warning-[DEBUG_DEP] Option will be deprecated
 Command: vcs -Mupdate test_bench.sv -o salida -full64 -debug_all -kdb -sverilog -l \
 log_test +lint=TFIPC-L
                          Chronologic VCS (TM)
-       Version R-2020.12-SP2_Full64 -- Thu Oct  3 05:07:52 2024
+       Version R-2020.12-SP2_Full64 -- Thu Oct  3 07:15:25 2024
 
                     Copyright (c) 1991 - 2021 Synopsys, Inc.
    This software and the associated documentation are proprietary to Synopsys,
@@ -33,54 +33,13 @@ Back to file 'test_bench.sv'.
 Parsing included file 'agent.sv'.
 Back to file 'test_bench.sv'.
 Parsing included file 'ambiente.sv'.
-Back to file 'test_bench.sv'.
-Parsing included file 'secuencer.sv'.
-Back to file 'test_bench.sv'.
-Top Level Modules:
-       prll_d_reg
-       prll_d_ltch_no_rst
-       prll_d_ltch
-       pos_edge
-       neg_edge
-       bs_gnrtr
-       test_bench
-TimeScale is 1 ns / 1 ps
-Notice: Ports coerced to inout, use -notice for details
-Starting vcs inline pass...
 
-16 modules and 0 UDP read.
-recompiling package vcs_paramclassrepository
-recompiling module prll_d_reg
-recompiling module prll_d_ltch_no_rst
-recompiling module prll_d_ltch
-recompiling module pos_edge
-recompiling module neg_edge
-recompiling module parallel_serial
-recompiling module serializer
-recompiling module Read_st_Mchn
-recompiling module Write_st_Mchn
-recompiling module bs_ntrfs
-recompiling module bs_gnrtr
-recompiling module bs_ntrfs_n_rbtr
-recompiling module bs_gnrtr_n_rbtr
-recompiling module dut_compl_if
-recompiling module test_bench
-All of 16 modules done
-make: Warning: File 'filelist.cu' has modification time 198 s in the future
-make[1]: Warning: File 'filelist.cu' has modification time 198 s in the future
-rm -f _cuarc*.so _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Warning: File 'filelist.cu' has modification time 198 s in the future
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-if [ -x ../salida ]; then chmod a-x ../salida; fi
-g++  -o ../salida      -rdynamic  -Wl,-rpath='$ORIGIN'/salida.daidir -Wl,-rpath=./salida.daidir \
--Wl,-rpath=/mnt/vol_NFS_rh003/tools/vcs/R-2020.12-SP2/linux64/lib -L/mnt/vol_NFS_rh003/tools/vcs/R-2020.12-SP2/linux64/lib \
--Wl,-rpath-link=./  /usr/lib64/libnuma.so.1   objs/amcQw_d.o   _2032413_archive_1.so \
-SIM_l.o      rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o \
--lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /mnt/vol_NFS_rh003/tools/vcs/R-2020.12-SP2/linux64/lib/vcs_tls.o \
--Wl,-whole-archive  -lvcsucli    -Wl,-no-whole-archive          /mnt/vol_NFS_rh003/tools/vcs/R-2020.12-SP2/linux64/lib/vcs_save_restore_new.o \
--ldl  -lc -lm -lpthread -ldl 
-../salida up to date
-make: warning:  Clock skew detected.  Your build may be incomplete.
-CPU time: .746 seconds to compile + .274 seconds to elab + .198 seconds to link
-Verdi KDB elaboration done and the database successfully generated: 0 error(s), 0 warning(s)
+Error-[SE] Syntax error
+  Following verilog source has syntax error :
+  "ambiente.sv", 7: token is '#'
+      score_board #(.width(width), .DRVS(DRVS)) sb_inst;
+                   ^
+
+1 warning
+1 error
+CPU time: .169 seconds to compile
