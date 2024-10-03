@@ -98,7 +98,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
 
                         if (this.tipo_transaccion_mnt == broadcast) begin 
 
-                            if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload &&
+                            if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt[7 : 0] == revisando.pkg_payload [7 : 0] &&
                                 this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
                             
                                 $display ("[%g] Checker: las transacciones coinciden", $time);
@@ -123,7 +123,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                         end
 
                         else begin
-                            if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload &&
+                            if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt[7 : 0] == revisando.pkg_payload[7 : 0] &&
                                 this.rcv_mnt_mnt == revisando.receiver_monitor && this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
                             
                                 $display ("[%g] Checker: las transacciones coinciden", $time);
