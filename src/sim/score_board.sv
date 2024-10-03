@@ -29,7 +29,7 @@ class score_board #(parameter width = 16, parameter DRVS = 4);
         end
         
         // Escribir la cabecera del CSV
-        $fdisplay(csv_file, "Tiempo, Transacciones Completadas, Instr_Broadcast, Instr_Send, Latencia, Total_avg_Delay, Clk_Cycles, Time_elapsed, Monitor_Terminal, Delay_Terminal");
+        $fdisplay(csv_file, "Tiempo, Transacciones_Completadas, Instr_Broadcast, Instr_Send, Latencia, Total_avg_Delay, Clk_Cycles, Time_elapsed, Monitor_Terminal, Delay_Terminal");
 
         $display("[%g] El Score Board fue inicializado", $time); // Mensaje de inicialización
   
