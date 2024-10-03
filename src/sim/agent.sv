@@ -177,8 +177,10 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
+
                             driver_spec = $urandom_range(0, DRVS - 1);
                             id_spec = $urandom_range(0, DRVS - 1);  // Se elige un ID aleatorio
+                            transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
 
 
                             rand_broadcast = $urandom_range(0, 1);
@@ -223,6 +225,10 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
 
+                            id_spec = $urandom_range(0, DRVS - 1);  // Se elige un ID aleatorio
+                            transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
+
+                            rand_broadcast = $urandom_range(0, 1);
                             if (rand_broadcast == 1) begin
                                 tipo_spec = broadcast;
                                 transaccion.pkg_id = '1; // Se asigna el ID a la transacción como broadcast
@@ -263,6 +269,10 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
                             tipo_spec = send;                  // Se define el tipo de transacción
+
+                            id_spec = $urandom_range(0, DRVS - 1);  // Se elige un ID aleatorio
+                            transaccion.pkg_id = id_spec; // Se asigna el ID a la transacción
+
                             transaccion.tipo_transaccion = tipo_spec;
                             transaccion.print("Agente: transacción all_sending_random creada");
                             agnt_drv_mbx[i].put(transaccion);
