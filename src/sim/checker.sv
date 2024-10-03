@@ -95,26 +95,55 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                         $display("this.pkg_id_mnt [%g] this.pkg_payload_mnt [%g] this.rcv_mnt_mnt [%g] this.tipo_transaccion_mnt [%p]", 
                                   this.pkg_id_mnt, this.pkg_payload_mnt, this.rcv_mnt_mnt, this.tipo_transaccion_mnt);
                         $display("[%g] Checker: revisando coincidencia de transaccion recibida en el monitor con la transaccion [%g]", $time, w);
-                        if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload &&
-                            this.rcv_mnt_mnt == revisando.receiver_monitor && this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
-                        
-                            $display ("[%g] Checker: las transacciones coinciden", $time);
-                            this.match_found = 1;
-                            transaccion_to_sb = new();
-                            transaccion_to_sb.max_delay        = transaccion_drv_received.max_delay;
-                            transaccion_to_sb.delay            = transaccion_drv_received.delay;
-                            transaccion_to_sb.pkg_id           = this.pkg_id_mnt;
-                            transaccion_to_sb.pkg_payload      = this.pkg_payload_mnt;
-                            transaccion_to_sb.send_time        = transaccion_drv_received.send_time;
-                            transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
-                            transaccion_to_sb.receiver_monitor = this.rcv_mnt_mnt;
-                            transaccion_to_sb.tipo_transaccion = this.tipo_transaccion_mnt;
-    
-                            transaccion_to_sb.print("Checker: transaccion completa reconstruida");
-                            checker_sb_mbx.put(transaccion_to_sb);
-                            $display ("[%g] Checker: transaccion enviada al sb", $time);
-                            //driver_fifo.delete(w);
-                            break;
+
+                        if (this.tipo_transaccion_mnt == broadcast) begin 
+
+                            if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload &&
+                                this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
+                            
+                                $display ("[%g] Checker: las transacciones coinciden", $time);
+                                this.match_found = 1;
+                                transaccion_to_sb = new();
+                                transaccion_to_sb.max_delay        = transaccion_drv_received.max_delay;
+                                transaccion_to_sb.delay            = transaccion_drv_received.delay;
+                                transaccion_to_sb.pkg_id           = this.pkg_id_mnt;
+                                transaccion_to_sb.pkg_payload      = this.pkg_payload_mnt;
+                                transaccion_to_sb.send_time        = transaccion_drv_received.send_time;
+                                transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
+                                transaccion_to_sb.receiver_monitor = this.rcv_mnt_mnt;
+                                transaccion_to_sb.tipo_transaccion = this.tipo_transaccion_mnt;
+        
+                                transaccion_to_sb.print("Checker: transaccion completa reconstruida");
+                                checker_sb_mbx.put(transaccion_to_sb);
+                                $display ("[%g] Checker: transaccion enviada al sb", $time);
+                                //driver_fifo.delete(w);
+                                break;
+                            end
+
+                        end
+
+                        else begin
+                            if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload &&
+                                this.rcv_mnt_mnt == revisando.receiver_monitor && this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
+                            
+                                $display ("[%g] Checker: las transacciones coinciden", $time);
+                                this.match_found = 1;
+                                transaccion_to_sb = new();
+                                transaccion_to_sb.max_delay        = transaccion_drv_received.max_delay;
+                                transaccion_to_sb.delay            = transaccion_drv_received.delay;
+                                transaccion_to_sb.pkg_id           = this.pkg_id_mnt;
+                                transaccion_to_sb.pkg_payload      = this.pkg_payload_mnt;
+                                transaccion_to_sb.send_time        = transaccion_drv_received.send_time;
+                                transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
+                                transaccion_to_sb.receiver_monitor = this.rcv_mnt_mnt;
+                                transaccion_to_sb.tipo_transaccion = this.tipo_transaccion_mnt;
+        
+                                transaccion_to_sb.print("Checker: transaccion completa reconstruida");
+                                checker_sb_mbx.put(transaccion_to_sb);
+                                $display ("[%g] Checker: transaccion enviada al sb", $time);
+                                //driver_fifo.delete(w);
+                                break;
+                            end
                         end
                     end
 
