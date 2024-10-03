@@ -38,7 +38,7 @@ class score_board #(parameter width = 16, parameter DRVS = 4);
             @(posedge vif_sb_fifo_dut.clk); // Esperar al flanco positivo del reloj
             clk_cycles ++;
             time_elapsed = clk_cycles * 20;
-            instrucciones_driver_monitor #(.WIDTH(WIDTH)) complete_transaction;
+            instrucciones_driver_monitor #(.WIDTH(width)) complete_transaction;
       
             // Procesar transacciones en el mailbox del scoreboard
             if (chkr_sb_mbx.num() > 0) begin
