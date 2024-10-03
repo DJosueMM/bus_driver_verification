@@ -83,6 +83,9 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                         if (vif_driver_fifo_dut.pop[0][drv_id] == 1) begin
                             vif_driver_fifo_dut.D_pop[0][drv_id] = fifo_in[$];
                             transaction_send.send_time = $time;
+                            transaction_send.receiver_monitor = transaction_send.pkg_id;
+                            transaction_send.pkg_payload      = transaction_send.pkg_payload;
+                            transaction_send.tipo_transaccion = transaction_send.tipo_transaccion;
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time
                             drv_chkr_mbx.put(transaction_send); //se envia al checker
                             $display("[ %g ] El Driver [%g] envio la transaccion al checker", $time, drv_id);
@@ -130,6 +133,9 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                         if (vif_driver_fifo_dut.pop[0][drv_id] == 1) begin
                             vif_driver_fifo_dut.D_pop[0][drv_id] = fifo_in[$];
                             transaction_send.send_time = $time;
+                            transaction_send.receiver_monitor = transaction_send.pkg_id;
+                            transaction_send.pkg_payload      = transaction_send.pkg_payload;
+                            transaction_send.tipo_transaccion = transaction_send.tipo_transaccion;
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time
                             drv_chkr_mbx.put(transaction_send); //se envia al checker
                             $display("[ %g ] El Driver [%g] envio la transaccion al checker", $time, drv_id);
