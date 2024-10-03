@@ -80,7 +80,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                         revisando = driver_fifo[w];
                         revisando.print("/////////////////////////////Checker: revisando \n");
                         $display("revisando.pkg_id [%g] revisando.pkg_payload [%g] revisando.receiver_monitor [%g] revisando.tipo_transaccion [%p]", 
-                                  revisando.pkg_id, revisando.pkg_payload, revisando.tipo_transaccion);
+                                  revisando.pkg_id, revisando.pkg_payload, revisando.receiver_monitor, revisando.tipo_transaccion);
                         
                         $display("this.pkg_id_mnt [%g] this.pkg_payload_mnt [%g] this.rcv_mnt_mnt [%g] this.tipo_transaccion_mnt [%p]", 
                                   this.pkg_id_mnt, this.pkg_payload_mnt, this.rcv_mnt_mnt, this.tipo_transaccion_mnt);
