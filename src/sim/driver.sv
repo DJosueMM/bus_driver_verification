@@ -93,7 +93,7 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                         $display("pkg_id[%h]", transaction_send.pkg_id);
                         this.current_payload = transaction_send.pkg_payload;
                         this.current_pkg_id = transaction_send.pkg_id;
-                        $display("pkg_payload[%h]", current_payload);aws
+                        $display("pkg_payload[%h]", current_payload);
                         $display("pkg_id[%h]", current_pkg_id);
                         $display("TENGO ESTO EN LA FIFO [%h]", fifo_in[1]);
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");
