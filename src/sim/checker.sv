@@ -71,14 +71,16 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                     this.pkg_payload_mnt      = transaccion_mnt_received.pkg_payload;
                     this.rcv_mnt_mnt          = transaccion_mnt_received.receiver_monitor;
                     this.tipo_transaccion_mnt = transaccion_mnt_received.tipo_transaccion;
-                    
+
+
+                    transaccion_mnt_received.print("/////////////////////////////Checker: revisando MONITOR contra");
                     foreach (driver_fifo[w]) begin
 
                         this.match_found = 0;
                         // Acceder al elemento en la posición w de la cola
                         revisando = new();
                         revisando = driver_fifo[w];
-                        revisando.print("/////////////////////////////Checker: revisando \n");
+                        revisando.print("/////////////////////////////Checker: revisando");
                         $display("revisando.pkg_id [%g] revisando.pkg_payload [%g] revisando.receiver_monitor [%g] revisando.tipo_transaccion [%p]", 
                                   revisando.pkg_id, revisando.pkg_payload, revisando.receiver_monitor, revisando.tipo_transaccion);
                         
