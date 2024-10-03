@@ -6,7 +6,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     agent   #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
 
     driver  #(.WIDTH(width),.DRVS(DRVS)) driver_inst  [DRVS - 1 : 0];
-    monitor #(.WIDTH(width),.DRVS(DRVS)) monitor_inst [DRVS - 1 : 0];
+    //monitor #(.WIDTH(width),.DRVS(DRVS)) monitor_inst [DRVS - 1 : 0];
 
 
     // Definición de la interface que conecta el DUT
@@ -17,7 +17,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     mbx_test_agent       test_agent_mbx;                      // mailbox del test al agente         
     mbx_agent_driver     agent_driver_mbx    [DRVS - 1 : 0];  // mailbox del agente al driver
     mbx_driver_checker   driver_checker_mbx  [DRVS - 1 : 0];  // mailbox del driver al checker
-    mbx_monitor_checker  monitor_checker_mbx [DRVS - 1 : 0];  // mailbox del monitor al checker
+    //mbx_monitor_checker  monitor_checker_mbx [DRVS - 1 : 0];  // mailbox del monitor al checker
     //mbx_checker_sb       checker_sb_mbx;                       // mailbox del checker al scoreboard
     //mbx_test_sb          test_sb_mbx;                          // mailbox del test al scoreboard
 
@@ -32,11 +32,11 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         for (int i = 0; i < DRVS; i++) begin
 
             driver_inst         [i] = new(i);
-            monitor_inst        [i] = new(i);
+            //monitor_inst        [i] = new(i);
 
             agent_driver_mbx    [i] = new();
             driver_checker_mbx  [i] = new();
-            monitor_checker_mbx [i] = new();
+            //monitor_checker_mbx [i] = new();
         end
 
         agent_inst = new();
@@ -57,8 +57,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
             driver_inst[c].vif_driver_fifo_dut = vif_ambiente_fifo_dut;
             
             //monitor
-            monitor_inst[c].mnt_ckecker_mbx      = monitor_checker_mbx [c];
-            monitor_inst[c].vif_monitor_fifo_dut = vif_ambiente_fifo_dut;
+            //monitor_inst[c].mnt_ckecker_mbx      = monitor_checker_mbx [c];
+            //monitor_inst[c].vif_monitor_fifo_dut = vif_ambiente_fifo_dut;
         end
     endfunction
 
@@ -72,8 +72,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
                     automatic int a = j;
                     driver_inst[a].run();
                     $display("[%g] El driver [%g] fue inicializado", $time, a);
-                    monitor_inst[a].run();
-                    $display("[%g] El monitor [%g] fue inicializado", $time, a);
+                    //monitor_inst[a].run();
+                    //$display("[%g] El monitor [%g] fue inicializado", $time, a);
                 join_none
             end
         join_none

@@ -2,7 +2,7 @@
 `include "Library.sv"
 `include "interface_transactions.sv"
 `include "driver.sv"
-`include "monitor.sv"
+//`include "monitor.sv"
 `include "agent.sv"
 `include "ambiente.sv"
 `include "secuencer.sv"
@@ -43,7 +43,7 @@ module test_bench;
     for (int w = 0; w < DRVS; w++) begin
       test_0.ambiente_inst.driver_inst[w].vif_driver_fifo_dut   = final_if;
       test_0.ambiente_inst.agent_inst.vif_agnt_dut              = final_if;
-      test_0.ambiente_inst.monitor_inst[w].vif_monitor_fifo_dut = final_if;
+      //test_0.ambiente_inst.monitor_inst[w].vif_monitor_fifo_dut = final_if;
       test_0.vif_test_fifo_dut                                  = final_if;
     end
     
