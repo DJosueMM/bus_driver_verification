@@ -2,6 +2,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
  
     mbx_monitor_checker mnt_ckecker_mbx;  
     virtual dut_compl_if # (.width(WIDTH), .drvs(DRVS), .bits(1)) vif_monitor_fifo_dut;
+    instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaction_receive;
 
     int mnt_id;
 
@@ -20,9 +21,7 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
         vif_monitor_fifo_dut.D_push[0][mnt_id] = '0;
 
         forever begin
-
-            instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaction_receive;
-            
+        
             $display("[%g] El Monitor [%g] espera por una transacción", $time, mnt_id);
 
             @(posedge vif_monitor_fifo_dut.clk);
