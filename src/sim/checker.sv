@@ -105,7 +105,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                                 transaccion_to_sb = new();
                                 transaccion_to_sb.max_delay        = transaccion_drv_received.max_delay;
                                 transaccion_to_sb.delay            = transaccion_drv_received.delay;
-                                transaccion_to_sb.pkg_id           = this.pkg_id_mnt;
+                                transaccion_to_sb.pkg_id           = 8'b11111111;
                                 transaccion_to_sb.pkg_payload      = this.pkg_payload_mnt;
                                 transaccion_to_sb.send_time        = transaccion_drv_received.send_time;
                                 transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
