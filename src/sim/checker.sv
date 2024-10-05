@@ -81,7 +81,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                     this.tipo_transaccion_mnt = transaccion_mnt_received.tipo_transaccion;
 
 
-                    transaccion_mnt_received.print("/////////////////////////////Checker: revisando MONITOR contra");
+                    transaccion_mnt_received.print("Checker: revisando MONITOR contra");
                     foreach (driver_fifo[w]) begin
 
                         this.match_found = 0;
