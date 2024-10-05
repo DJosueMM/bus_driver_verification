@@ -97,7 +97,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
 
                         if (this.tipo_transaccion_mnt == broadcast) begin 
 
-                            if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt[7 : 0] == revisando.pkg_payload [7 : 0] &&
+                            if (this.pkg_id_mnt == revisando.pkg_id && this.pkg_payload_mnt == revisando.pkg_payload &&
                                 this.tipo_transaccion_mnt == revisando.tipo_transaccion) begin
                             
                                 $display ("[%g] Checker: las transacciones coinciden", $time);
