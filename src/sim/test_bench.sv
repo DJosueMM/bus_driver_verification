@@ -31,8 +31,8 @@ module test_bench;
       .pndng    (final_if.pndng),
       .push     (final_if.push),
       .pop      (final_if.pop),
-      .D_pop    (final_if.D_push),
-      .D_push   (final_if.D_pop)
+      .D_pop    (final_if.D_pop),
+      .D_push   (final_if.D_push)
   );
   
   always #10 clk = ~clk;
