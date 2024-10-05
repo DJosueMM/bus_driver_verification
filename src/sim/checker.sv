@@ -88,7 +88,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                         // Acceder al elemento en la posición w de la cola
                         revisando = new();
                         revisando = driver_fifo[w];
-                        revisando.print("/////////////////////////////Checker: revisando");
+                        revisando.print("Checker: revisando");
                         $display("revisando.pkg_id [%g] revisando.pkg_payload [%g] revisando.receiver_monitor [%g] revisando.tipo_transaccion [%p]", 
                                   revisando.pkg_id, revisando.pkg_payload, revisando.receiver_monitor, revisando.tipo_transaccion);
                         
