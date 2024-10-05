@@ -40,8 +40,6 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                         
                         transaction_receive.pkg_id           = vif_monitor_fifo_dut.D_push[0][mnt_id][WIDTH - 1 : WIDTH - 8];
                         transaction_receive.pkg_payload      = vif_monitor_fifo_dut.D_push[0][mnt_id][WIDTH - 9 : 0];
-                        $display("[%g] El Monitor [%h] reconstruyo la transaccion id", $time, transaction_receive.pkg_id);
-                        $display("[%g] El Monitor [%h] reconstruyo la transaccion payload", $time, transaction_receive.pkg_payload);
                         transaction_receive.receive_time     = $time;
                         transaction_receive.receiver_monitor = mnt_id;
 

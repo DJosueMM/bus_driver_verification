@@ -41,6 +41,7 @@ module test_bench;
 
     clk    = 0;
     test_0 = new();
+    $monitor(final_if.D_push);
     for (int w = 0; w < DRVS; w++) begin
       test_0.ambiente_inst.sb_inst.vif_sb_fifo_dut              = final_if;
       test_0.ambiente_inst.checker_inst.vif_checker_fifo_dut    = final_if;
