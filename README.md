@@ -1,3 +1,87 @@
+# Test Plan para la verificación del Bus Driver
+
+
+## 1. Descripción del DUT
+
+Para el diseño del ambiente de verificación, se toma en cuenta el funcionamiento del dispositivo, que en este caso es un manejador de bus de datos que permite la transmisión de información entre diferentes periféricos. Estos periféricos serán emulados mediante FIFOs, y el objetivo específico es verificar el correcto funcionamiento del bus. Las FIFOs serán descritas a nivel de software y los datos transmitidos serán definidos como específicos o aleatorios, dependiendo del tipo de prueba que se ejecute.
+
+### Módulos Principales
+1. **Bus driver**: DUT, se encarga de administrar el acceso de distintos periféricos al bus de datos.
+2. **Dispositivos FIFO**: estos almacenan datos temporalmente, en este caso es la interfaz de conexión entre el DUT y el ambiente de verificación.
+
+### Señales 
+
+- pndng: si la fifo está vacía la señal de pndng es 0.
+- push: señal de control que indica que se debe realizar una operación de push (es decir, ingresar datos a la FIFO). 
+- pop: señal de control que indica que se debe realizar una operación de pop (es decir, sacar datos de la FIFO). 
+
+    ![alt text](doc/img/data_protocol.png)
+- Dpush: datos a ser almacenados en la FIFO.
+- Dpop: datos a ser extraídos de la FIFO. 
+- broadcast: Representa una señal con un valor por defecto de 8 bits (todo 1s: 11111111). Esto significa que el módulo tiene una funcionalidad de transmisión de mensajes a múltiples destinatarios simultáneamente (broadcast).
+
+## 2. Escenarios
+### 2.1 Casos generales
+
+Como casos generales o de uso común se tienen las pruebas con cada transacción:
+
+- **Enviar datos**: cada periférico debe poder enviar un paquete a otro periférico a través del bus de datos.
+
+- **Recepción de datos enviados**: si se envía un paquete a cierto periférico, este debe recibirlo dado su ID, el payload debe coincidir con el enviado.
+
+- **Funcionamiento del reset**: ....
+
+- **Broadcast**: si un periférico realiza broadcast con el identificador 8´d1, todos los periféricos deben recibir el payload enviado.
+
+
+### 2.2 Casos de esquina
+
+- **Overflow**: Consiste en un caso donde una FIFO se le hará push, pero ya está llena.
+
+- **Underflow**: Consiste en un caso donde una FIFO está vacía y se quiere hacer una lectura.
+
+- **Varios envían a la vez**: Este caso probará el comportamiento del bus al enviar datos por varios periférico a la vez
+- **Todos envían a la vez**: Este caso probará el comportamiento del bus al enviar datos por cada periférico a la vez
+- **Se envía un paquete con un id ilegal**: Con determinado número de periféricos, se utilizará un número o ID que no existe.
+- **Todos hacen broadcast simultaneamente**: Similar al caso de enviar todos a la vez, solo que con broadcast.
+- **Varios hacen broadcast**: Busca probar mportamiento del bus al recibir varios broadcast 
+- **Se envía a sí mismo**: Este caso consiste en sacar un dato de un periférico para volver a enviarlo al mismo.
+- **Uno solo envía una ráfaga de paquetes**: Busca probar el comportamiento del dispositivo al enviar datos de forms exhaustiva.
+- **Todos le envían al mismo simultaneamente**: Medirá la capacidad de los periféricos al recibir datos exhaustivamente.
+- **Reset cuando no se ha terminado una transacción**: El comportamiento esperado es que vacíe el dispositivo, dejándolo sin datos. Por lo que anularía las transacciones hasta dicho momento.
+
+## 3. Aleatorización
+
+Además de esto, como parte de las pruebas, se aleatorizarán distintas variables del test:
+
+- **Número de transacciones**: se pobrarán cantidades distintas de transacciones.
+
+- **Largo de paquetes**: se aleatorizará el largo de los paquetes entre 16, 32 y 64 bits.
+
+- **Tiempo de espera entre eventos**: Para las distintas transacciones se aleatorizarán los tiempos de retardo.
+
+- **Cantidad de periféricos**: El dispositivo al ser capaz de tener diferente cantidad de periféricos, podría tener comportamientos distintos.
+- **Dimensión de profundidad en la FIFO**: Los periféricos pueden tener tamaños distintos, lo ideal sería un comportamiento sin cambios.
+- **Tipos de transacciones**: Las transacciones pueden ir en distinto órden y cantidad, cada una realiza distintas acciones.
+- **Payload**: Los datos oara periféricos serán aleatorizables.
+- **Identificadores válidos**: Cada periférico posee un ID, estos estan asociados al numero de periféricos.
+- **Identificadores no válidos**: Como prueba se tendrán identificadores para periféricos que no existen.
+
+## 4. Diseño del ambiente
+El ambiente consiste de distintos transactores, en este caso se conforma de un generador Test, un agente, un driver/monitor, un checker y un scoreboard. Además de esto el driver va a tener una interfaz para comunicarse con el DUT.
+
+<a name="Ambiente_Bloques"></a>
+![Ambiente_Bloques](doc/img/ambiente_bloques.png)
+
+
+### Generador de Tests
+El generador es el bloque que crea los estímulos o entradas que se enviarán al DUT. Los estímulos pueden ser aleatorios o predefinidos, dependiendo del tipo de test. Este componente genera transacciones, que son estructuras de datos que representan las entradas para el DUT.
+
+### Agente
+El agente es un transactor que recibe las instrucciones de alto nivel del test y las traduce a un nivel de abstracción menor para enviarlas a los drivers.
+
+### Driver-Monitor
+=======
 # bus_driver_verification
 Proyecto 1 del curso Verificación Funcional de Circuitos Integrados
 

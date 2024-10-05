@@ -1,0 +1,3 @@
+*.o
+*.env
+/verif/dsim_work/
