@@ -81,19 +81,17 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                     this.tipo_transaccion_mnt = transaccion_mnt_received.tipo_transaccion;
 
 
-                    transaccion_mnt_received.print("Checker: revisando MONITOR contra");
+                    transaccion_mnt_received.print("Checker: revisando transaccion recibida en el monitor");
                     foreach (driver_fifo[w]) begin
 
                         this.match_found = 0;
                         // Acceder al elemento en la posición w de la cola
                         revisando = new();
                         revisando = driver_fifo[w];
-                        revisando.print("Checker: revisando");
-                        $display("revisando.pkg_id [%g] revisando.pkg_payload [%g] revisando.receiver_monitor [%g] revisando.tipo_transaccion [%p]", 
-                                  revisando.pkg_id, revisando.pkg_payload, revisando.receiver_monitor, revisando.tipo_transaccion);
+                        revisando.print("Checker: revisando transaccion anteriormente recibida de driver");
+                        $display("revisando.pkg_id DRIVER [%g] vs MONITOR [%g] \n revisando.pkg_payload DRIVER [%g] vs MONITOR [%g] \n revisando.receiver_monitor DRIVER [%g] vs MONITOR [%g] \n revisando.tipo_transaccion DRIVER [%p] vs MONITOR [%p] \n", 
+                                  revisando.pkg_id, this.pkg_id_mnt,  revisando.pkg_payload, this.pkg_payload_mnt, revisando.receiver_monitor, this.rcv_mnt_mnt, revisando.tipo_transaccion, this.tipo_transaccion_mnt);
                         
-                        $display("this.pkg_id_mnt [%g] this.pkg_payload_mnt [%g] this.rcv_mnt_mnt [%g] this.tipo_transaccion_mnt [%p]", 
-                                  this.pkg_id_mnt, this.pkg_payload_mnt, this.rcv_mnt_mnt, this.tipo_transaccion_mnt);
                         $display("[%g] Checker: revisando coincidencia de transaccion recibida en el monitor con la transaccion [%g]", $time, w);
 
                         if (this.tipo_transaccion_mnt == broadcast) begin 
@@ -120,6 +118,8 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                                 break;
                             end
 
+                            else $display ("[%g] Checker: las transacciones no coinciden, pasando a la siguiente", $time);
+
                         end
 
                         else begin
@@ -144,6 +144,9 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                                 //driver_fifo.delete(w);
                                 break;
                             end
+
+                            else $display ("[%g] Checker: las transacciones no coinciden, pasando a la siguiente", $time);
+
                         end
                     end
 
