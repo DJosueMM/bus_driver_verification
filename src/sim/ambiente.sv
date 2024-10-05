@@ -56,12 +56,15 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
         sb_inst.checker_sb_mbx    = checker_sb_mbx;
         sb_inst.test_sb_mbx       = test_sb_mbx;
         agent_inst.vif_agnt_dut   = vif_ambiente_fifo_dut;
+
         checker_inst.vif_checker_fifo_dut = vif_ambiente_fifo_dut;
+
         agent_inst.test_agent_mbx = test_agent_mbx;
         agent_inst.agnt_drv_mbx   = agent_driver_mbx;
+        
         checker_inst.driver_checker_mbx = driver_checker_mbx;
-        checker_inst.mnt_checker_mbx = monitor_checker_mbx;
-        checker_inst.checker_sb_mbx = checker_sb_mbx;
+        checker_inst.mnt_checker_mbx    = monitor_checker_mbx;
+        checker_inst.checker_sb_mbx     = checker_sb_mbx;
 
         for (int c = 0; c < DRVS; c++) begin
           
