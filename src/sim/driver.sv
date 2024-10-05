@@ -37,7 +37,8 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
             @(posedge vif_driver_fifo_dut.clk); begin
                 $display("[%g] Transacciones pendientes en el mbx agnt_drv [%g] = %g", $time, drv_id, agnt_drv_mbx.num());
                 agnt_drv_mbx.get(transaction_send);
-                transaction_send.print("Driver: Transacción recibida en el driver");
+                $display("[%g] Driver: Transacción recibida en el driver [%g]", $time, drv_id);
+                transaction_send.print("Transacción recibida en el driver");
             end
 
             while (espera < transaction_send.delay) begin
