@@ -52,7 +52,8 @@ class monitor # (parameter WIDTH = 16, parameter DRVS = 8);
                         
                         transaction_receive.delay = 0;
                         transaction_receive.max_delay = 0;
-                        transaction_receive.print("///////////////////Monitor: Transacción reconstruida en el monitor");
+                        $display("[%g] El Monitor [%g] reconstruyo la transaccion", $time, mnt_id);
+                        transaction_receive.print("Monitor: Transacción reconstruida en el monitor");
                         mnt_ckecker_mbx.put(transaction_receive);
                         transaction_receive.print("Monitor: Transacción enviada al Checker");
                         $display("[%g] El Monitor [%g] envio la transaccion al Checker", $time, mnt_id);

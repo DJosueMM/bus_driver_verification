@@ -118,7 +118,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
 
     // funcion para imprimir los valores de los datos en la clase y transaccionS
     function void print(string tag = ""); //este tag se inicializa al llamar a la funcion
-        $display("\n[%g] %s: \n Max Delay=%g Delay=%g pkg_id=0x%g pkg_payload=0x%h Send_Time=%g Receive_Time=%g Receiver Monitor=%g Tipo=%p \n", 
+        $display("[%g] %s: \n Max Delay=%g Delay=%g pkg_id=0x%g pkg_payload=0x%h Send_Time=%g Receive_Time=%g Receiver Monitor=%g Tipo=%p \n", 
                   $time, tag, max_delay, delay, pkg_id, pkg_payload, send_time, receive_time, receiver_monitor, tipo_transaccion);
     endfunction
 
