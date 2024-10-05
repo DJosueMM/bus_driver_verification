@@ -38,8 +38,8 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
 
             if(test_agent_mbx.num() > 0) begin
 
-                $display("[%g] Agente: recibe instruccion", $time);
                 test_agent_mbx.get(instruccion);
+                $display("[%g] Agente: recibe instruccion [%p] del test", $time, instruccion);
         
                 const_no_reset.constraint_mode(1);   
                 const_illegal_ID.constraint_mode(0);

@@ -44,7 +44,7 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
 
         instr_agent = init;
         test_agent_mbx.put(instr_agent);
-        $display("[%g] Test: Comenzando la inicializacion", $time);
+        $display("\n[%g] Test: Comenzando la inicializacion", $time);
         
         #1000;
 
