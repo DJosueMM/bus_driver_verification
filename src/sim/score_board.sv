@@ -66,76 +66,73 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
             end
 
             // Procesar el mailbox de comandos del test
-            test_sb_mbx.try_get(consulta_test_sb); // Obtener la transacción del mailbox
-               
-            case (consulta_test_sb)
+            if (test_sb_mbx.num() > 0) begin     
+                test_sb_mbx.try_get(consulta_test_sb); // Obtener la transacción del mailbox
+                case (consulta_test_sb)
 
-                transacciones_completadas: begin
-                    $display("Procesando: Transacciones Completadas \n\n");
-                    $display("##########################################################");
-                    $display("############### NÚMERO DE TRANSACCIONES %0d ###############", transacciones_completadas);
-                    $display("##########################################################");
-                end
+                    transacciones_completadas: begin
+                        $display("Procesando: Transacciones Completadas \n\n");
+                        $display("##########################################################");
+                        $display("############### NÚMERO DE TRANSACCIONES %0d ###############", transacciones_completadas);
+                        $display("##########################################################");
+                    end
 
-                instr_broadcast: begin
-                    $display("Procesando: Transacción de tipo Broadcast \n\n");
-                    $display("##########################################################");
-                    $display("############### NÚMERO DE BROADCASTS %0d ###############", instr_broadcast);
-                    $display("##########################################################");
-                end
+                    instr_broadcast: begin
+                        $display("Procesando: Transacción de tipo Broadcast \n\n");
+                        $display("##########################################################");
+                        $display("############### NÚMERO DE BROADCASTS %0d ###############", instr_broadcast);
+                        $display("##########################################################");
+                    end
 
-                instr_send: begin
-                    $display("Procesando: Transacción de tipo Send \n\n");
-                    $display("##########################################################");
-                    $display("############### NÚMERO DE ENVÍOS %0d ###############", instr_send);
-                    $display("##########################################################");
-                end
+                    instr_send: begin
+                        $display("Procesando: Transacción de tipo Send \n\n");
+                        $display("##########################################################");
+                        $display("############### NÚMERO DE ENVÍOS %0d ###############", instr_send);
+                        $display("##########################################################");
+                    end
 
-                latencia: begin
-                    $display("Procesando: Latencia \n\n");
-                    $display("##########################################################");
-                    $display("############### LATENCIA %0d CICLOS ###############", latencia);
-                    $display("##########################################################");
-                end
+                    latencia: begin
+                        $display("Procesando: Latencia \n\n");
+                        $display("##########################################################");
+                        $display("############### LATENCIA %0d CICLOS ###############", latencia);
+                        $display("##########################################################");
+                    end
 
-                total_avg_delay: begin
-                    $display("Procesando: Retardo Promedio Total \n\n");
-                    $display("##########################################################");
-                    $display("############### RETARDO PROMEDIO TOTAL %0d CICLOS ###############", total_avg_delay);
-                    $display("##########################################################");
-                end
+                    total_avg_delay: begin
+                        $display("Procesando: Retardo Promedio Total \n\n");
+                        $display("##########################################################");
+                        $display("############### RETARDO PROMEDIO TOTAL %0d CICLOS ###############", total_avg_delay);
+                        $display("##########################################################");
+                    end
 
-                clk_cycles: begin
-                    $display("Procesando: Ciclos de Reloj \n\n");
-                    $display("##########################################################");
-                    $display("############### CICLOS DE RELOJ %0d ###############", clk_cycles);
-                    $display("##########################################################");
-                end
+                    clk_cycles: begin
+                        $display("Procesando: Ciclos de Reloj \n\n");
+                        $display("##########################################################");
+                        $display("############### CICLOS DE RELOJ %0d ###############", clk_cycles);
+                        $display("##########################################################");
+                    end
 
-                time_elapsed: begin
-                    $display("Procesando: Tiempo Transcurrido \n\n");
-                    $display("##########################################################");
-                    $display("############### TIEMPO TRANSCURRIDO %0d UNIDADES ###############", time_elapsed);
-                    $display("##########################################################");
-                end
+                    time_elapsed: begin
+                        $display("Procesando: Tiempo Transcurrido \n\n");
+                        $display("##########################################################");
+                        $display("############### TIEMPO TRANSCURRIDO %0d UNIDADES ###############", time_elapsed);
+                        $display("##########################################################");
+                    end
 
-                complete_report: begin
-                    $display("Procesando: Reporte Completo \n\n");
-                    $display("##########################################################");
-                    $display("############### REPORTE COMPLETO ###############");
-                    $display("### TRANSACCIONES COMPLETADAS: %0d", transacciones_completadas);
-                    $display("### BROADCASTS: %0d", instr_broadcast);
-                    $display("### ENVÍOS: %0d", instr_send);
-                    $display("### LATENCIA PROMEDIO: %0d CICLOS", total_avg_delay);
-                    $display("### CICLOS DE RELOJ: %0d", clk_cycles);
-                    $display("### TIEMPO TRANSCURRIDO: %0d UNIDADES", time_elapsed);
-                    $display("##########################################################");
-                end
-
-                default: begin
-                    $display("\n");
-                end
-            endcase
+                    complete_report: begin
+                        $display("Procesando: Reporte Completo \n\n");
+                        $display("##########################################################");
+                        $display("############### REPORTE COMPLETO ###############");
+                        $display("### TRANSACCIONES COMPLETADAS: %0d", transacciones_completadas);
+                        $display("### BROADCASTS: %0d", instr_broadcast);
+                        $display("### ENVÍOS: %0d", instr_send);
+                        $display("### LATENCIA PROMEDIO: %0d CICLOS", total_avg_delay);
+                        $display("### CICLOS DE RELOJ: %0d", clk_cycles);
+                        $display("### TIEMPO TRANSCURRIDO: %0d UNIDADES", time_elapsed);
+                        $display("##########################################################");
+                    end
+                endcase
+            end
         end
     endtask
 
