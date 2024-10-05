@@ -89,7 +89,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                         revisando = new();
                         revisando = driver_fifo[w];
                         revisando.print("Checker: revisando transaccion anteriormente recibida de driver");
-                        $display("revisando.pkg_id ENVIADO DEL DRIVER [%g] vs RECIBIDO DEL MONITOR [%g] \n revisando.pkg_payload ENVIADO DEL DRIVER [%h] vs RECIBIDO DEL MONITOR [%h] \n revisando.receiver_monitor ENVIADO DEL DRIVER [%g] vs RECIBIDO DEL MONITOR [%g] \n revisando.tipo_transaccion ENVIADO DEL DRIVER [%p] vs RECIBIDO DEL MONITOR [%p]", 
+                        $display("revisando.pkg_id          ENVIADO DEL DRIVER [%g] vs RECIBIDO DEL MONITOR [%g] \nrevisando.pkg_payload      ENVIADO DEL DRIVER [%h] vs RECIBIDO DEL MONITOR [%h] \nrevisando.receiver_monitor ENVIADO DEL DRIVER [%g] vs RECIBIDO DEL MONITOR [%g] \nrevisando.tipo_transaccion ENVIADO DEL DRIVER [%p] vs RECIBIDO DEL MONITOR [%p]", 
                                   revisando.pkg_id, this.pkg_id_mnt,  revisando.pkg_payload, this.pkg_payload_mnt, revisando.receiver_monitor, this.rcv_mnt_mnt, revisando.tipo_transaccion, this.tipo_transaccion_mnt);
                         
                         $display("[%g] Checker: revisando coincidencia de transaccion recibida en el monitor con la transaccion [%g]", $time, w);
