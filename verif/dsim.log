@@ -1,4 +1,4 @@
-=N:[UsageMeter (2024-10-01 09:28:22 -0600)] usage server initial connection
+=N:[UsageMeter (2024-10-05 10:03:36 -0600)] usage server initial connection
 =N:[License] 
 Licensed for Metrics Design Automation.
 =N:[License] New lease granted.
@@ -7,12 +7,91 @@ Elaborating...
   Top-level modules:
     $unit
     test_bench
-=E:[UnresolvedModule]:
-    Unable to find definitions for the following       
-    module/interface/program/UDP/checker instances:    
+=E:[UndefIdentifier]:
+    Undefined identifiers:    
 
-    ../src/sim/test_bench.sv:24:57    dut_compl_if       
+    ./../src/sim/score_board.sv:8:5                 simple name: mbx_test_sb    
+    Included from ../src/sim/test_bench.sv:4:10                                 
 
-    ../src/sim/test_bench.sv:29:53    bs_gnrtr_n_rbtr    
+    ./../src/sim/ambiente.sv:28:5                   simple name: mbx_test_sb    
+    Included from ../src/sim/test_bench.sv:9:10                                 
+
+    ./../src/sim/secuencer.sv:4:5                   simple name: mbx_test_sb    
+    Included from ../src/sim/test_bench.sv:10:10                                
+
+=E:[IllegalMemberSelect]:
+    A member-select(dot) operation is not valid    
+    for the given prefix types:                    
+
+                                                    Prefix type    Illegal suffix    
+
+    ./../src/sim/score_board.sv:69:13               <error>        try_get           
+    Included from ../src/sim/test_bench.sv:4:10                                      
+
+    ./../src/sim/secuencer.sv:58:9                  <error>        put               
+    Included from ../src/sim/test_bench.sv:10:10                                     
+
+=E:[InvalidTypeAssign]:
+    Invalid types for operands of the following assignments:    
+
+    ./../src/sim/checker.sv:36:9                   enum{send=0,broadcast=1,reset=2}    
+    Included from ../src/sim/test_bench.sv:5:10    bit                                 
+
+    ./../src/sim/checker.sv:56:13                  enum{send=0,broadcast=1,reset=2}    
+    Included from ../src/sim/test_bench.sv:5:10    bit                                 
+
+=W:[ExprStmtNotVoid]:
+    The following expressions used as statements do not have void type:    
+
+    ./../src/sim/driver.sv:108:29                  logic[15:0]    
+    Included from ../src/sim/test_bench.sv:6:10                   
+
+    ./../src/sim/driver.sv:152:29                  logic[15:0]    
+    Included from ../src/sim/test_bench.sv:6:10                   
+
+    ./../src/sim/agent.sv:65:29                    int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:84:29                    int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:108:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:126:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:149:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:181:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:198:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:229:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:245:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:276:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:289:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+    ./../src/sim/agent.sv:313:29                   int            
+    Included from ../src/sim/test_bench.sv:8:10                   
+
+=E:[UnknownMemberSelect]:
+    The suffix of a member-select(dot) was not found in    
+    the scope denoted by its prefix:                       
+
+                                                   Prefix type             Undefined suffix    
+
+    ./../src/sim/ambiente.sv:67:13                 class monitor#(16,8)    mnt_ckecker_mbx     
+    Included from ../src/sim/test_bench.sv:9:10                                                
 
   Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:ubuntu_22.04)

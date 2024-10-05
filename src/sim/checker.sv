@@ -1,4 +1,4 @@
-class checker #(parameter WIDTH = 16, parameter DRVS = 8);  // Clase checker con parámetros WIDTH y DRVS
+class checker_ds #(parameter WIDTH = 16, parameter DRVS = 8);  // Clase checker con parámetros WIDTH y DRVS
 
     // Variables de transacciones para recibir del driver y monitor, y una auxiliar para guardar temporalmente
     instrucciones_driver_monitor #(.WIDTH(WIDTH)) transaccion_drv_received;   // Transacción recibida del driver

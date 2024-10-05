@@ -4,7 +4,7 @@
 `include "score_board.sv"
 `include "checker.sv"
 `include "driver.sv"
-//`include "monitor.sv"
+`include "monitor.sv"
 `include "agent.sv"
 `include "ambiente.sv"
 `include "secuencer.sv"
