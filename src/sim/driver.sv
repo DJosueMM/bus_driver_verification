@@ -35,9 +35,9 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
             espera = 0;
             
             @(posedge vif_driver_fifo_dut.clk); begin
+                $display("[%g] Transacciones pendientes en el mbx agnt_drv [%g] = %g", $time, drv_id, agnt_drv_mbx.num());
                 agnt_drv_mbx.get(transaction_send);
                 transaction_send.print("Driver: Transacción recibida en el driver");
-                $display("[%g] Transacciones pendientes en el mbx agnt_drv [%g] = %g", $time, drv_id, agnt_drv_mbx.num());
             end
 
             while (espera < transaction_send.delay) begin
@@ -56,13 +56,7 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                         this.current_pkg_id = transaction_send.pkg_id;
                         this.current_data_tx = {current_pkg_id, current_payload};
                         fifo_in.push_front(this.current_data_tx);  //aqui se lo metemos a la fifo de entrada
-                        
-                        $display("pkg_payload[%h]", transaction_send.pkg_payload);
-                        $display("pkg_id[%h]", transaction_send.pkg_id);
-                        $display("pkg_payload[%h]", current_payload);
-                        $display("pkg_id[%h]", current_pkg_id);
-                        $display("current_data_tx[%h]", current_data_tx);
-
+        
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");
     
                         //se comprueba si hay datos pendientes para entrar al dut en la fifo de entrada
@@ -107,11 +101,6 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                         this.current_data_tx = {current_pkg_id, current_payload};
                         fifo_in.push_front(this.current_data_tx);  //aqui se lo metemos a la fifo de entrada
                         
-                        $display("pkg_payload[%h]", transaction_send.pkg_payload);
-                        $display("pkg_id[%h]", transaction_send.pkg_id);
-                        $display("pkg_payload[%h]", current_payload);
-                        $display("pkg_id[%h]", current_pkg_id);
-                        $display("current_data_tx[%h]", current_data_tx);
 
                         transaction_send.print("Driver: Transacción send enviada a la FIFO de entrada");
     

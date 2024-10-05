@@ -53,10 +53,10 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                 else if (complete_transaction.tipo_transaccion == send)
                     instr_send++;
                 
-                $display("[%g] Latencia promedio %0d", $time, total_avg_delay);
-                $display("[%g] Transacciones Completadas %0d", $time, transacciones_completadas);
-                $display("[%g] Broadcast Completados %0d", $time, instr_broadcast);
-                $display("[%g] Send Completados %0d", $time, instr_send);
+                //$display("[%g] Latencia promedio %0d", $time, total_avg_delay);
+                //$display("[%g] Transacciones Completadas %0d", $time, transacciones_completadas);
+                //$display("[%g] Broadcast Completados %0d", $time, instr_broadcast);
+                //$display("[%g] Send Completados %0d", $time, instr_send);
 
                 // Escribir los datos de la transacción actual en el archivo CSV
                 $fdisplay(csv_file, "%g,%d,%d,%d,%d,%d,%d,%d,%d,%d",
