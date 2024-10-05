@@ -58,7 +58,7 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         test_sb_mbx.put(consulta_test_sb);
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
         ambiente_inst.sb_inst.close_csv();
-        #2000
+        #20
         $finish;
     endtask
 endclass
