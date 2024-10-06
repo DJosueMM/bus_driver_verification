@@ -60,6 +60,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
     rand bit [WIDTH - 9 : 0] pkg_payload;       // ID del paquete de payload (ajustar el tamaño según sea necesario)
     int                      send_time;         // Tiempo en el que se envió el paquete
     int                      receive_time;      // Tiempo en el que se recibió el paquete
+    int                      sender_monitor;    // Monitor emisor del paquete
     int                      receiver_monitor;  // Monitor receptor del paquete
     rand tipo_trans          tipo_transaccion;  // Tipo de transaccion declarado tipo_trans
    
@@ -85,7 +86,8 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
         bit [7 : 0]         id      = 0,
         bit [WIDTH - 9 : 0] payload = 0, 
         int                 st      = 0, 
-        int                 rt      = 0, 
+        int                 rt      = 0,
+        int                 snd_mtr = 0, 
         int                 rcv_mtr = 0, 
         tipo_trans          tipo    = send
     
@@ -97,6 +99,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
         this.pkg_payload      = payload;
         this.send_time        = st;
         this.receive_time     = rt;
+        this.sender_monitor   = snd_mtr;
         this.receiver_monitor = rcv_mtr;
         this.tipo_transaccion = tipo;
 
@@ -110,16 +113,17 @@ class instrucciones_driver_monitor # (parameter WIDTH = 16);
         this.pkg_id           = 0;
         this.pkg_payload      = 0;
         this.send_time        = 0;
+        this.sender_monitor   = 0;
         this.receive_time     = 0;
         this.receiver_monitor = 0;
-      //  this.tipo_transaccion = reset;
+        this.tipo_transaccion = reset;
 
     endfunction
 
     // funcion para imprimir los valores de los datos en la clase y transaccionS
     function void print(string tag = ""); //este tag se inicializa al llamar a la funcion
-        $display("[%g] %s: \n Max Delay=%g Delay=%g pkg_id=0x%g pkg_payload=0x%h Send_Time=%g Receive_Time=%g Receiver Monitor=%g Tipo=%p \n", 
-                  $time, tag, max_delay, delay, pkg_id, pkg_payload, send_time, receive_time, receiver_monitor, tipo_transaccion);
+        $display("[%g] %s: \n Max Delay=%g Delay=%g pkg_id=0x%g pkg_payload=0x%h Send_Time=%g Receive_Time=%g Sender Monitor=%g Receiver Monitor=%g Tipo=%p \n", 
+                  $time, tag, max_delay, delay, pkg_id, pkg_payload, send_time, receive_time, sender_monitor, receiver_monitor, tipo_transaccion);
     endfunction
 
 endclass

@@ -111,6 +111,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                                 transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
                                 transaccion_to_sb.receiver_monitor = this.rcv_mnt_mnt;
                                 transaccion_to_sb.tipo_transaccion = this.tipo_transaccion_mnt;
+                                transaccion.to_sb.sender_monitor   = transaccion_drv_received.sender_monitor;
         
                                 transaccion_to_sb.print("Checker: transaccion completa reconstruida");
                                 checker_sb_mbx.put(transaccion_to_sb);
@@ -137,6 +138,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                                 transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
                                 transaccion_to_sb.receiver_monitor = this.rcv_mnt_mnt;
                                 transaccion_to_sb.tipo_transaccion = this.tipo_transaccion_mnt;
+                                transaccion.to_sb.sender_monitor   = transaccion_drv_received.sender_monitor;
         
                                 transaccion_to_sb.print("Checker: transaccion completa reconstruida");
                                 checker_sb_mbx.put(transaccion_to_sb);
@@ -153,6 +155,33 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                     if (this.match_found == 0) begin
                         $display ("[%g] ERROR Checker: las transaccion recibida no coincide con ninguna enviada", $time);
                     end
+                end
+            end
+        end
+    endtask
+
+    task revisar_datos_descartados();
+
+        // Recorre cada entrada en la FIFO driver_fifo
+        foreach(driver_fifo[i]) begin
+
+            if (driver_fifo[i].tipo_transaccion == broadcast) begin
+                //driver_fifo.delete(i);
+                $display("Transaccion de broadcast ya fue recibida por todos los monitores: %s", driver_fifo[i]);
+            end 
+            
+            else begin
+
+                if ((driver_fifo[i].tipo_transaccion == send &&
+                    driver_fifo[i].pkg_id != driver_fifo[i].receiver_monitor &&
+                    driver_fifo[i].pkg_id >= DRVS) || 
+                    driver_fifo[i].sender_monitor == driver_fifo[i].pkg_id) begin
+                    $display("Transaccion ilegal o sin proposito correctamente descartada: %s", driver_fifo[i]);
+                    //driver_fifo.delete(i);
+            end 
+                
+                else begin
+                    $display("ERROR: Transaccion Valida pendiente a evaluarse: %s", driver_fifo[i]);
                 end
             end
         end

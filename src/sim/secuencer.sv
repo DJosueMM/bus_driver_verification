@@ -56,7 +56,7 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         $display("[%g] Test: Enviada la primera instruccion al agente send_random_payload_legal_id con num_transacciones %g", $time, num_transacciones);
         
 
-        //Comprobacion de transacciones con destinos inexistentes
+        //comprobacion de transacciones con destinos inexistentes
         #2550;
 
         instr_agent = send_random_payload_ilegal_id;
