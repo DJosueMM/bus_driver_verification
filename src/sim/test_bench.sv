@@ -7,7 +7,7 @@
 `include "monitor.sv"
 `include "agent.sv"
 `include "ambiente.sv"
-`include "secuencer.sv"
+`include "test.sv"
 
 
 //-----------------------------------------------//
@@ -21,7 +21,7 @@ module test_bench;
   parameter DRVS  = 8;
   
 
-  secuencer    # (.width(width), .DRVS(DRVS)) test_0;
+  test    # (.width(width), .DRVS(DRVS)) test_0;
   dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) final_if (.clk(clk));
 
   //BUS DRIVER    
