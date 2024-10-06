@@ -63,7 +63,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                 //$display("[%g] Send Completados %0d", $time, instr_send);
 
                 // Escribir los datos de la transacción actual en el archivo CSV
-                $fdisplay(csv_file, "%g,%d,%d,%d,%d,%d,%d,%d,%d,%p",
+                $fdisplay(csv_file, "%g,%d,%d,%d,%f,%f,%d,%d,%d,%p",
                           $time, transacciones_completadas, instr_broadcast, instr_send, latencia,
                           total_avg_delay, clk_cycles, time_elapsed, 
                           complete_transaction.receiver_monitor, avr_delay_terminal);
