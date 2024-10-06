@@ -17,7 +17,7 @@
 module test_bench;
 
   logic     clk   = 0;
-  parameter width = 16;
+  parameter width = 32;
   parameter DRVS  = 8;
   
 
