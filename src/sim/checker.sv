@@ -180,6 +180,8 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                     (driver_fifo[i].tipo_transaccion == send &&
                     driver_fifo[i].pkg_id >= DRVS) || 
                     driver_fifo[i].sender_monitor == driver_fifo[i].pkg_id) begin
+                    $display("%g", DRVS);
+                    $display("%g", driver_fifo[i].pkg_id);
                     $display("[%g] Transaccion ilegal o sin proposito correctamente descartada:\n%p", $time, driver_fifo[i]);
                     //driver_fifo.delete(i);
             end 
