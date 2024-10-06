@@ -117,7 +117,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                     time_elapsed: begin
                         $display("Procesando: Tiempo Transcurrido \n\n");
                         $display("##########################################################");
-                        $display("############### TIEMPO TRANSCURRIDO %0d UNIDADES ###############", time_elapsed);
+                        $display("############### TIEMPO TRANSCURRIDO %0d ns      ###############", time_elapsed);
                         $display("##########################################################");
                     end
 
