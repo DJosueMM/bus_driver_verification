@@ -167,7 +167,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
 
             if (driver_fifo[i].tipo_transaccion == broadcast) begin
                 //driver_fifo.delete(i);
-                $display("Transaccion de broadcast ya fue recibida por todos los monitores: %s", driver_fifo[i]);
+                $display("Transaccion de broadcast ya fue recibida por todos los monitores: %p", driver_fifo[i]);
             end 
             
             else begin
@@ -176,12 +176,12 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                     driver_fifo[i].pkg_id != driver_fifo[i].receiver_monitor &&
                     driver_fifo[i].pkg_id >= DRVS) || 
                     driver_fifo[i].sender_monitor == driver_fifo[i].pkg_id) begin
-                    $display("Transaccion ilegal o sin proposito correctamente descartada: %s", driver_fifo[i]);
+                    $display("Transaccion ilegal o sin proposito correctamente descartada: %p", driver_fifo[i]);
                     //driver_fifo.delete(i);
             end 
                 
                 else begin
-                    $display("ERROR: Transaccion Valida pendiente a evaluarse: %s", driver_fifo[i]);
+                    $display("ERROR: Transaccion Valida pendiente a evaluarse: %p", driver_fifo[i]);
                 end
             end
         end
