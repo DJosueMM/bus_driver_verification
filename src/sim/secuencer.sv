@@ -36,7 +36,8 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         fork
             ambiente_inst.run();
         join_none
-
+        
+        //inicializacion del dut
 
         vif_test_fifo_dut.reset = 1;
         #30;
@@ -48,9 +49,22 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
         
         #1000;
 
+        //envios random, para comprobar el funcionamiento general del dut
+
         instr_agent = send_random_payload_legal_id;
         test_agent_mbx.put(instr_agent);
-        $display("[%g] Test: Enviada la primera instruccion al agente llenado aleatorio con num_transacciones %g", $time,num_transacciones);
+        $display("[%g] Test: Enviada la primera instruccion al agente send_random_payload_legal_id con num_transacciones %g", $time, num_transacciones);
+        
+
+        //Comprobacion de transacciones con destinos inexistentes
+        #2550;
+
+        instr_agent = send_random_payload_ilegal_id;
+        test_agent_mbx.put(instr_agent);
+        $display("[%g] Test: Enviada la primera instruccion al agente send_random_payload_ilegal_id con num_transacciones %g", $time, num_transacciones);
+        
+
+
 
         #20000
         

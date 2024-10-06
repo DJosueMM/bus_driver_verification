@@ -2,6 +2,8 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
 
     virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_sb_fifo_dut;
 
+
+    localparam CLK_PERIOD = 20; // Periodo del reloj en ns
     consulta_sb consulta_test_sb;
 
     mbx_checker_sb checker_sb_mbx;     
@@ -36,7 +38,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
             instrucciones_driver_monitor #(.WIDTH(width)) complete_transaction;
             @(posedge vif_sb_fifo_dut.clk); // Esperar al flanco positivo del reloj
             clk_cycles++;
-            time_elapsed = clk_cycles * 20;
+            time_elapsed = clk_cycles * CLK_PERIOD;
       
             // Procesar transacciones en el mailbox del scoreboard
             if (checker_sb_mbx.num() > 0) begin

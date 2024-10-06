@@ -1,1 +1,9 @@
-=N:[LibUpdate] Updated library dut.
+=E:[ParseError]:
+    Parser errors encountered at the following locations:    
+
+    ./../src/sim/checker.sv:1:7                    expected 'escaped_identifier' or 'simple_identifier' instead of 'checker'    
+    Included from ../src/sim/test_bench.sv:5:10                                                                                 
+
+    ./../src/sim/ambiente.sv:10:5                  expected 'escaped_identifier' or 'simple_identifier' instead of 'checker'    
+    Included from ../src/sim/test_bench.sv:9:10                                                                                 
+
