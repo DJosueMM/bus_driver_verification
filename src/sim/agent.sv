@@ -296,7 +296,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                             transaccion.pkg_id = id_spec;
                             
                             transaccion.print("Agente: transacción auto_send_random creada");
-                            agnt_drv_mbx[driver_spec].put(transaccion);
+                            agnt_drv_mbx[id_spec].put(transaccion);
                         end
 
                     end
