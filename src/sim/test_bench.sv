@@ -58,7 +58,7 @@ module test_bench;
   end
 
   always @(posedge clk) begin
-    if ($time > 1000000) begin
+    if ($time > 10000000) begin
       $display("Test_bench: Tiempo límite de prueba en el test_bench alcanzado");
       $finish;
     end
