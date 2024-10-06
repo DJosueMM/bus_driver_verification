@@ -161,7 +161,7 @@ typedef mailbox # (consulta_sb) mbx_test_sb;
 interface dut_compl_if # (
     
     parameter width = 16, 
-    parameter drvs  = 22, 
+    parameter drvs  = 8, 
     parameter bits  = 1    
 )(
     input clk
