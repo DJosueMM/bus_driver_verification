@@ -90,7 +90,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                         revisando = driver_fifo[w];
                         revisando.print("Checker: revisando transaccion anteriormente recibida de driver");
                         $display ("intento #[%g]", w);
-                        $display("revisando.pkg_id           ENVIADO DEL DRIVER [%g]    vs RECIBIDO DEL MONITOR [%g] \nrevisando.pkg_payload      ENVIADO DEL DRIVER [%h] vs RECIBIDO DEL MONITOR [%h] \nrevisando.receiver_monitor ENVIADO DEL DRIVER [%g]    vs RECIBIDO DEL MONITOR [%g] \nrevisando.tipo_transaccion ENVIADO DEL DRIVER [%p] vs RECIBIDO DEL MONITOR [%p]", 
+                        $display("revisando.pkg_id           ENVIADO DEL DRIVER [%g]    vs RECIBIDO DEL MONITOR [%g] \nrevisando.pkg_payload      ENVIADO DEL DRIVER [%h]   vs RECIBIDO DEL MONITOR [%h] \nrevisando.receiver_monitor ENVIADO DEL DRIVER [%g]    vs RECIBIDO DEL MONITOR [%g] \nrevisando.tipo_transaccion ENVIADO DEL DRIVER [%p] vs RECIBIDO DEL MONITOR [%p]", 
                                   revisando.pkg_id, this.pkg_id_mnt,  revisando.pkg_payload, this.pkg_payload_mnt, revisando.receiver_monitor, this.rcv_mnt_mnt, revisando.tipo_transaccion, this.tipo_transaccion_mnt); 
                         
                         $display("[%g] Checker: revisando coincidencia de transaccion recibida en el monitor con la transaccion [%g]", $time, w);
@@ -105,17 +105,17 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                                 transaccion_to_sb = new();
                                 transaccion_to_sb.max_delay        = transaccion_drv_received.max_delay;
                                 transaccion_to_sb.delay            = transaccion_drv_received.delay;
-                                transaccion_to_sb.pkg_id           = this.pkg_id_mnt;
+                                transaccion_to_sb.pkg_id           = 8'b11111111;
                                 transaccion_to_sb.pkg_payload      = this.pkg_payload_mnt;
                                 transaccion_to_sb.send_time        = transaccion_drv_received.send_time;
                                 transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
                                 transaccion_to_sb.receiver_monitor = this.rcv_mnt_mnt;
                                 transaccion_to_sb.tipo_transaccion = this.tipo_transaccion_mnt;
+                                transaccion_to_sb.sender_monitor   = transaccion_drv_received.sender_monitor;
         
                                 transaccion_to_sb.print("Checker: transaccion completa reconstruida");
                                 checker_sb_mbx.put(transaccion_to_sb);
                                 $display ("[%g] Checker: transaccion enviada al sb", $time);
-                                //driver_fifo.delete(w);
                                 break;
                             end
 
@@ -138,11 +138,12 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                                 transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
                                 transaccion_to_sb.receiver_monitor = this.rcv_mnt_mnt;
                                 transaccion_to_sb.tipo_transaccion = this.tipo_transaccion_mnt;
+                                transaccion_to_sb.sender_monitor   = transaccion_drv_received.sender_monitor;
         
                                 transaccion_to_sb.print("Checker: transaccion completa reconstruida");
                                 checker_sb_mbx.put(transaccion_to_sb);
                                 $display ("[%g] Checker: transaccion enviada al sb", $time);
-                                //driver_fifo.delete(w);
+                                driver_fifo.delete(w);
                                 break;
                             end
 
@@ -153,7 +154,37 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
 
                     if (this.match_found == 0) begin
                         $display ("[%g] ERROR Checker: las transaccion recibida no coincide con ninguna enviada", $time);
+                        transaccion_mnt_received.print("Checker: ERROR EN LA TRANSACCION RECIBIDA");
+                        $finish;
                     end
+                end
+            end
+        end
+    endtask
+
+    task revisar_datos_descartados();
+        
+        $display("\n[%g] Test: comprobando que los datos no validos hayan sido correctamente descartados\n", $time);
+        // Recorre cada entrada en la FIFO driver_fifo
+        foreach(driver_fifo[i]) begin
+
+            if (driver_fifo[i].tipo_transaccion == broadcast) begin
+                //driver_fifo.delete(i);
+                $display("[%g] Transaccion de broadcast ya fue recibida por todos los monitores:\n %p", $time, driver_fifo[i]);
+            end 
+            
+            else begin
+
+                if ((driver_fifo[i].tipo_transaccion == send && driver_fifo[i].pkg_id != driver_fifo[i].receiver_monitor) ||
+                    (driver_fifo[i].tipo_transaccion == send && driver_fifo[i].pkg_id >= DRVS - 1) || 
+                    (driver_fifo[i].sender_monitor == driver_fifo[i].pkg_id)) begin
+                    $display("[%g] Transaccion ilegal o sin proposito correctamente descartada:\n%p", $time, driver_fifo[i]);
+                    //driver_fifo.delete(i);
+                end 
+                
+                else begin
+                    $display("[%g] ERROR: Transaccion Valida pendiente a evaluarse:\n%p", $time, driver_fifo[i]);
+                    $finish;
                 end
             end
         end

@@ -2,6 +2,8 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
 
     virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_sb_fifo_dut;
 
+
+    localparam CLK_PERIOD = 20; // Periodo del reloj en ns
     consulta_sb consulta_test_sb;
 
     mbx_checker_sb checker_sb_mbx;     
@@ -36,7 +38,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
             instrucciones_driver_monitor #(.WIDTH(width)) complete_transaction;
             @(posedge vif_sb_fifo_dut.clk); // Esperar al flanco positivo del reloj
             clk_cycles++;
-            time_elapsed = clk_cycles * 20;
+            time_elapsed = clk_cycles * CLK_PERIOD;
       
             // Procesar transacciones en el mailbox del scoreboard
             if (checker_sb_mbx.num() > 0) begin
@@ -80,7 +82,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                     instr_broadcast: begin
                         $display("Procesando: Transacción de tipo Broadcast \n\n");
                         $display("##########################################################");
-                        $display("############### NÚMERO DE BROADCASTS %0d ###############", instr_broadcast);
+                        $display("############### NÚMERO DE RECIBIDAS POR BROADCASTS %0d ###############", instr_broadcast);
                         $display("##########################################################");
                     end
 
@@ -115,7 +117,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                     time_elapsed: begin
                         $display("Procesando: Tiempo Transcurrido \n\n");
                         $display("##########################################################");
-                        $display("############### TIEMPO TRANSCURRIDO %0d UNIDADES ###############", time_elapsed);
+                        $display("############### TIEMPO TRANSCURRIDO %0d ns      ###############", time_elapsed);
                         $display("##########################################################");
                     end
 
@@ -124,7 +126,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                         $display("##########################################################");
                         $display("############### REPORTE COMPLETO ###############");
                         $display("### TRANSACCIONES COMPLETADAS: %0d", transacciones_completadas);
-                        $display("### BROADCASTS: %0d", instr_broadcast);
+                        $display("### RECIBIDAS POR BROADCASTS: %0d", instr_broadcast);
                         $display("### ENVÍOS: %0d", instr_send);
                         $display("### LATENCIA PROMEDIO: %0d CICLOS", total_avg_delay);
                         $display("### CICLOS DE RELOJ: %0d", clk_cycles);

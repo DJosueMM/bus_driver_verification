@@ -55,7 +55,7 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
 
                         this.current_payload = transaction_send.pkg_payload;
                         this.current_pkg_id = transaction_send.pkg_id;
-                        this.current_data_tx = {current_pkg_id, current_payload};
+                        this.current_data_tx = {this.current_pkg_id, this.current_payload};
                         fifo_in.push_front(this.current_data_tx);  //aqui se lo metemos a la fifo de entrada
                         
                         $display("[%g] Driver [%g] envio la transaccion send a la FIFO de entrada", $time, drv_id);
@@ -79,9 +79,10 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                         if (vif_driver_fifo_dut.pop[0][drv_id] == 1) begin
                             vif_driver_fifo_dut.D_pop[0][drv_id] = fifo_in[$];
                             transaction_send.send_time = $time;
-                            transaction_send.receiver_monitor = transaction_send.pkg_id;
+                            transaction_send.receiver_monitor = this.current_pkg_id;
                             transaction_send.pkg_payload      = transaction_send.pkg_payload;
                             transaction_send.tipo_transaccion = transaction_send.tipo_transaccion;
+                            transaction_send.sender_monitor   = drv_id;
                             $display("[%g] Driver [%g] envio la transaccion al DUT", $time, drv_id);
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time
                             drv_chkr_mbx.put(transaction_send); //se envia al checker
@@ -128,6 +129,8 @@ class driver # (parameter WIDTH = 16, parameter DRVS = 8);
                             transaction_send.receiver_monitor = transaction_send.pkg_id;
                             transaction_send.pkg_payload      = transaction_send.pkg_payload;
                             transaction_send.tipo_transaccion = transaction_send.tipo_transaccion;
+                            transaction_send.sender_monitor   = drv_id;
+                            
 
                             $display("[%g] Driver [%g] envio la transaccion al DUT", $time, drv_id);
                             transaction_send.print("Driver: Transacción enviada al DUT desde la fifo de entrada"); //al enviar al dut, se mete en send time con $time

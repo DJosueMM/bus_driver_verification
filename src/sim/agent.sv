@@ -288,15 +288,15 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
                          
                         for (int i = 0; i < num_transacciones; i++) begin
 
-                            driver_spec = $urandom_range(0, DRVS - 1);     
+                               
                             transaccion = new();
                             transaccion.randomize();
                             transaccion.max_delay = max_retardo;
-                            id_spec = driver_spec; //revisar asignacion de int a bit
+                            id_spec = $urandom_range(0, DRVS - 1);  
                             transaccion.pkg_id = id_spec;
                             
                             transaccion.print("Agente: transacción auto_send_random creada");
-                            agnt_drv_mbx[driver_spec].put(transaccion);
+                            agnt_drv_mbx[id_spec].put(transaccion);
                         end
 
                     end
