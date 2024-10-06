@@ -12,11 +12,11 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
     int transacciones_completadas = 0;  
     int instr_broadcast = 0;               
     int instr_send = 0;                    
-    int latencia = 0;  
-    int total_avg_delay = 0;                    
+    real latencia = 0;  
+    real total_avg_delay = 0;                    
     int clk_cycles = 0;
     int time_elapsed = 0;
-    logic [31:0] avr_delay_terminal [DRVS - 1:0];
+    real avr_delay_terminal [DRVS - 1:0];
 
     integer csv_file;    
 
@@ -46,7 +46,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                 $display("[%g] SB recibe una transaccion del Checker", $time);
                 
                 transacciones_completadas++;
-                avr_delay_terminal[complete_transaction.receiver_monitor] = complete_transaction.receive_time - complete_transaction.send_time; // Calcular latencia
+                avr_delay_terminal[complete_transaction.receiver_monitor] = avr_delay_terminal[complete_transaction.receiver_monitor] + complete_transaction.receive_time - complete_transaction.send_time; // Calcular latencia
                 latencia = complete_transaction.receive_time - complete_transaction.send_time;     
                 total_avg_delay = (total_avg_delay + latencia) / transacciones_completadas; 
 
