@@ -3,8 +3,8 @@ class test #(parameter width = 16, parameter DRVS = 8);
     mbx_test_agent test_agent_mbx;
     mbx_test_sb    test_sb_mbx;
 
-    parameter num_transacciones = 5;
-    parameter max_retardo = 4;
+    parameter num_transacciones = 200;
+    parameter max_retardo = 10;
 
     instrucciones_agente instr_agent;
     consulta_sb consulta_test_sb;
