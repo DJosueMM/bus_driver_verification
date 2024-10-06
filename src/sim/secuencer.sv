@@ -67,7 +67,7 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
 
 
         #20000
-        
+        ambiente_inst.checker_inst.revisar_datos_descartados();
         consulta_test_sb = complete_report;
         test_sb_mbx.put(consulta_test_sb);
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
