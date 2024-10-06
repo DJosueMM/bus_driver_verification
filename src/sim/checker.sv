@@ -174,18 +174,13 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
             end 
             
             else begin
-                 
-                $display("%d", DRVS);
-                $display("%d", driver_fifo[i].pkg_id);
 
-                if ((driver_fifo[i].tipo_transaccion == send &&
-                    driver_fifo[i].pkg_id != driver_fifo[i].receiver_monitor) ||
-                    (driver_fifo[i].tipo_transaccion == send &&
-                    driver_fifo[i].pkg_id >= DRVS) || 
+                if ((driver_fifo[i].tipo_transaccion == send && driver_fifo[i].pkg_id != driver_fifo[i].receiver_monitor) ||
+                    (driver_fifo[i].tipo_transaccion == send && driver_fifo[i].pkg_id >= DRVS) || 
                     driver_fifo[i].sender_monitor == driver_fifo[i].pkg_id) begin
                     $display("[%g] Transaccion ilegal o sin proposito correctamente descartada:\n%p", $time, driver_fifo[i]);
                     //driver_fifo.delete(i);
-            end 
+                end 
                 
                 else begin
                     $display("[%g] ERROR: Transaccion Valida pendiente a evaluarse:\n%p", $time, driver_fifo[i]);
