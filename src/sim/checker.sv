@@ -154,6 +154,8 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
 
                     if (this.match_found == 0) begin
                         $display ("[%g] ERROR Checker: las transaccion recibida no coincide con ninguna enviada", $time);
+                        transaccion_mnt_received.print("Checker: ERROR EN LA TRANSACCION RECIBIDA");
+                        $finish;
                     end
                 end
             end
