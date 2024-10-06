@@ -85,7 +85,23 @@ class test #(parameter width = 16, parameter DRVS = 8);
         instr_agent = all_for_one;
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada instruccion al agente all_for_one con num_transacciones %g", $time, num_transacciones);
+
+        //todos enviando random
+        #2550;
+
+        instr_agent = all_sending_random;
+        test_agent_mbx.put(instr_agent);
+        $display("[%g] Test: Enviada instruccion al agente all_sending_random con num_transacciones %g", $time, num_transacciones);
+
+
+        //todos hacen broadcast
+        #2550;
+
+        instr_agent = all_broadcast;
+        test_agent_mbx.put(instr_agent);
+        $display("[%g] Test: Enviada instruccion al agente all_broadcast con num_transacciones %g", $time, num_transacciones);
         
+    
         
         #20000
         $display("\n////////////////////////////////////////////////////////////////////////////////////////");
