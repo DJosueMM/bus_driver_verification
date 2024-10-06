@@ -96,7 +96,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                     latencia: begin
                         $display("Procesando: Latencia \n\n");
                         $display("##########################################################");
-                        $display("############### LATENCIA %0f CICLOS ###############", latencia);
+                        $display("############### LATENCIA %f CICLOS ###############", latencia);
                         $display("##########################################################");
                     end
 
@@ -128,7 +128,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                         $display("### TRANSACCIONES COMPLETADAS: %0d", transacciones_completadas);
                         $display("### RECIBIDAS POR BROADCASTS: %0d", instr_broadcast);
                         $display("### ENVÍOS: %0d", instr_send);
-                        $display("### LATENCIA PROMEDIO: %0d CICLOS", total_avg_delay);
+                        $display("### LATENCIA PROMEDIO: %f CICLOS", total_avg_delay);
                         $display("### CICLOS DE RELOJ: %0d", clk_cycles);
                         $display("### TIEMPO TRANSCURRIDO: %0d UNIDADES", time_elapsed);
                         $display("##########################################################");
