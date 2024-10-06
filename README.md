@@ -15,7 +15,9 @@ Para el diseño del ambiente de verificación, se toma en cuenta el funcionamien
 - push: señal de control que indica que se debe realizar una operación de push (es decir, ingresar datos a la FIFO). 
 - pop: señal de control que indica que se debe realizar una operación de pop (es decir, sacar datos de la FIFO). 
 
-    ![alt text](doc/img/data_protocol.png)
+![interfaz_fifo_dut](https://github.com/user-attachments/assets/b2cb3e76-5d6b-47b8-a0a7-2fa4cdd3c111)
+
+  
 - Dpush: datos a ser almacenados en la FIFO.
 - Dpop: datos a ser extraídos de la FIFO. 
 - broadcast: Representa una señal con un valor por defecto de 8 bits (todo 1s: 11111111). Esto significa que el módulo tiene una funcionalidad de transmisión de mensajes a múltiples destinatarios simultáneamente (broadcast).
@@ -71,7 +73,7 @@ Además de esto, como parte de las pruebas, se aleatorizarán distintas variable
 El ambiente consiste de distintos transactores, en este caso se conforma de un generador Test, un agente, un driver/monitor, un checker y un scoreboard. Además de esto el driver va a tener una interfaz para comunicarse con el DUT.
 
 <a name="Ambiente_Bloques"></a>
-![Ambiente_Bloques](doc/img/ambiente_bloques.png)
+![ambiente_bloques](https://github.com/user-attachments/assets/0c49660b-e6cf-4130-af64-8dc9298e3a19)
 
 
 ### Generador de Tests
