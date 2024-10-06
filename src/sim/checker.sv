@@ -175,8 +175,8 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
             
             else begin
                  
-                $display("%g", DRVS);
-                $display("%g", driver_fifo[i].pkg_id);
+                $display("%d", DRVS);
+                $display("%d", driver_fifo[i].pkg_id);
 
                 if ((driver_fifo[i].tipo_transaccion == send &&
                     driver_fifo[i].pkg_id != driver_fifo[i].receiver_monitor) ||
