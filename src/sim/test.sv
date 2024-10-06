@@ -69,9 +69,16 @@ class test #(parameter width = 16, parameter DRVS = 8);
         instr_agent = auto_send_random;
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada instruccion al agente auto_send_random con num_transacciones %g", $time, num_transacciones);
-        
-        
 
+
+        //comprobacion de rafaga de send de un solo driver
+        #2550;
+
+        instr_agent = consecutive_send;
+        test_agent_mbx.put(instr_agent);
+        $display("[%g] Test: Enviada instruccion al agente consecutive_send con num_transacciones %g", $time, num_transacciones);
+        
+        
         #20000
         $display("\n////////////////////////////////////////////////////////////////////////////////////////");
         $display("[%g] Test: para finalizar la prueba, se envia tarea de comprobacion final al checker", $time);
