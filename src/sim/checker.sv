@@ -168,9 +168,6 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
         // Recorre cada entrada en la FIFO driver_fifo
         foreach(driver_fifo[i]) begin
 
-            $display("DRVS:\n%p",DRVS);
-            $display("ID:\n%h",driver_fifo[i].pkg_id);
-
             if (driver_fifo[i].tipo_transaccion == broadcast) begin
                 //driver_fifo.delete(i);
                 $display("[%g] Transaccion de broadcast ya fue recibida por todos los monitores:\n %p", $time, driver_fifo[i]);
@@ -179,7 +176,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
             else begin
 
                 if ((driver_fifo[i].tipo_transaccion == send && driver_fifo[i].pkg_id != driver_fifo[i].receiver_monitor) ||
-                    (driver_fifo[i].tipo_transaccion == send && driver_fifo[i].pkg_id >= DRVS) || 
+                    (driver_fifo[i].tipo_transaccion == send && driver_fifo[i].pkg_id > DRVS) || 
                     (driver_fifo[i].sender_monitor == driver_fifo[i].pkg_id)) begin
                     $display("[%g] Transaccion ilegal o sin proposito correctamente descartada:\n%p", $time, driver_fifo[i]);
                     //driver_fifo.delete(i);
