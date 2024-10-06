@@ -103,7 +103,7 @@ class test #(parameter width = 16, parameter DRVS = 8);
         
     
         
-        #800000
+        #300000;
         $display("\n////////////////////////////////////////////////////////////////////////////////////////");
         $display("[%g] Test: para finalizar la prueba, se envia tarea de comprobacion final al checker", $time);
         $display("////////////////////////////////////////////////////////////////////////////////////////\n");
