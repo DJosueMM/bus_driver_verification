@@ -161,13 +161,14 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
     endtask
 
     task revisar_datos_descartados();
-
+        
+        $display("\n[%g] Test: comprobando que los datos no validos hayan sido correctamente descartados\n", $time);
         // Recorre cada entrada en la FIFO driver_fifo
         foreach(driver_fifo[i]) begin
 
             if (driver_fifo[i].tipo_transaccion == broadcast) begin
                 //driver_fifo.delete(i);
-                $display("Transaccion de broadcast ya fue recibida por todos los monitores: %p", driver_fifo[i]);
+                $display("[%g] Transaccion de broadcast ya fue recibida por todos los monitores:\n %p", $time, driver_fifo[i]);
             end 
             
             else begin
@@ -177,12 +178,12 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                     (driver_fifo[i].tipo_transaccion == send &&
                     driver_fifo[i].pkg_id >= DRVS) || 
                     driver_fifo[i].sender_monitor == driver_fifo[i].pkg_id) begin
-                    $display("Transaccion ilegal o sin proposito correctamente descartada: %p", driver_fifo[i]);
+                    $display("[%g] Transaccion ilegal o sin proposito correctamente descartada:\n%p", $time, driver_fifo[i]);
                     //driver_fifo.delete(i);
             end 
                 
                 else begin
-                    $display("ERROR: Transaccion Valida pendiente a evaluarse: %p", driver_fifo[i]);
+                    $display("[%g] ERROR: Transaccion Valida pendiente a evaluarse:\n%p", $time, driver_fifo[i]);
                 end
             end
         end

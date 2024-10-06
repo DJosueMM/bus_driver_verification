@@ -67,6 +67,9 @@ class secuencer #(parameter width = 16, parameter DRVS = 8);
 
 
         #20000
+        $display("////////////////////////////////////////////////////////////////////////////////////////");
+        $display("\n[%g] Test: para finalizar la prueba, se envia tarea de comprobacion final al checker\n", $time);
+        $display("////////////////////////////////////////////////////////////////////////////////////////");
         ambiente_inst.checker_inst.revisar_datos_descartados();
         consulta_test_sb = complete_report;
         test_sb_mbx.put(consulta_test_sb);
