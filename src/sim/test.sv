@@ -77,6 +77,14 @@ class test #(parameter width = 16, parameter DRVS = 8);
         instr_agent = consecutive_send;
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada instruccion al agente consecutive_send con num_transacciones %g", $time, num_transacciones);
+
+
+        //todos le envian a uno solo
+        #2550;
+
+        instr_agent = all_for_one;
+        test_agent_mbx.put(instr_agent);
+        $display("[%g] Test: Enviada instruccion al agente all_for_one con num_transacciones %g", $time, num_transacciones);
         
         
         #20000
