@@ -96,7 +96,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                     latencia: begin
                         $display("Procesando: Latencia \n\n");
                         $display("##########################################################");
-                        $display("############### LATENCIA %0d CICLOS ###############", latencia);
+                        $display("############### LATENCIA %0f CICLOS ###############", latencia);
                         $display("##########################################################");
                     end
 
