@@ -82,7 +82,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                     instr_broadcast: begin
                         $display("Procesando: Transacción de tipo Broadcast \n\n");
                         $display("##########################################################");
-                        $display("############### NÚMERO DE BROADCASTS %0d ###############", instr_broadcast);
+                        $display("############### NÚMERO DE RECIBIDAS POR BROADCASTS %0d ###############", instr_broadcast);
                         $display("##########################################################");
                     end
 
@@ -126,7 +126,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                         $display("##########################################################");
                         $display("############### REPORTE COMPLETO ###############");
                         $display("### TRANSACCIONES COMPLETADAS: %0d", transacciones_completadas);
-                        $display("### BROADCASTS: %0d", instr_broadcast);
+                        $display("### RECIBIDAS POR BROADCASTS: %0d", instr_broadcast);
                         $display("### ENVÍOS: %0d", instr_send);
                         $display("### LATENCIA PROMEDIO: %0d CICLOS", total_avg_delay);
                         $display("### CICLOS DE RELOJ: %0d", clk_cycles);
