@@ -37,7 +37,7 @@ void  hsG_0__0 (struct dummyq_struct * I1353, EBLK  * I1348, U  I707)
         sched_hsopt(pQ, I1348, I1613);
     }
 }
-void  hs_0_M_23_21__salida_daidir (UB  * pcode, scalar  val)
+void  hs_0_M_24_21__salida_daidir (UB  * pcode, scalar  val)
 {
     if (*(pcode + 2) == val) {
         if (fRTFrcRelCbk) {
@@ -158,38 +158,38 @@ void  hs_0_M_23_21__salida_daidir (UB  * pcode, scalar  val)
         (*(FP  *)(pcode + 0))(*(UB  **)(pcode + 8), I1361);
     }
 }
-void  hs_0_M_23_0__salida_daidir (UB  * pcode, scalar  val)
+void  hs_0_M_24_0__salida_daidir (UB  * pcode, scalar  val)
 {
     UB  * I1680;
     *(pcode + 0) = val;
     if (*(pcode + 1)) {
         return  ;
     }
-    hs_0_M_23_21__salida_daidir(pcode, val);
+    hs_0_M_24_21__salida_daidir(pcode, val);
     fScalarIsReleased = 0;
 }
-void  hs_0_M_23_1__salida_daidir (UB  * pcode, scalar  val, U  I699, scalar  * I1368, U  did)
+void  hs_0_M_24_1__salida_daidir (UB  * pcode, scalar  val, U  I699, scalar  * I1368, U  did)
 {
     U  I1347 = 0;
     *(pcode + 1) = 1;
     fScalarIsForced = 1;
-    hs_0_M_23_21__salida_daidir(pcode, val);
+    hs_0_M_24_21__salida_daidir(pcode, val);
     fScalarIsForced = 0;
 }
-void  hs_0_M_23_2__salida_daidir (UB  * pcode)
+void  hs_0_M_24_2__salida_daidir (UB  * pcode)
 {
     scalar  val;
     fScalarIsReleased = 1;
     val = *(pcode + 0);
     *(pcode + 1) = 0;
-    hs_0_M_23_21__salida_daidir(pcode, val);
+    hs_0_M_24_21__salida_daidir(pcode, val);
     fScalarIsReleased = 0;
 }
-void  hs_0_M_23_5__salida_daidir (UB  * pcode, UB  val)
+void  hs_0_M_24_5__salida_daidir (UB  * pcode, UB  val)
 {
     val = *(pcode + 0);
     *(pcode + 0) = 0xff;
-    hs_0_M_23_0__salida_daidir(pcode, val);
+    hs_0_M_24_0__salida_daidir(pcode, val);
     fScalarIsReleased = 0;
 }
 #ifdef __cplusplus

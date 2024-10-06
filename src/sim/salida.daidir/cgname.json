@@ -59,58 +59,64 @@
         "module",
         10
     ],
+    "serializer_0001": [
+        "serializer_0001",
+        "Ah4n6",
+        "module",
+        11
+    ],
     "Read_st_Mchn": [
         "Read_st_Mchn",
         "LUjI7",
         "module",
-        11
+        12
     ],
     "Write_st_Mchn": [
         "Write_st_Mchn",
         "atLs2",
         "module",
-        12
+        13
     ],
     "bs_ntrfs": [
         "bs_ntrfs",
         "tSaKw",
         "module",
-        13
+        14
     ],
     "bs_gnrtr": [
         "bs_gnrtr",
         "V7vhV",
         "module",
-        14
+        15
     ],
     "bs_ntrfs_n_rbtr": [
         "bs_ntrfs_n_rbtr",
         "hSZxw",
         "module",
-        15
+        16
     ],
     "bs_gnrtr_n_rbtr_0000": [
         "bs_gnrtr_n_rbtr_0000",
         "tn8Y7",
         "module",
-        16
+        17
     ],
     "dut_compl_if": [
         "dut_compl_if",
         "jTCts",
         "module",
-        17
+        18
     ],
     "test_bench": [
         "test_bench",
         "YMuFK",
         "module",
-        18
+        19
     ],
     "...MASTER...": [
         "SIM",
         "amcQw",
         "module",
-        19
+        20
     ]
 }

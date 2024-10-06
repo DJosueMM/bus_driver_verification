@@ -6,7 +6,7 @@ Warning-[DEBUG_DEP] Option will be deprecated
 Command: vcs -Mupdate test_bench.sv -o salida -full64 -debug_all -kdb -sverilog -l \
 log_test +lint=TFIPC-L
                          Chronologic VCS (TM)
-       Version R-2020.12-SP2_Full64 -- Sat Oct  5 22:51:05 2024
+       Version R-2020.12-SP2_Full64 -- Sat Oct  5 22:59:43 2024
 
                     Copyright (c) 1991 - 2021 Synopsys, Inc.
    This software and the associated documentation are proprietary to Synopsys,
@@ -77,12 +77,12 @@ make[1]: warning:  Clock skew detected.  Your build may be incomplete.
 if [ -x ../salida ]; then chmod a-x ../salida; fi
 g++  -o ../salida      -rdynamic  -Wl,-rpath='$ORIGIN'/salida.daidir -Wl,-rpath=./salida.daidir \
 -Wl,-rpath=/mnt/vol_NFS_rh003/tools/vcs/R-2020.12-SP2/linux64/lib -L/mnt/vol_NFS_rh003/tools/vcs/R-2020.12-SP2/linux64/lib \
--Wl,-rpath-link=./  /usr/lib64/libnuma.so.1   objs/amcQw_d.o   _2793584_archive_1.so \
+-Wl,-rpath-link=./  /usr/lib64/libnuma.so.1   objs/amcQw_d.o   _2797921_archive_1.so \
 SIM_l.o      rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o \
 -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /mnt/vol_NFS_rh003/tools/vcs/R-2020.12-SP2/linux64/lib/vcs_tls.o \
 -Wl,-whole-archive  -lvcsucli    -Wl,-no-whole-archive          /mnt/vol_NFS_rh003/tools/vcs/R-2020.12-SP2/linux64/lib/vcs_save_restore_new.o \
 -ldl  -lc -lm -lpthread -ldl 
 ../salida up to date
 make: warning:  Clock skew detected.  Your build may be incomplete.
-CPU time: .933 seconds to compile + .324 seconds to elab + .271 seconds to link
+CPU time: .856 seconds to compile + .320 seconds to elab + .260 seconds to link
 Verdi KDB elaboration done and the database successfully generated: 0 error(s), 0 warning(s)
