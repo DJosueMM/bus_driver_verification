@@ -111,7 +111,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                                 transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
                                 transaccion_to_sb.receiver_monitor = this.rcv_mnt_mnt;
                                 transaccion_to_sb.tipo_transaccion = this.tipo_transaccion_mnt;
-                                transaccion.to_sb.sender_monitor   = transaccion_drv_received.sender_monitor;
+                                transaccion_to_sb.sender_monitor   = transaccion_drv_received.sender_monitor;
         
                                 transaccion_to_sb.print("Checker: transaccion completa reconstruida");
                                 checker_sb_mbx.put(transaccion_to_sb);
@@ -138,7 +138,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                                 transaccion_to_sb.receive_time     = transaccion_mnt_received.receive_time;
                                 transaccion_to_sb.receiver_monitor = this.rcv_mnt_mnt;
                                 transaccion_to_sb.tipo_transaccion = this.tipo_transaccion_mnt;
-                                transaccion.to_sb.sender_monitor   = transaccion_drv_received.sender_monitor;
+                                transaccion_to_sb.sender_monitor   = transaccion_drv_received.sender_monitor;
         
                                 transaccion_to_sb.print("Checker: transaccion completa reconstruida");
                                 checker_sb_mbx.put(transaccion_to_sb);
