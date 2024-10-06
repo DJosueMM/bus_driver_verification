@@ -186,6 +186,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                 
                 else begin
                     $display("[%g] ERROR: Transaccion Valida pendiente a evaluarse:\n%p", $time, driver_fifo[i]);
+                    $finish;
                 end
             end
         end
