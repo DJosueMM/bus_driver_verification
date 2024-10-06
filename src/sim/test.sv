@@ -46,6 +46,9 @@ class test #(parameter width = 16, parameter DRVS = 8);
         instr_agent = init;
         test_agent_mbx.put(instr_agent);
         $display("\n[%g] Test: Comenzando la inicializacion", $time);
+
+        consulta_test_sb = complete_report;
+        test_sb_mbx.put(consulta_test_sb);
         
         #1000;
 
@@ -55,6 +58,8 @@ class test #(parameter width = 16, parameter DRVS = 8);
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada instruccion al agente send_random_payload_legal_id con num_transacciones %g", $time, num_transacciones);
         
+        consulta_test_sb = complete_report;
+        test_sb_mbx.put(consulta_test_sb);
 
         //comprobacion de transacciones con destinos inexistentes
         #2550;
@@ -62,7 +67,9 @@ class test #(parameter width = 16, parameter DRVS = 8);
         instr_agent = send_random_payload_ilegal_id;
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada instruccion al agente send_random_payload_ilegal_id con num_transacciones %g", $time, num_transacciones);
-
+        
+        consulta_test_sb = complete_report;
+        test_sb_mbx.put(consulta_test_sb);
         //comprobacion de autosend para correcto descarte
         #2550;
 
@@ -70,7 +77,8 @@ class test #(parameter width = 16, parameter DRVS = 8);
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada instruccion al agente auto_send_random con num_transacciones %g", $time, num_transacciones);
 
-
+        consulta_test_sb = complete_report;
+        test_sb_mbx.put(consulta_test_sb);
         //comprobacion de rafaga de send de un solo driver
         #2550;
 
@@ -78,7 +86,8 @@ class test #(parameter width = 16, parameter DRVS = 8);
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada instruccion al agente consecutive_send con num_transacciones %g", $time, num_transacciones);
 
-
+        consulta_test_sb = complete_report;
+        test_sb_mbx.put(consulta_test_sb);
         //todos le envian a uno solo
         #2550;
 
@@ -86,6 +95,8 @@ class test #(parameter width = 16, parameter DRVS = 8);
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada instruccion al agente all_for_one con num_transacciones %g", $time, num_transacciones);
 
+        consulta_test_sb = complete_report;
+        test_sb_mbx.put(consulta_test_sb);
         //todos enviando random
         #2550;
 
@@ -93,7 +104,8 @@ class test #(parameter width = 16, parameter DRVS = 8);
         test_agent_mbx.put(instr_agent);
         $display("[%g] Test: Enviada instruccion al agente all_sending_random con num_transacciones %g", $time, num_transacciones);
 
-
+        consulta_test_sb = complete_report;
+        test_sb_mbx.put(consulta_test_sb);
         //todos hacen broadcast
         #2550;
 
