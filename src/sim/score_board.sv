@@ -17,7 +17,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
     int clk_cycles = 0;
     int time_elapsed = 0;
     int terminal_activa [DRVS - 1:0] = 0;
-    real avr_delay_terminal [DRVS - 1:0] = 0';
+    real avr_delay_terminal [DRVS - 1:0] = '0;
 
     integer csv_file;    
 
