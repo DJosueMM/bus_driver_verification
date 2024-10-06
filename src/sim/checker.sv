@@ -168,6 +168,9 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
         // Recorre cada entrada en la FIFO driver_fifo
         foreach(driver_fifo[i]) begin
 
+            $display("DRVS:\n%p",DRVS);
+            $display("ID:\n%p",driver_fifo[i].pkg_id);
+
             if (driver_fifo[i].tipo_transaccion == broadcast) begin
                 //driver_fifo.delete(i);
                 $display("[%g] Transaccion de broadcast ya fue recibida por todos los monitores:\n %p", $time, driver_fifo[i]);
@@ -183,8 +186,6 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
                 end 
                 
                 else begin
-                    $display("DRVS:\n%p",DRVS);
-                    $display("ID:\n%p",driver_fifo[i].pkg_id);
                     $display("[%g] ERROR: Transaccion Valida pendiente a evaluarse:\n%p", $time, driver_fifo[i]);
                     $finish;
                 end
