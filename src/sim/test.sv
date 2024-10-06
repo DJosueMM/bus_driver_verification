@@ -53,7 +53,7 @@ class test #(parameter width = 16, parameter DRVS = 8);
 
         instr_agent = send_random_payload_legal_id;
         test_agent_mbx.put(instr_agent);
-        $display("[%g] Test: Enviada la primera instruccion al agente send_random_payload_legal_id con num_transacciones %g", $time, num_transacciones);
+        $display("[%g] Test: Enviada instruccion al agente send_random_payload_legal_id con num_transacciones %g", $time, num_transacciones);
         
 
         //comprobacion de transacciones con destinos inexistentes
@@ -61,10 +61,16 @@ class test #(parameter width = 16, parameter DRVS = 8);
 
         instr_agent = send_random_payload_ilegal_id;
         test_agent_mbx.put(instr_agent);
-        $display("[%g] Test: Enviada la primera instruccion al agente send_random_payload_ilegal_id con num_transacciones %g", $time, num_transacciones);
+        $display("[%g] Test: Enviada instruccion al agente send_random_payload_ilegal_id con num_transacciones %g", $time, num_transacciones);
+
+        //comprobacion de autosend para correcto descarte
+        #2550;
+
+        instr_agent = auto_send_random;
+        test_agent_mbx.put(instr_agent);
+        $display("[%g] Test: Enviada instruccion al agente auto_send_random con num_transacciones %g", $time, num_transacciones);
         
-
-
+        
 
         #20000
         $display("\n////////////////////////////////////////////////////////////////////////////////////////");
