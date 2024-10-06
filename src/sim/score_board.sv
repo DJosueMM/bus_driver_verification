@@ -64,7 +64,7 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                 $fdisplay(csv_file, "%g,%d,%d,%d,%d,%d,%d,%d,%d,%d",
                           $time, transacciones_completadas, instr_broadcast, instr_send, latencia,
                           total_avg_delay, clk_cycles, time_elapsed, 
-                          complete_transaction.receiver_monitor, avr_delay_terminal[complete_transaction.receiver_monitor]);
+                          complete_transaction.receiver_monitor, avr_delay_terminal);
             end
 
             // Procesar el mailbox de comandos del test
