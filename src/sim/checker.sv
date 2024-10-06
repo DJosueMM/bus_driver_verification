@@ -169,7 +169,7 @@ class checker #(parameter WIDTH = 16, parameter DRVS = 8);
         foreach(driver_fifo[i]) begin
 
             $display("DRVS:\n%p",DRVS);
-            $display("ID:\n%p",driver_fifo[i].pkg_id);
+            $display("ID:\n%h",driver_fifo[i].pkg_id);
 
             if (driver_fifo[i].tipo_transaccion == broadcast) begin
                 //driver_fifo.delete(i);
