@@ -8,7 +8,8 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
 
     mbx_checker_sb checker_sb_mbx;     
     mbx_test_sb test_sb_mbx;
-
+    
+    //variables de estadisticas de simulacion
     int transacciones_completadas = 0;  
     int instr_broadcast = 0;               
     int instr_send = 0;                    
@@ -16,10 +17,10 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
     real total_avg_delay = 0;                    
     int clk_cycles = 0;
     int time_elapsed = 0;
-    real terminal_activa [DRVS - 1 : 0];
-    real avr_delay_terminal [DRVS - 1 : 0];
+    real terminal_activa [DRVS - 1 : 0];    //variable para contar las transacciones por terminal
+    real avr_delay_terminal [DRVS - 1 : 0]; //variable para calcular el promedio de retardo por terminal
 
-    integer csv_file;    
+    integer csv_file;  //auxiliar para crear el csv
 
     task run();
         // Abrir el archivo CSV para escritura
@@ -47,15 +48,15 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
                 $display("[%g] SB recibe una transaccion del Checker", $time);
                 
                 transacciones_completadas++;
-                terminal_activa[complete_transaction.receiver_monitor]++;
-                avr_delay_terminal[complete_transaction.receiver_monitor] = (avr_delay_terminal[complete_transaction.receiver_monitor] + complete_transaction.receive_time - complete_transaction.send_time) / terminal_activa[complete_transaction.receiver_monitor]; // Calcular latencia
-                latencia = complete_transaction.receive_time - complete_transaction.send_time;     
-                total_avg_delay = (total_avg_delay + latencia) / transacciones_completadas; 
+                terminal_activa[complete_transaction.receiver_monitor]++; //se aumenta el contador de transacciones por terminal, para la terminal correspondiente     
+                avr_delay_terminal[complete_transaction.receiver_monitor] = (avr_delay_terminal[complete_transaction.receiver_monitor] + complete_transaction.receive_time - complete_transaction.send_time) / terminal_activa[complete_transaction.receiver_monitor]; // Calcular latenciavpor terminal
+                latencia = complete_transaction.receive_time - complete_transaction.send_time; //calcula la latencia de la transaccion
+                total_avg_delay = (total_avg_delay + latencia) / transacciones_completadas;  //calcula el promedio de retardo total
 
                 if (complete_transaction.tipo_transaccion == broadcast) 
-                    instr_broadcast++;
+                    instr_broadcast++; //aumenta el contador de transacciones de tipo broadcast
                 else if (complete_transaction.tipo_transaccion == send)
-                    instr_send++;
+                    instr_send++; //aumenta el contador de transacciones de tipo send
                 
                 //$display("[%g] Latencia promedio %0d", $time, total_avg_delay);
                 //$display("[%g] Transacciones Completadas %0d", $time, transacciones_completadas);
@@ -72,6 +73,8 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
             // Procesar el mailbox de comandos del test
             if (test_sb_mbx.num() > 0) begin     
                 test_sb_mbx.try_get(consulta_test_sb); // Obtener la transacción del mailbox
+                
+                //dependiendo del tipo, se imprime el reporte correspondiente
                 case (consulta_test_sb)
 
                     transacciones_completadas: begin
@@ -149,5 +152,4 @@ class score_board # (parameter width = 16, parameter DRVS = 4);
             $error("Error: El archivo CSV no estaba abierto o ya fue cerrado.");
         end
     endfunction
-
 endclass

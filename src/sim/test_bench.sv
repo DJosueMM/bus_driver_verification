@@ -9,7 +9,6 @@
 `include "ambiente.sv"
 `include "test.sv"
 
-
 //-----------------------------------------------//
 // Modulo para correr la prueba //
 //-----------------------------------------------//
@@ -20,7 +19,6 @@ module test_bench;
   parameter width = 64;
   parameter DRVS  = 8;
   
-
   test    # (.width(width), .DRVS(DRVS)) test_0;
   dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) final_if (.clk(clk));
 
@@ -42,6 +40,7 @@ module test_bench;
     clk    = 0;
     test_0 = new();
 
+    //se conectan las interfaces de los drivers y componentes con la interfaz final
     for (int w = 0; w < DRVS; w++) begin
       test_0.ambiente_inst.sb_inst.vif_sb_fifo_dut              = final_if;
       test_0.ambiente_inst.checker_inst.vif_checker_fifo_dut    = final_if;
@@ -51,6 +50,7 @@ module test_bench;
       test_0.vif_test_fifo_dut                                  = final_if;
     end
     
+    //se corre el hilo del test
     fork
       test_0.run();
     join_none

@@ -2,18 +2,14 @@
 class ambiente #(parameter width = 16, parameter DRVS = 8);
 
     localparam DRIVERS_Q = DRVS;
+
     // Declaración de los componentes del ambiente
-
-    
-
     score_board #(.width(width),.DRVS(DRVS)) sb_inst;
     checker     #(.WIDTH(width), .DRVS(DRVS)) checker_inst;
     agent       #(.WIDTH(width), .DRVS(DRVS)) agent_inst;
     driver      #(.WIDTH(width), .DRVS(DRVS)) driver_inst  [DRVS - 1 : 0];
     monitor     #(.WIDTH(width), .DRVS(DRVS)) monitor_inst [DRVS - 1 : 0];
     
-    
-
 
     // Definición de la interface que conecta el DUT
     virtual dut_compl_if # (.width(width), .drvs(DRVS), .bits(1)) vif_ambiente_fifo_dut;
@@ -27,8 +23,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
     mbx_checker_sb       checker_sb_mbx;                       // mailbox del checker al scoreboard
     mbx_checker_sb       chkr_sb_mbx;     
     mbx_test_sb          test_sb_mbx; 
-
-
+  
+    // Constructor del ambiente
     function new();
         // Instanciación de los mailboxes
         test_agent_mbx      = new();
@@ -38,7 +34,8 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
         // Instanciación de los componentes del ambiente
         for (int i = 0; i < DRVS; i++) begin
-
+            
+            //los drivers y monitores se construyen con un id de 0 a DRVS-1 unico
             driver_inst         [i] = new(i);
             monitor_inst        [i] = new(i);
 
@@ -46,7 +43,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
             driver_checker_mbx  [i] = new();
             monitor_checker_mbx [i] = new();
         end
-
+ 
         agent_inst = new();
         checker_inst = new();
         sb_inst = new();
@@ -68,12 +65,12 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
         for (int c = 0; c < DRVS; c++) begin
           
-            //driver
+            //driver, cada uno se asigna al mailbox correspondiente
             driver_inst[c].agnt_drv_mbx        = agent_driver_mbx  [c];
             driver_inst[c].drv_chkr_mbx        = driver_checker_mbx[c];
             driver_inst[c].vif_driver_fifo_dut = vif_ambiente_fifo_dut;
             
-            //monitor
+            //monitor cada uno se asigna al mailbox correspondiente
             monitor_inst[c].mnt_ckecker_mbx      = monitor_checker_mbx [c];
             monitor_inst[c].vif_monitor_fifo_dut = vif_ambiente_fifo_dut;
 
@@ -82,6 +79,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
     virtual task run();
         $display("[%g] El ambiente fue inicializado",$time);
+        //se corren los hilos de los componentes
         fork
             agent_inst.run();
             checker_inst.run();
@@ -89,6 +87,7 @@ class ambiente #(parameter width = 16, parameter DRVS = 8);
 
             for (int j = 0; j < DRIVERS_Q; j++) begin
                 fork     
+                    //para cada driver y cada monitor se corre un hilo
                     automatic int a = j;
                     driver_inst[a].run();
                     monitor_inst[a].run();
