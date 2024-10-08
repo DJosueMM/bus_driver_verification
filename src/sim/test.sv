@@ -71,11 +71,11 @@ class test #(parameter width = 16, parameter DRVS = 8);
        // consulta_test_sb = complete_report;
        // test_sb_mbx.put(consulta_test_sb);
         //comprobacion de autosend para correcto descarte
-       // #2550;
+       #2550;
 
-       // instr_agent = auto_send_random;
-       // test_agent_mbx.put(instr_agent);
-       // $display("[%g] Test: Enviada instruccion al agente auto_send_random con num_transacciones %g", $time, num_transacciones);
+       instr_agent = auto_send_random;
+       test_agent_mbx.put(instr_agent);
+       $display("[%g] Test: Enviada instruccion al agente auto_send_random con num_transacciones %g", $time, num_transacciones);
 
        // consulta_test_sb = complete_report;
        // test_sb_mbx.put(consulta_test_sb);
