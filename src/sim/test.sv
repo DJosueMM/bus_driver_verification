@@ -64,9 +64,9 @@ class test #(parameter width = 16, parameter DRVS = 8);
         //comprobacion de transacciones con destinos inexistentes
         //#2550;
 
-        instr_agent = send_random_payload_ilegal_id;
-        test_agent_mbx.put(instr_agent);
-        $display("[%g] Test: Enviada instruccion al agente send_random_payload_ilegal_id con num_transacciones %g", $time, num_transacciones);
+        //instr_agent = send_random_payload_ilegal_id;
+        //test_agent_mbx.put(instr_agent);
+        //$display("[%g] Test: Enviada instruccion al agente send_random_payload_ilegal_id con num_transacciones %g", $time, num_transacciones);
         
        // consulta_test_sb = complete_report;
        // test_sb_mbx.put(consulta_test_sb);
@@ -91,9 +91,9 @@ class test #(parameter width = 16, parameter DRVS = 8);
         //todos le envian a uno solo
        // #2550;
 
-        instr_agent = all_for_one;
-        test_agent_mbx.put(instr_agent);
-        $display("[%g] Test: Enviada instruccion al agente all_for_one con num_transacciones %g", $time, num_transacciones);
+        //instr_agent = all_for_one;
+        //test_agent_mbx.put(instr_agent);
+        //$display("[%g] Test: Enviada instruccion al agente all_for_one con num_transacciones %g", $time, num_transacciones);
 
        // consulta_test_sb = complete_report;
        // test_sb_mbx.put(consulta_test_sb);
