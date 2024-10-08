@@ -16,7 +16,7 @@
 module test_bench;
 
   logic     clk   = 0;
-  parameter width = 64;
+  parameter width = 16;
   parameter DRVS  = 8;
   
   test    # (.width(width), .DRVS(DRVS)) test_0;
