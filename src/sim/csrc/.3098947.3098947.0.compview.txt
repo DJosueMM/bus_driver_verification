@@ -1,0 +1,7 @@
+{"vcs1":{"timestamp_begin":1728400280.126234113, "rt":0.88, "ut":0.63, "st":0.13}}
+{"vcselab":{"timestamp_begin":1728400281.083284844, "rt":0.43, "ut":0.25, "st":0.05}}
+{"link":{"timestamp_begin":1728400281.564371857, "rt":0.23, "ut":0.10, "st":0.05}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1728400279.615572545}
+{"VCS_COMP_START_TIME": 1728400279.615572545}
+{"VCS_COMP_END_TIME": 1728400282.716362573}
+{"VCS_USER_OPTIONS": "-Mupdate test_bench.sv -o salida -full64 -debug_all -kdb -sverilog -l log_test +lint=TFIPC-L"}
