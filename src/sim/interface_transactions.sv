@@ -52,7 +52,6 @@ typedef enum {
 // estos tipos de datos se transmiten desde el agente al driver_monitor y desde el driver_monitor al checker
 class instrucciones_driver_monitor # (parameter WIDTH = 64); 
    
-
     // Definición de los miembros de la clase
     rand int                 max_delay;         // Tiempo máximo de retraso en ciclos de reloj
     rand int                 delay;             // Retraso en ciclos de reloj
@@ -67,7 +66,7 @@ class instrucciones_driver_monitor # (parameter WIDTH = 64);
    //Constraint de retardo
     constraint const_delay {
         max_delay <= 10;         //Retardo maximo al randomizar, VERIFICAR
-        delay     <= max_delay; //Definir cotas del delay
+        delay     <= max_delay;  //Definir cotas del delay
         delay     >= 0;
     }
     

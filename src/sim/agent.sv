@@ -24,7 +24,7 @@ class agent # (parameter WIDTH = 16, parameter DRVS = 4);
     
     //constructor
     function new();
-        num_transacciones = 100;
+        num_transacciones = 10;
         max_retardo       = 10;
     endfunction
 
